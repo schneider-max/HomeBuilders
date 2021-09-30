@@ -1,6 +1,6 @@
 Dumb:
 
-mysqldump -u root -p homebuilderdb > C:\mein\pfad\zum\dump.sql
+mysqldump -u root -p homebuildersdb > C:\mein\pfad\zum\<<dumpfile.sql>>
 
 #####
 
@@ -14,4 +14,4 @@ mysql> create database homebuildersdb;
 
 mysql> exit
 
-mysql -u root -p homebuildersdb < C:\mein\pfad\zum\dump.sql
+mysql -u root -p homebuildersdb < C:\mein\pfad\zum\<<dumpfile.sql>>

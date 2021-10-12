@@ -1,4 +1,3 @@
-import app from "./config/app";
 import { Server } from '@overnightjs/core';
 import { Logger } from '@overnightjs/logger';
 

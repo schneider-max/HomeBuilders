@@ -7,5 +7,8 @@ module.exports = {
   database: "homebuildersdb",
   synchronize: true,
   logging: false,
-  insecureAuth: true
+  insecureAuth: true,
+  entities: [
+    "lib/db/entities/**/*.ts"
+  ],
 };

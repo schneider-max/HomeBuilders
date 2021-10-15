@@ -7,16 +7,34 @@ import { Customer } from './entity.customer';
 export class Project {
 
     @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column({
+        type: "nvarchar",
+        length: 255,
+        charset: "utf8"
+    })
     name: string;
 
-    @Column()
+    @Column({
+        type: "datetime"
+    })
     creationDate: Date;
 
-    @Column()
+    @Column({
+        type: "decimal",
+        precision: 10, 
+        scale: 0,
+        nullable: true,
+        default: null
+    })
     budget: number;
 
-    @ManyToOne(type => Customer, customer => customer.projects)
-    customer: Customer[];
+    @ManyToOne(type => Customer, customer => customer.projects, {
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE"
+    })
+    customer: Customer;
 
     @OneToMany(type => Request, request => request.projects)
     requests: Request[];

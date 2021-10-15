@@ -39,18 +39,21 @@ export class Request {
     price: number;
 
     @ManyToOne(type => Project, project => project.requests, {
+        nullable: false,
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
     projects: Project;
 
     @ManyToOne(type => Sector, sector => sector.requests, {
+        nullable: false,
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })
     sectors: Sector;
 
     @ManyToOne(type => Supplier, supplier => supplier.requests, {
+        nullable: false,
         onUpdate: "CASCADE",
         onDelete: "CASCADE"
     })

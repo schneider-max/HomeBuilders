@@ -31,6 +31,7 @@ export class Project {
     budget: number;
 
     @ManyToOne(type => Customer, customer => customer.projects, {
+        nullable: false,
         onDelete: "CASCADE",
         onUpdate: "CASCADE"
     })

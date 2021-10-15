@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.12",
+    "reflect-metadata": "^0.1.13",
     "ts-node": "^10.2.1",
     "typeorm": "^0.2.38"
   },

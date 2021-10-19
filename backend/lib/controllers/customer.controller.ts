@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Post } from '@overnightjs/core';
+import { Controller, Delete, Get, Post, Put } from '@overnightjs/core';
 import { Logger } from '@overnightjs/logger';
 import { Request, Response } from 'express'
 import { Md5 } from 'ts-md5';
@@ -35,15 +35,33 @@ export class CustomerController {
     @Post('')
     async post(req: Request, res: Response): Promise<any> {
         Logger.Info(`[${req.method}]` + req.originalUrl);
-        const customer = await getRepository(Customer).create(req.body);
+        const customer = getRepository(Customer).create(req.body);
         const results = await getRepository(Customer).save(customer);
         return res.status(200).json(results);
     }
 
-    @Delete(':email')
+    @Put('')
+    async update(req: Request, res: Response): Promise<any> {
+        Logger.Info(`[${req.method}]` + req.originalUrl);
+        const customer = await getRepository(Customer).findOne(req.body.email);
+        if (customer?.password === Md5.hashStr(req.body.password)) {
+            getRepository(Customer).merge(customer, req.body);
+            const results = await getRepository(Customer).save(customer);
+            return res.status(200).json(results);
+        }
+        else
+            return res.status(401).json({});
+    }
+
+    @Delete(':email/:password')
     async delete (req: Request, res: Response): Promise<any> {
         Logger.Info(`[${req.method}]` + req.originalUrl);
-        const results = await getRepository(Customer).delete(req.params.email);
-        return res.status(200).json(results);
+        const customer = await getRepository(Customer).findOne(req.params.email);
+        if (customer?.password === Md5.hashStr(req.params.password)) {
+            const results = await getRepository(Customer).delete(req.params.email);
+            return res.status(200).json(results);
+        }
+        else
+            return res.status(401).json({});
     }
 }

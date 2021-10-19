@@ -4,7 +4,7 @@ import { Server } from '@overnightjs/core';
 import { Logger } from '@overnightjs/logger';
 
 
-class HomeBuilderServer extends Server {
+class RouterServer extends Server {
 
    private readonly SERVER_START_MSG = 'Server started at port: ';
    private readonly config = require("./config/server.config");
@@ -39,4 +39,4 @@ class HomeBuilderServer extends Server {
    }
 }
 
-export default HomeBuilderServer;
+export default RouterServer;

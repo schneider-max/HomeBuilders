@@ -4,7 +4,8 @@
   "description": "",
   "main": "./dist/start.js",
   "scripts": {
-    "dev": "tsc && nodemon --config \"./lib/config/nodemon.json\"/"
+    "dev:nodemon": "copy /y \".\\lib\\config\\nodemon.json\" \".\\dist\\config\\nodemon.json\" && nodemon --config \"./dist/config/nodemon.json\"/",
+    "dev": "tsc && npm run dev:nodemon"
   },
   "author": "",
   "license": "ISC",

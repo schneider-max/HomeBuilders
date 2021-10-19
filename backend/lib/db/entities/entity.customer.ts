@@ -1,4 +1,5 @@
-import { Entity, Column, OneToMany, PrimaryColumn } from "typeorm";
+import { Md5 } from "ts-md5";
+import { Entity, Column, OneToMany, PrimaryColumn, BeforeInsert, BeforeUpdate } from "typeorm";
 import { Project } from './entity.project';
 
 @Entity()
@@ -34,4 +35,12 @@ export class Customer {
 
     @OneToMany(type => Project, project => project.customer)
     projects: Project[];
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    hashPassword() {
+        if (this.password) {
+            this.password = Md5.hashStr(this.password);
+        }
+    }
 }

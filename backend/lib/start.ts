@@ -1,8 +1,5 @@
-import DemoServer from './server';
+import RouterServer from './server';
 
-// Start the server or run tests
-if (process.argv[2] !== 'test') {
-    let server = new DemoServer();
-    server.start(3004);
-} else {
-}
+// start server
+const server = new RouterServer();
+server.start();

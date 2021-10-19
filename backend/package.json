@@ -4,8 +4,7 @@
   "description": "",
   "main": "./dist/start.js",
   "scripts": {
-    "dev": "tsc && nodemon --config \"./lib/config/nodemon.json\"/",
-    "db-ConnectionTest": "ts-node lib/db/dbConnection.ts"
+    "dev": "tsc && nodemon --config \"./lib/config/nodemon.json\"/"
   },
   "author": "",
   "license": "ISC",

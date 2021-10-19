@@ -1,14 +1,14 @@
+import { DBLogger } from '../db/db.logger';
+
 module.exports = {
-  type: "mysql",
-  host: "localhost",
+  type: 'mysql',
+  host: 'localhost',
   port: 3306,
-  username: "root",
-  password: "password",
-  database: "homebuildersdb",
+  username: 'root',
+  password: 'password',
+  database: 'homebuildersdb',
   synchronize: true,
-  logging: false,
+  logging: new DBLogger(),
   insecureAuth: true,
-  entities: [
-    "lib/db/entities/**/*.ts"
-  ],
+  entities: ['dist/db/entities/**/*.js']
 };

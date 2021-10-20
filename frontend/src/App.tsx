@@ -3,9 +3,16 @@ import './App.css';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Grid from '@mui/material/Grid';
-import Item from '@mui/material/MenuItem'
+import ProjectList from './MainPage';
+import Logo from './img/HomeBuilder_Logo_4c.png';
 
+function Footer() {
+  return(
+    <div style={{bottom: "0px", height: "40px", backgroundColor: "gray"}}>
+
+    </div>
+  );
+}
 
 function NavBar() {
   const [value, setValue] = React.useState(0);
@@ -15,7 +22,7 @@ function NavBar() {
   };
 
   return (
-    <Box sx={{ width: '100%', bgcolor: 'background.paper'}}>
+    <Box sx={{ width: '100%'}}>
       <Tabs value={value} onChange={handleChange} centered>
         <Tab label="Home" />
         <Tab label="History" />
@@ -25,52 +32,23 @@ function NavBar() {
   );
 }
 
-function ProjectList() {
-  return(
-    <Box sx={{height: '600px', borderColor: 'black', margin: '15px'}}>
-      <Grid container spacing={8} sx={{margin: "15px"}}>
-        <Grid item xs={6}>
-          <Item>
-            Projekt 1
-          </Item>
-        </Grid>
-        <Grid item xs={6}>
-          <Item>
-            Projekt 2
-          </Item>
-        </Grid>
-        <Grid item xs>
-          <Item>
-            Projekt 3
-          </Item>
-        </Grid>
-        <Grid item xs>
-          <Item>
-            Projekt 4
-          </Item>
-        </Grid>
-        <Grid item xs>
-          <Item>
-            Projekt 5
-          </Item>
-        </Grid>
-      </Grid>
-    </Box>
-  );
-}
-
 function App() {
   return (
-    <div className="App">
-      <Box sx={{backgroundColor: 'lightblue', top: '0px', fontSize: '30px', height: '50px', padding: '15px'}} className="titleName">
-        HomeBuilders
+    <div className="App" style={{backgroundColor: 'lightgray', height: "100%"}}>
+      <Box sx={{backgroundColor: 'lightblue', top: '0px', fontSize: '30px', height: '100px', padding: '15px'}} className="titleName">
+        <img src={Logo} style= {{width: "300px"}}></img>
       </Box>
-      <React.StrictMode>
-        <NavBar />
-      </React.StrictMode>  
-      <React.StrictMode>
-        <ProjectList />
-      </React.StrictMode> 
+      <Box>
+        <React.StrictMode>
+          <NavBar/>
+        </React.StrictMode>  
+        <React.StrictMode>
+          <ProjectList />
+        </React.StrictMode> 
+      </Box>
+      <Box>
+        <Footer />
+      </Box>
     </div>
   );
 }

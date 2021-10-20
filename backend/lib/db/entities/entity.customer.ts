@@ -1,40 +1,47 @@
-import { Md5 } from "ts-md5";
-import { Entity, Column, OneToMany, PrimaryColumn, BeforeInsert, BeforeUpdate } from "typeorm";
+import { Md5 } from 'ts-md5';
+import { Entity, Column, OneToMany, PrimaryColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { Project } from './entity.project';
 
 @Entity()
 export class Customer {
-
     @PrimaryColumn({
-        type: "nvarchar",
+        type: 'nvarchar',
         length: 255,
-        charset: "utf8"
+        charset: 'utf8'
     })
     email: string;
 
     @Column({
-        type: "nvarchar",
+        type: 'nvarchar',
         length: 255,
-        charset: "utf8"
+        charset: 'utf8'
     })
     password: string;
 
     @Column({
-        type: "nvarchar",
+        type: 'nvarchar',
         length: 255,
-        charset: "utf8"
+        charset: 'utf8'
     })
     firstname: string;
 
     @Column({
-        type: "nvarchar",
+        type: 'nvarchar',
         length: 255,
-        charset: "utf8"
+        charset: 'utf8'
     })
     lastname: string;
 
     @OneToMany(type => Project, project => project.customer)
     projects: Project[];
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    emailToLower() {
+        if (this.email) {
+            this.email = this.email.toLowerCase();
+        }
+    }
 
     @BeforeInsert()
     @BeforeUpdate()

@@ -1,29 +1,39 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany, JoinTable } from "typeorm";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    OneToMany,
+    ManyToOne,
+    ManyToMany,
+    JoinTable,
+    BeforeUpdate,
+    BeforeInsert,
+    JoinColumn
+} from 'typeorm';
 import { Request } from './entity.request';
 import { Sector } from './entity.sector';
 import { Customer } from './entity.customer';
 
 @Entity()
 export class Project {
-
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column({
-        type: "nvarchar",
+        type: 'nvarchar',
         length: 255,
-        charset: "utf8"
+        charset: 'utf8'
     })
     name: string;
 
     @Column({
-        type: "datetime"
+        type: 'datetime'
     })
     creationDate: Date;
 
     @Column({
-        type: "decimal",
-        precision: 10, 
+        type: 'decimal',
+        precision: 10,
         scale: 0,
         nullable: true,
         default: null
@@ -32,8 +42,8 @@ export class Project {
 
     @ManyToOne(type => Customer, customer => customer.projects, {
         nullable: false,
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE"
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
     })
     customer: Customer;
 

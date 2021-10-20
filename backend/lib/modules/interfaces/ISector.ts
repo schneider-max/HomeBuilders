@@ -1,5 +1,5 @@
-import { IElement } from "./IElement";
+import { IElement } from './IElement';
 
-export interface ISector extends IElement  {
-    name: string
+export interface ISector extends IElement {
+    name: string;
 }

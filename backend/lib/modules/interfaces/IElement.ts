@@ -1,3 +1,3 @@
 export interface IElement {
-    id: number
+    id: number;
 }

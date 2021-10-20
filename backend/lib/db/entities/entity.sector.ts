@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { Supplier } from './entity.supplier';
 import { Project } from './entity.project';
 import { Request } from './entity.request';
@@ -9,9 +9,9 @@ export class Sector {
     id: number;
 
     @Column({
-        type: "nvarchar",
+        type: 'nvarchar',
         length: 255,
-        charset: "utf8"
+        charset: 'utf8'
     })
     name: string;
 

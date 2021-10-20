@@ -1,7 +1,7 @@
-import { IElement } from "./IElement";
+import { IElement } from './IElement';
 
 export interface ISupplier extends IElement {
-    companyName: string,
-    email: string,
-    webPage: URL
+    companyName: string;
+    email: string;
+    webPage: URL;
 }

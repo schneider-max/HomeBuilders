@@ -1,7 +1,7 @@
-import { IElement } from "./IElement";
+import { IElement } from './IElement';
 
 export interface IProject extends IElement {
-    name: string,
-    creationDate: Date,
-    budget: number
+    name: string;
+    creationDate: Date;
+    budget: number;
 }

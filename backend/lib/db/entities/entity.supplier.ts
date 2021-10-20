@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany, BeforeUpdate, BeforeInsert } from 'typeorm';
 import { Sector } from './entity.sector';
 import { Request } from './entity.request';
 
@@ -8,31 +8,47 @@ export class Supplier {
     id: number;
 
     @Column({
-        type: "nvarchar",
+        type: 'nvarchar',
         length: 255,
-        charset: "utf8"
+        charset: 'utf8'
     })
     companyName: string;
 
     @Column({
-        type: "nvarchar",
+        type: 'nvarchar',
         length: 255,
-        charset: "utf8"
+        charset: 'utf8'
     })
     email: string;
 
     @Column({
-        type: "nvarchar",
+        type: 'nvarchar',
         length: 255,
         nullable: true,
         default: null,
-        charset: "utf8"
+        charset: 'utf8'
     })
     webPage: string;
-    
+
     @ManyToMany(type => Sector, sector => sector.suppliers)
     sectors: Sector[];
 
     @OneToMany(type => Request, request => request.suppliers)
     requests: Request[];
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    emailToLower() {
+        if (this.email) {
+            this.email = this.email.toLowerCase();
+        }
+    }
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    webPageToLower() {
+        if (this.webPage) {
+            this.webPage = this.webPage.toLowerCase();
+        }
+    }
 }

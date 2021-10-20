@@ -1,6 +1,5 @@
-import { Logger } from "@overnightjs/logger";
-import { NextFunction, Request, Response } from 'express'
-
+import { Logger } from '@overnightjs/logger';
+import { NextFunction, Request, Response } from 'express';
 
 export class BaseController {
     protected readonly Ok: number = 200;
@@ -11,7 +10,8 @@ export class BaseController {
     protected readonly InternalServerError: number = 500;
 }
 
+// logging middleware for controller methods
 export const logger = (req: Request, res: Response, next: NextFunction) => {
     Logger.Info(`[${req.method}]` + req.originalUrl);
     next();
-}
+};

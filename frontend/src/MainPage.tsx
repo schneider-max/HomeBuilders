@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import LinearWithValueLabel from './Progressbar';
 
+
 function ActionAreaCard(props: any) {
     return (
       <Card sx={{width: "100%"}}>
@@ -22,7 +23,8 @@ function ActionAreaCard(props: any) {
             </Typography>
             <br></br>
             <Typography variant="body2" color="text.secondary">
-                Phase:
+            <div style={{textAlign: 'left'}}>Baufortschritt:</div>
+            <LinearWithValueLabel />
             </Typography>
           </CardContent>
         </CardActionArea>
@@ -41,13 +43,16 @@ function ProjectList() {
                     <ActionAreaCard projectName="Projekt 2"/>
                 </Grid>
                 <Grid item xs={4}>
-                    <ActionAreaCard />
+                    <ActionAreaCard projectName="Projekt 3"/>
                 </Grid>
                 <Grid item xs={4}>
-                    <ActionAreaCard />
+                    <ActionAreaCard projectName="Projekt 4"/>
                 </Grid>
                 <Grid item xs={4}>
-                    <ActionAreaCard />
+                    <ActionAreaCard projectName="Projekt 5"/>
+                </Grid>
+                <Grid item xs={12} style={{marginTop: "15px", padding: "15px", height: "100px"}}>
+                    <Button style={{backgroundColor: "white", width: "20%", height: "100%", color: 'black'}}>Neues Projekt</Button>
                 </Grid>
             </Grid>
         </Box>

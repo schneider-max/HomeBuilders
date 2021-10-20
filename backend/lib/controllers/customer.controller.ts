@@ -55,6 +55,7 @@ export class CustomerController extends BaseController {
     @Put('')
     @Middleware([logger])
     public async update(req: Request, res: Response): Promise<any> {
+        req.body.email = req.body.email.toLowerCase();
         const customer = await getRepository(Customer).findOne(req.body.email.toLowerCase());
         if (customer?.password === Md5.hashStr(req.body.password)) {
             getRepository(Customer).merge(customer, req.body);

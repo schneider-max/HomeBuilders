@@ -52,7 +52,7 @@ export class CustomerController extends BaseController {
         if (customer?.password === Md5.hashStr(req.body.password)) {
             getRepository(Customer).merge(customer, req.body);
             const result = await getRepository(Customer).save(customer);
-            return res.status(this.Ok).json([result]);
+            return res.status(this.Ok).json(this.mapDBOToDTO([result]));
         }
         else {
             return res.status(this.Unauthorized).json({});

@@ -12,7 +12,7 @@ export class CustomerController extends BaseController {
 
     @Get('')
     @Middleware([logger])
-    async get(req: Request, res: Response, next: NextFunction): Promise<any> {
+    async get(req: Request, res: Response): Promise<any> {
         const customers = await getRepository(Customer).find();       
         return res.status(this.Ok).json(this.mapDBOToDTO(customers));
     }

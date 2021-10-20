@@ -24,7 +24,7 @@ export class CustomerController extends BaseController {
         if (customer != null)
             return res.status(this.Ok).json(this.mapDBOToDTO([customer]));
         else
-            return res.status(this.NotFound).json({});
+            return res.status(this.NotFound).json(null);
     }
 
     @Get(':email/:password')
@@ -32,9 +32,9 @@ export class CustomerController extends BaseController {
     async getLogin(req: Request, res: Response): Promise<any> {
         const customer = await getRepository(Customer).findOne(req.params.email);       
         if (customer?.password === Md5.hashStr(req.params.password))
-            return res.status(this.Ok).json({});
+            return res.status(this.Ok).json(null);
         else
-            return res.status(this.Unauthorized).json({});
+            return res.status(this.Unauthorized).json(null);
     }
 
     @Post('')
@@ -55,7 +55,7 @@ export class CustomerController extends BaseController {
             return res.status(this.Ok).json(this.mapDBOToDTO([result]));
         }
         else {
-            return res.status(this.Unauthorized).json({});
+            return res.status(this.Unauthorized).json(null);
         }
     }
 
@@ -68,7 +68,7 @@ export class CustomerController extends BaseController {
             return res.status(this.Ok).json(results);
         }
         else
-            return res.status(this.Unauthorized).json({});
+            return res.status(this.Unauthorized).json(null);
     }
 
     private mapDBOToDTO(customers: Customer[]): ICustomer[] {

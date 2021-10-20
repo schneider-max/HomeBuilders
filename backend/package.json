@@ -6,6 +6,8 @@
   "scripts": {
     "start:nodemon": "nodemon --config \"./nodemon.json\"/",
     "start": "tsc && node ./dist/start.js"
+    "db-ConnectionTest": "tsc && ts-node lib/db/maintenance/dbConnectionTest.ts",
+    "createInitialDB": "tsc && ts-node lib/db/maintenance/dbInitialSetup.ts"
   },
   "author": "",
   "license": "ISC",

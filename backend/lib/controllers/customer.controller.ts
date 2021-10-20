@@ -12,14 +12,14 @@ export class CustomerController extends BaseController {
 
     @Get('')
     @Middleware([logger])
-    async get(req: Request, res: Response): Promise<any> {
+    public async get(req: Request, res: Response): Promise<any> {
         const customers = await getRepository(Customer).find();       
         return res.status(this.Ok).json(this.mapDBOToDTO(customers));
     }
 
     @Get(':email')
     @Middleware([logger])
-    async getById(req: Request, res: Response): Promise<any> {
+    public async getById(req: Request, res: Response): Promise<any> {
         const customer = await getRepository(Customer).findOne(req.params.email);      
         if (customer != null)
             return res.status(this.Ok).json(this.mapDBOToDTO([customer]));
@@ -29,7 +29,7 @@ export class CustomerController extends BaseController {
 
     @Get(':email/:password')
     @Middleware([logger])
-    async getLogin(req: Request, res: Response): Promise<any> {
+    public async getLogin(req: Request, res: Response): Promise<any> {
         const customer = await getRepository(Customer).findOne(req.params.email);       
         if (customer?.password === Md5.hashStr(req.params.password))
             return res.status(this.Ok).json(null);
@@ -39,7 +39,7 @@ export class CustomerController extends BaseController {
 
     @Post('')
     @Middleware([logger])    
-    async post(req: Request, res: Response): Promise<any> {
+    public async post(req: Request, res: Response): Promise<any> {
         const customer = getRepository(Customer).create(req.body);
         const results = await getRepository(Customer).save(customer);        
         return res.status(this.Ok).json(this.mapDBOToDTO(results));
@@ -47,7 +47,7 @@ export class CustomerController extends BaseController {
 
     @Put('')
     @Middleware([logger])
-    async update(req: Request, res: Response): Promise<any> {
+    public async update(req: Request, res: Response): Promise<any> {
         const customer = await getRepository(Customer).findOne(req.body.email);   
         if (customer?.password === Md5.hashStr(req.body.password)) {
             getRepository(Customer).merge(customer, req.body);
@@ -61,7 +61,7 @@ export class CustomerController extends BaseController {
 
     @Delete(':email/:password')
     @Middleware([logger])
-    async delete (req: Request, res: Response): Promise<any> {
+    public async delete (req: Request, res: Response): Promise<any> {
         const customer = await getRepository(Customer).findOne(req.params.email);
         if (customer?.password === Md5.hashStr(req.params.password)) {
             const results = await getRepository(Customer).delete(req.params.email);

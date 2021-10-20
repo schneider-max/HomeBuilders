@@ -1,8 +1,10 @@
 import * as bodyParser from 'body-parser'
 import * as controllers from './controllers';
+import * as express from "express";
 import { Server } from '@overnightjs/core';
 import { Logger } from '@overnightjs/logger';
 import { createConnection } from 'typeorm';
+
 
 class RouterServer extends Server {
 
@@ -13,8 +15,8 @@ class RouterServer extends Server {
    constructor() {
       super();
 
-      this.app.use(bodyParser.json());
-      this.app.use(bodyParser.urlencoded({extended: true}));
+      this.app.use(express.json());
+      this.app.use(express.urlencoded({extended: true}));
       this.setupConnection();
       this.setupControllers();
    }

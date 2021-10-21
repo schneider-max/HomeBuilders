@@ -9,7 +9,7 @@ class RouterServer extends Server {
     private readonly SERVER_START_MSG: string = 'Server started at port: ';
     private readonly SERVER_CONFIG = require('./config/server.config');
     private readonly DB_CONFIG = require('./config/db.config');
-    private readonly SWAGGER_CONFIG = require('./config/swagger.config');
+    private readonly SWAGGER_CONFIG = require('./../assets/docs/swagger.json');
 
     constructor() {
         super();

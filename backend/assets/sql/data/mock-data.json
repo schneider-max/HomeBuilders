@@ -1,0 +1,163 @@
+{
+    "customers": [
+        {
+            "email": "max.schnerider@icloud.com",
+            "password": "P455W0RD",
+            "firstname": "Max",
+            "lastname": "Schneider"
+        },
+        {
+            "email": "sebastian98.kapeller@gmail.com",
+            "password": "password",
+            "firstname": "Sebastian",
+            "lastname": "Kapeller"
+        },
+        {
+            "email": "TestUser@hotmail.com",
+            "password": "TestPasswort",
+            "firstname": "Herbert",
+            "lastname": "Stifter"
+        }
+    ],
+    "projects": [
+        {
+            "id": 1,
+            "name": "Eigenheim Hagenberg",
+            "creationDate": "2014-01-01T23:28:56.782Z",
+            "budget": 450000,
+            "customer": {
+                "email": "TestUser@hotmail.com"
+            }
+        }
+    ],
+    "sectors": [
+        {
+            "id": 1,
+            "name": "Erdarbeiten"
+        },
+        {
+            "id": 2,
+            "name": "Kellerbau"
+        },
+        {
+            "id": 3,
+            "name": "Fundament"
+        },
+        {
+            "id": 4,
+            "name": "Rohbau"
+        },
+        {
+            "id": 5,
+            "name": "Dach"
+        },
+        {
+            "id": 6,
+            "name": "Innenausbau"
+        }
+    ],
+    "suppliers": [
+        {
+            "id": 1,
+            "companyName": "Holzhaider Bau GmbH",
+            "email": "office@holzhaider.asdf",
+            "webPage": "www.holzhaider.at"
+        },
+        {
+            "id": 2,
+            "companyName": "Wimberger Bau GesmbH",
+            "email": "office.linz@wimberger.asdf",
+            "webPage": "www.wimbergerhaus.at"
+        },
+        {
+            "id": 3,
+            "companyName": "Buchner GmbH",
+            "email": "office@buchner.asdf",
+            "webPage": "www.buchner.at"
+        }
+    ],
+    "project_sectors_sector": [
+        {
+            "projectId": 1,
+            "sectorId": 1
+        },
+        {
+            "projectId": 1,
+            "sectorId": 2
+        },
+        {
+            "projectId": 1,
+            "sectorId": 3
+        },
+        {
+            "projectId": 1,
+            "sectorId": 4
+        },
+        {
+            "projectId": 1,
+            "sectorId": 5
+        },
+        {
+            "projectId": 1,
+            "sectorId": 6
+        }
+    ],
+    "sector_suppliers_supplier": [
+        {
+            "sectorId": 1,
+            "supplierId": 1
+        },
+        {
+            "sectorId": 2,
+            "supplierId": 2
+        },
+        {
+            "sectorId": 2,
+            "supplierId": 3
+        },
+        {
+            "sectorId": 3,
+            "supplierId": 2
+        },
+        {
+            "sectorId": 3,
+            "supplierId": 3
+        },
+        {
+            "sectorId": 4,
+            "supplierId": 1
+        },
+        {
+            "sectorId": 4,
+            "supplierId": 2
+        },
+        {
+            "sectorId": 4,
+            "supplierId": 3
+        },
+        {
+            "sectorId": 5,
+            "supplierId": 1
+        },
+        {
+            "sectorId": 5,
+            "supplierId": 2
+        },
+        {
+            "sectorId": 5,
+            "supplierId": 3
+        },
+        {
+            "sectorId": 6,
+            "supplierId": 1
+        },
+        {
+            "sectorId": 6,
+            "supplierId": 2
+        },
+        {
+            "sectorId": 6,
+            "supplierId": 3
+        }
+    ]
+}

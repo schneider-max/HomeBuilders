@@ -14,6 +14,17 @@ export class ProjectController extends BaseController {
         return res.status(this.Ok).json(projects);
     }
 
+    @Get(':email')
+    @Middleware([logger])
+    public async getByCustomerId(req: Request, res: Response): Promise<any> {
+        const email = req.params.email.toLowerCase();
+        const projects = await getRepository(Project)
+            .createQueryBuilder('project')
+            .where('project.customerEmail = :email', { email })
+            .getMany();
+        return res.status(this.Ok).json(projects);
+    }
+
     @Post('')
     @Middleware([logger])
     public async post(req: Request, res: Response): Promise<any> {

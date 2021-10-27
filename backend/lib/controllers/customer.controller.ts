@@ -47,7 +47,6 @@ export class CustomerController extends BaseController {
     @Post('')
     @Middleware([logger])
     public async post(req: Request, res: Response): Promise<any> {
-        console.log(req.body)
         const customer = getRepository(Customer).create(req.body);
         const results = await getRepository(Customer).save(customer);
         return res.status(this.Ok).json(results);

@@ -1,6 +1,6 @@
 import { Controller, Get, Middleware, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
-import { logger } from 'middleware/logger.mw';
+import { logger } from '../middleware/logger.mw';
 import { DeepPartial, getRepository } from 'typeorm';
 
 import { Project } from '../db/entities/entity.project';

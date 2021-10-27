@@ -37,7 +37,7 @@ function ProjectList() {
         <Box sx={{height: '100%', borderColor: 'black'}}>
             <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 40px)"}}>
                 <Grid item xs={4}>
-                    <ActionAreaCard projectName="Projekt 1" />
+                    <ActionAreaCard projectName="Projekt 1"/>
                 </Grid>
                 <Grid item xs={4}>
                     <ActionAreaCard projectName="Projekt 2"/>

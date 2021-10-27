@@ -3,45 +3,34 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Box from '@mui/material/Box';
 
-function SelectAutoWidth() {
-  const [age, setAge] = React.useState('');
+export default function SelectAutoWidth() {
+  const [project, setProject] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
+    setProject(event.target.value);
   };
 
   return (
     <div>
       <FormControl sx={{ m: 1, minWidth: 110 }}>
-        <InputLabel id="demo-simple-select-autowidth-label">Projekte</InputLabel>
+        <InputLabel id="demo-simple-select-autowidth-label">Projekt</InputLabel>
         <Select
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
-          value={age}
+          value={project}
           onChange={handleChange}
           autoWidth
-          label="Age"
+          label="Projekt"
         >
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Twenty</MenuItem>
-          <MenuItem value={21}>Twenty one</MenuItem>
-          <MenuItem value={22}>Twenty one and a half</MenuItem>
+          <MenuItem value={10}>Projekt 1</MenuItem>
+          <MenuItem value={21}>Projekt 2</MenuItem>
+          <MenuItem value={22}>Projekt 3</MenuItem>
         </Select>
       </FormControl>
     </div>
   );
 }
-
-function History() {
-    return(
-        <Box>
-            <SelectAutoWidth />
-        </Box>
-    )        
-}
-
-export default History;

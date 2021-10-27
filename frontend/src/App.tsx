@@ -5,7 +5,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ProjectList from './MainPage';
 import Logo from './img/HomeBuilder_Logo_4c.png';
-import History from './History';
+import History from './HistoryPage/History';
 
 function Footer() {
   return(

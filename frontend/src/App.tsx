@@ -5,6 +5,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ProjectList from './MainPage';
 import Logo from './img/HomeBuilder_Logo_4c.png';
+import Image from './img/concrete_bg.jpg';
 
 function Footer() {
   return(
@@ -34,9 +35,9 @@ function NavBar() {
 
 function App() {
   return (
-    <div className="App" style={{backgroundColor: 'lightgray', height: "100%"}}>
-      <Box sx={{backgroundColor: 'lightblue', top: '0px', fontSize: '30px', height: '100px', padding: '15px'}} className="titleName">
-        <img src={Logo} style= {{width: "300px"}}></img>
+    <div className="App" style={{backgroundImage: `url(${Image})`, height: "100%"}}>
+      <Box sx={{top: '0px', fontSize: '30px', height: '100px', padding: '15px'}} className="titleName">
+        <img src={Logo} style= {{width: "300px"}} alt={"Logo"}/>
       </Box>
       <Box>
         <React.StrictMode>

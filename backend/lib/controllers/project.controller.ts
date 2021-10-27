@@ -1,9 +1,10 @@
 import { Controller, Get, Middleware, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
+import { logger } from 'middleware/logger.mw';
 import { DeepPartial, getRepository } from 'typeorm';
 
 import { Project } from '../db/entities/entity.project';
-import { BaseController, logger } from './base.controller';
+import { BaseController } from './base.controller';
 
 @Controller('api/projects')
 export class ProjectController extends BaseController {

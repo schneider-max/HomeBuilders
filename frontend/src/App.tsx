@@ -5,6 +5,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import ProjectList from './MainPage';
 import Logo from './img/HomeBuilder_Logo_4c.png';
+import History from './History';
 
 function Footer() {
   return(
@@ -43,7 +44,7 @@ function App() {
           <NavBar/>
         </React.StrictMode>  
         <React.StrictMode>
-          <ProjectList />
+          <History />
         </React.StrictMode> 
       </Box>
       <Box>

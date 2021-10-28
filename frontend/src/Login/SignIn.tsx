@@ -5,7 +5,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from "../img/HomeBuilder_Logo_4c.png";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {logger} from "../../../backend/lib/middleware/logger.mw";
 
 function Copyright(props: any) {
     return (
@@ -20,22 +21,25 @@ function Copyright(props: any) {
 
 function throwLoginErrorIfGiven(response: Response) {
     if (response.status !== 200) {
-        throw new Error(response.statusText)
+        handleLoginError(response.statusText);
     }
-    handleLogin("",response.status)
+    handleLogin(response)
     return response;
 }
 
-function handleLoginError(errorMsg:string) {
-    console.log(errorMsg !== "" ? errorMsg : "Login faild!");
+function handleLoginError(errorMsg: string) {
+    console.log(errorMsg);
 }
 
-function handleLogin(errorMsg: string, statuscode: number) {
-    if (errorMsg !== "" && statuscode !== 200) {
-        handleLoginError(errorMsg);
-    }
-    if(statuscode === 200){
-        console.log("login successfull");
+function handleLogin(res: Response) {
+    if (res.status === 200 && res.body != null) {
+        try {
+            res.json().then(resBody => {
+                sessionStorage.setItem("token", resBody.token);
+            });
+        } catch (ex: any) {
+            handleLoginError(ex);
+        }
     }
 }
 
@@ -56,13 +60,18 @@ export default function SignIn() {
     const handleSubmit = (event: any) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
         let email = data.get('email');
         let password = data.get('password');
         if (email !== "" && password !== "") {
-            fetch("http://localhost:3001/api/customers/" + email + "/" + password)
-                .then(throwLoginErrorIfGiven)
-                .catch(err => handleLogin(err, 0));
+            fetch("http://localhost:3001/api/customers/" + email, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({password: password})
+            })
+                .then(res => throwLoginErrorIfGiven(res))
         } else {
             handleLoginError("");
         }
@@ -85,6 +94,7 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
+                <Alert severity="error" style=>Wrong Login data. Following error occured: {errorMsg}</Alert>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
                     <TextField
                         margin="normal"

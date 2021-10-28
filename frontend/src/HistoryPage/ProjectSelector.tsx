@@ -3,8 +3,9 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { margin } from '@mui/system';
 
-export default function SelectAutoWidth() {
+function SelectAutoWidth() {
   const [project, setProject] = React.useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -12,7 +13,7 @@ export default function SelectAutoWidth() {
   };
 
   return (
-    <div>
+    <div style={{textAlign: "left"}}>
       <FormControl sx={{ m: 1, minWidth: 110 }}>
         <InputLabel id="demo-simple-select-autowidth-label">Projekt</InputLabel>
         <Select
@@ -23,14 +24,14 @@ export default function SelectAutoWidth() {
           autoWidth
           label="Projekt"
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Projekt 1</MenuItem>
-          <MenuItem value={21}>Projekt 2</MenuItem>
-          <MenuItem value={22}>Projekt 3</MenuItem>
+          <MenuItem value="" sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}><em>None</em></MenuItem>
+          <MenuItem value={10} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Twenty</MenuItem>
+          <MenuItem value={21} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Twenty one</MenuItem>
+          <MenuItem value={22} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Twenty one and a half</MenuItem>
         </Select>
       </FormControl>
     </div>
   );
 }
+
+export default SelectAutoWidth;

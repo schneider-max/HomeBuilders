@@ -19,14 +19,6 @@ export class CustomerController extends BaseController {
         return res.status(this.Ok).json(customers);
     }
 
-    @Get(':email')
-    @Middleware([logger, authMw])
-    public async getById(req: Request, res: Response): Promise<any> {
-        const customer = await getRepository(Customer).findOne(req.params.email.toLowerCase());
-        if (customer != null) return res.status(this.Ok).json(customer);
-        else return res.status(this.NotFound).json(null);
-    }
-
     @Get(':email/:password/projects')
     @Middleware([logger, authMw])
     public async getByIdWithProjects(req: Request, res: Response): Promise<any> {
@@ -40,12 +32,13 @@ export class CustomerController extends BaseController {
         else return res.status(this.NotFound).json(null);
     }
 
-    @Get(':email/:password')
+    @Post(':email')
     @Middleware([logger])
     public async getLogin(req: Request, res: Response): Promise<any> {
         const customer = await getRepository(Customer).findOne(req.params.email.toLowerCase());
-        if (customer?.password === Md5.hashStr(req.params.password)) return res.status(this.Ok).json(
-            null
+        if (customer?.password === Md5.hashStr(req.body.password))
+            return res.status(this.Ok).json(
+            encodeSession(JWT_TOKEN, {id: customer.email, dateCreated: Date.now(), username: customer.firstname})
         );
         else return res.status(this.Unauthorized).json(null);
     }

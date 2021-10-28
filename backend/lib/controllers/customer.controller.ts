@@ -1,10 +1,11 @@
 import { Controller, Delete, Get, Middleware, Post, Put } from '@overnightjs/core';
 import { Request, Response } from 'express';
+import { logger } from '../middleware/logger.mw';
 import { Md5 } from 'ts-md5';
 import { getRepository } from 'typeorm';
 
 import { Customer } from '../db/entities/entity.customer';
-import { BaseController, logger } from './base.controller';
+import { BaseController } from './base.controller';
 
 @Controller('api/customers')
 export class CustomerController extends BaseController {
@@ -61,9 +62,7 @@ export class CustomerController extends BaseController {
             getRepository(Customer).merge(customer, req.body);
             const result = await getRepository(Customer).save(customer);
             return res.status(this.Ok).json(result);
-        } else {
-            return res.status(this.Unauthorized).json(null);
-        }
+        } else return res.status(this.Unauthorized).json(null);
     }
 
     @Delete(':email/:password')

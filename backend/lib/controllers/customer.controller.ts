@@ -6,11 +6,12 @@ import { getRepository } from 'typeorm';
 
 import { Customer } from '../db/entities/entity.customer';
 import { BaseController } from './base.controller';
+import {authMw} from "../middleware/auth.mw";
 
 @Controller('api/customers')
 export class CustomerController extends BaseController {
     @Get('')
-    @Middleware([logger])
+    @Middleware([logger, authMw])
     public async get(req: Request, res: Response): Promise<any> {
         const customers = await getRepository(Customer).find();
         return res.status(this.Ok).json(customers);
@@ -25,7 +26,7 @@ export class CustomerController extends BaseController {
     }
 
     @Get(':email/:password/projects')
-    @Middleware([logger])
+    @Middleware([logger, authMw])
     public async getByIdWithProjects(req: Request, res: Response): Promise<any> {
         const email = req.params.email.toLowerCase();
         const customer = await getRepository(Customer)
@@ -46,7 +47,7 @@ export class CustomerController extends BaseController {
     }
 
     @Post('')
-    @Middleware([logger])
+    @Middleware([logger, authMw])
     public async post(req: Request, res: Response): Promise<any> {
         const customer = getRepository(Customer).create(req.body);
         const results = await getRepository(Customer).save(customer);
@@ -54,7 +55,7 @@ export class CustomerController extends BaseController {
     }
 
     @Put('')
-    @Middleware([logger])
+    @Middleware([logger, authMw])
     public async update(req: Request, res: Response): Promise<any> {
         req.body.email = req.body.email.toLowerCase();
         const customer = await getRepository(Customer).findOne(req.body.email.toLowerCase());
@@ -66,7 +67,7 @@ export class CustomerController extends BaseController {
     }
 
     @Delete(':email/:password')
-    @Middleware([logger])
+    @Middleware([logger, authMw])
     public async delete(req: Request, res: Response): Promise<any> {
         const email = req.params.email.toLowerCase();
         const customer = await getRepository(Customer).findOne(email);

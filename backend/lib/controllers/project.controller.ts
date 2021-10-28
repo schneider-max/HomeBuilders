@@ -5,18 +5,19 @@ import { DeepPartial, getRepository } from 'typeorm';
 
 import { Project } from '../db/entities/entity.project';
 import { BaseController } from './base.controller';
+import {authMw} from "../middleware/auth.mw";
 
 @Controller('api/projects')
 export class ProjectController extends BaseController {
     @Get('')
-    @Middleware([logger])
+    @Middleware([logger, authMw])
     public async get(req: Request, res: Response): Promise<any> {
         const projects = await getRepository(Project).find();
         return res.status(this.Ok).json(projects);
     }
 
     @Get(':email')
-    @Middleware([logger])
+    @Middleware([logger, authMw])
     public async getByCustomerId(req: Request, res: Response): Promise<any> {
         const email = req.params.email.toLowerCase();
         const projects = await getRepository(Project)
@@ -27,7 +28,7 @@ export class ProjectController extends BaseController {
     }
 
     @Post('')
-    @Middleware([logger])
+    @Middleware([logger, authMw])
     public async post(req: Request, res: Response): Promise<any> {
         const projects = [req.body].map((project: DeepPartial<Project>) => {
             let p = getRepository(Project).create(project);

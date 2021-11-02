@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from "../img/HomeBuilder_Logo_4c.png";
 import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
-import {logger} from "../../../backend/lib/middleware/logger.mw";
+import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 function Copyright(props: any) {
     return (
@@ -19,59 +19,110 @@ function Copyright(props: any) {
     );
 }
 
-function throwLoginErrorIfGiven(response: Response) {
-    if (response.status !== 200) {
-        handleLoginError(response.statusText);
+export default function SignIn() {
+    const [signUpDialogOpen, setSignUpDialogOpen] = React.useState(false);
+    const [userCreationAlert, setUserCreationAlert] = React.useState(false);
+    const [userCreationAlertMsg, setUserCreationAlertMsg] = React.useState('');
+    const [logInErrorAlert, setLogInErrorAlert] = React.useState(false);
+    const [loginErrorAlertMsg, setLoginErrorAlertMsg] = React.useState('');
+
+    function handleLoginError(errorMsg: any) {
+        if (errorMsg !== null && errorMsg.toString().includes("401")) {
+            setLoginErrorAlertMsg("Login failed - Bad Credentials");
+        } else {
+            setLoginErrorAlertMsg("Login failed! Please try again or create a new Account.")
+        }
+        setLogInErrorAlert(true);
     }
-    handleLogin(response)
-    return response;
-}
 
-function handleLoginError(errorMsg: string) {
-    console.log(errorMsg);
-}
+    function processLogin(res: AxiosResponse) {
+        setLoginErrorAlertMsg('');
+        setLogInErrorAlert(false);
 
-function handleLogin(res: Response) {
-    if (res.status === 200 && res.body != null) {
-        try {
-            res.json().then(resBody => {
-                sessionStorage.setItem("token", resBody.token);
-            });
-        } catch (ex: any) {
-            handleLoginError(ex);
+        setUserCreationAlertMsg('');
+        setUserCreationAlert(false);
+
+        if (res.status === 200 && res.data != null) {
+            try {
+                console.log(res.data);
+                sessionStorage.setItem("token", res.data.token);
+                sessionStorage.setItem("email", res.data.firstname);
+            } catch (ex: any) {
+                handleLoginError(ex);
+            }
+        } else {
+            handleLoginError('');
         }
     }
-}
 
-export default function SignIn() {
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleClickSignUpOpen = () => {
+        setSignUpDialogOpen(true);
     };
-    const handleClose = () => {
-        setOpen(false);
+    const handleSignUpClose = () => {
+        setSignUpDialogOpen(false);
     };
-    const handleCreateAcc = () => {
-        console.log('Create User: ')
-        handleClose()
-    }
+    const handleCreateAcc = (event: any) => {
+        event.preventDefault();
 
-    const handleSubmit = (event: any) => {
+        try {
+            const data = new FormData(event.currentTarget);
+
+            let newUserMail = data.get('newUserMail');
+            let newUserPassword = data.get('newUserPassword');
+            let newUserFirstName = data.get('newUserFirstname');
+            let newUserLastName = data.get('newUserLastname');
+
+            if (newUserMail !== ''
+                && newUserPassword !== ''
+                && newUserFirstName !== ''
+                && newUserLastName !== '') {
+                const options: AxiosRequestConfig = {
+                    url: "http://localhost:3001/api/customers/",
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        email: newUserMail,
+                        password: newUserPassword,
+                        firstname: newUserFirstName,
+                        lastname: newUserLastName
+                    }
+                }
+                console.log(options.data);
+                axios(options)
+                    .then(res => {
+                        console.log('Create User: ');
+                        console.log(res.data);
+                    })
+                    .catch();
+
+                handleSignUpClose()
+            }
+
+        } catch (ex: any) {
+
+        }
+    };
+    const handleSignIn = (event: any) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         let email = data.get('email');
         let password = data.get('password');
         if (email !== "" && password !== "") {
-            fetch("http://localhost:3001/api/customers/" + email, {
+            const options: AxiosRequestConfig = {
+                url: "http://localhost:3001/api/customers/" + email,
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({password: password})
-            })
-                .then(res => throwLoginErrorIfGiven(res))
+                data: {password: password}
+            }
+            axios(options)
+                .then(res => processLogin(res))
+                .catch(ex => handleLoginError(ex))
         } else {
             handleLoginError("");
         }
@@ -94,8 +145,31 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <Alert severity="error" style=>Wrong Login data. Following error occured: {errorMsg}</Alert>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+
+                <div id={"logInErrorAlert"}>
+                    {logInErrorAlert ? <Alert
+                        severity='error'
+                        onClick={() => {
+                            setLogInErrorAlert(false);
+                            setLoginErrorAlertMsg('');
+                            return null;
+                        }}
+                    >{loginErrorAlertMsg}
+                    </Alert> : <></>}
+                </div>
+                <div id={"userCreationAlert"}>
+                    {userCreationAlert ? <Alert
+                        severity='success'
+                        onClick={() => {
+                            setUserCreationAlert(false);
+                            setUserCreationAlertMsg('');
+                            return null;
+                        }}
+                    >{userCreationAlertMsg}
+                    </Alert> : <></>}
+                </div>
+
+                <Box component="form" onSubmit={handleSignIn} noValidate sx={{mt: 1}}>
                     <TextField
                         margin="normal"
                         required
@@ -120,45 +194,69 @@ export default function SignIn() {
                         Sign In
                     </Button>
                 </Box>
-                <Button fullWidth variant="contained" onClick={handleClickOpen}>
+                <Button fullWidth variant="contained" onClick={handleClickSignUpOpen}>
                     Sign Up
                 </Button>
             </Box>
 
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={signUpDialogOpen} onClose={handleSignUpClose}>
                 <DialogTitle>Sign Up</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        To create a new Account to start your upcoming Project with HomeBuilders, please fill out the
-                        following fields and click on 'create Account'
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        required
-                        margin="dense"
-                        id="name"
-                        label="Email Address"
-                        type="email"
-                        fullWidth
-                        variant="standard"
-                        autoComplete="email"
-                    />
-                    <TextField
-                        autoFocus
-                        required
-                        margin="dense"
-                        id="password"
-                        label="Password"
-                        type="password"
-                        fullWidth
-                        variant="standard"
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleCreateAcc}>Create Account</Button>
-                </DialogActions>
+                <Box component="form" onSubmit={handleCreateAcc} noValidate sx={{mt: 1}}>
+                    <DialogContent>
+                        <DialogContentText>
+                            To create a new Account to start your upcoming Project with HomeBuilders, please fill out
+                            the
+                            following fields and click on 'create Account'
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            name="newUserMail"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                            autoComplete="email"
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            name="newUserPassword"
+                            label="Password"
+                            type="password"
+                            fullWidth
+                            variant="standard"
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            name="newUserFirstname"
+                            label="Firstname"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            name="newUserLastname"
+                            label="Lastname"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleSignUpClose}>Cancel</Button>
+                        <Button type="submit">Create Account</Button>
+                    </DialogActions>
+                </Box>
             </Dialog>
+
             <Copyright sx={{mt: 4, mb: 4}}/>
         </Container>
     );

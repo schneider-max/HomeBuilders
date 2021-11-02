@@ -11,7 +11,7 @@ import ProjectComponent from './ProjectPage/ProjectOverview';
 
 function Footer() {
   return(
-    <div style={{bottom: "0px", height: "40px", backgroundColor: "gray"}}></div>
+    <div style={{bottom: "0px", height: "40px", backgroundColor: "gray"}}/>
   );
 }
 
@@ -56,10 +56,10 @@ function NavBar() {
         <Tab label="Logout" />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <ProjectComponent></ProjectComponent>
+        <ProjectComponent/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <History></History>
+        <History/>
       </TabPanel>
       <TabPanel value={value} index={2}>
         Item Three

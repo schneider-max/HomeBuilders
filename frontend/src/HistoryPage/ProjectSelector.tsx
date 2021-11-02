@@ -24,10 +24,10 @@ function SelectAutoWidth() {
           autoWidth
           label="Projekt"
         >
-          <MenuItem value="" sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}><em>None</em></MenuItem>
-          <MenuItem value={10} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Twenty</MenuItem>
-          <MenuItem value={21} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Twenty one</MenuItem>
-          <MenuItem value={22} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Twenty one and a half</MenuItem>
+          <MenuItem value="" sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Alle</MenuItem>
+          <MenuItem value={10} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Haus 1</MenuItem>
+          <MenuItem value={21} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Baumhaus 1</MenuItem>
+          <MenuItem value={22} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Höhle 1</MenuItem>
         </Select>
       </FormControl>
     </div>

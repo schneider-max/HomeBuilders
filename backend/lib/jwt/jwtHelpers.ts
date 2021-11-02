@@ -15,4 +15,4 @@ export type DecodeResult =
     type: "invalid-token";
 };
 
-export type ExpirationStatus = "expired" | "active" | "grace";
+export enum ExpirationStatus { "expired" , "active" , "grace"}

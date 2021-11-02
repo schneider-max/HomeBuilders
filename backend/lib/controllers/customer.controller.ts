@@ -1,5 +1,5 @@
 import {Controller, Delete, Get, Middleware, Post, Put} from '@overnightjs/core';
-import {Request, Response} from 'express';
+import {json, Request, Response} from 'express';
 import {logger} from '../middleware/logger.mw';
 import {Md5} from 'ts-md5';
 import {getRepository} from 'typeorm';
@@ -7,8 +7,9 @@ import {getRepository} from 'typeorm';
 import {Customer} from '../db/entities/entity.customer';
 import {BaseController} from './base.controller';
 import {authMw} from "../middleware/auth.mw";
-import {encodeSession} from "../jwt/jwtFunctions";
+import {checkExpirationStatus, decodeSession, encodeSession} from "../jwt/jwtFunctions";
 import {JWT_TOKEN} from "../jwt/tokens";
+import {Session} from "../jwt/jwtInterfaces";
 
 @Controller('api/customers')
 export class CustomerController extends BaseController {
@@ -17,6 +18,20 @@ export class CustomerController extends BaseController {
     public async get(req: Request, res: Response): Promise<any> {
         const customers = await getRepository(Customer).find();
         return res.status(this.Ok).json(customers);
+    }
+
+    @Get('validate')
+    @Middleware([logger, authMw])
+    public async getValidateToken(req: Request, res: Response): Promise<any> {
+        let tokenString = req.header("X-JWT-Token");
+        if(tokenString != null){
+            let decodedSessionJsn = JSON.stringify(decodeSession(JWT_TOKEN, tokenString));
+            checkExpirationStatus(JSON.parse(decodedSessionJsn).session);
+
+            return res.status(this.Ok).json("Token is valid!");
+        }else {
+            return res.status(this.Unauthorized).json("Token is invalid!");
+        }
     }
 
     @Get(':email/:password/projects')

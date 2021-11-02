@@ -3,7 +3,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { margin } from '@mui/system';
 
 function SelectAutoWidth() {
   const [project, setProject] = React.useState('');

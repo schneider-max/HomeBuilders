@@ -11,9 +11,11 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LinearWithValueLabel from './Progressbar';
+import ModalRequest from "./ModalRequest"
 
 import CSS from 'csstype';
 
+//styles header of the sector page
 const SectorHeaderStyle: CSS.Properties = {
   backgroundColor: 'white',
   marginTop:"16px",
@@ -25,6 +27,7 @@ const SectorHeaderStyle: CSS.Properties = {
 
 };
 
+//function that defines the suppliers card
 function ActionAreaCard(props: any) {
   return (
     <Card sx={{width: "100%"}}>
@@ -34,12 +37,10 @@ function ActionAreaCard(props: any) {
               {props.companyName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-              <div style={{textAlign: 'left'}}>[Platzhalter Icon Dienstleister]</div>              
+              <div style={{textAlign: 'left'}}>[Platzhalter IMG Dienstleister]</div>              
           </Typography>
           <br></br>
-          <Typography variant="body2" color="text.secondary">
-          <div style={{textAlign: 'end'}}>[Platzhalter Button "Anfrage senden"]</div>
-          </Typography>
+            <ModalRequest />
         </CardContent>
       </CardActionArea>
     </Card>
@@ -53,8 +54,9 @@ export default function ControlledAccordions() {
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
-    // sx={{backgroundcolor: "white", margintop: "10px", width: "auto"}}
+    
   return (
+    // list of Sectors in the Project
     <div>
       <div style={SectorHeaderStyle}>
       <Grid container spacing={2} >

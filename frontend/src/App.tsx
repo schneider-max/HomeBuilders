@@ -7,6 +7,7 @@ import ProjectList from './MainPage';
 import Logo from './img/HomeBuilder_Logo_4c.png';
 import Image from './img/concrete_bg.jpg';
 import ControlledAccordions from './ProjectSector';
+import { Login } from '@mui/icons-material';
 
 function Footer() {
   return(
@@ -46,6 +47,8 @@ function App() {
         </React.StrictMode>  
         <React.StrictMode>
           <ControlledAccordions />
+          {/* <ProjectList /> */}
+        
         </React.StrictMode> 
       </Box>
       <Box>

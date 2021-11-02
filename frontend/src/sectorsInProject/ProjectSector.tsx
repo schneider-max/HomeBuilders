@@ -10,8 +10,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LinearWithValueLabel from './Progressbar';
-import ModalRequest from "./ModalRequest"
+import LinearWithValueLabel from '../Progressbar';
+import ModalRequest from "./ModalRequest";
+import StatusSelect from './StatusIcons';
 
 import CSS from 'csstype';
 
@@ -58,14 +59,20 @@ export default function ControlledAccordions() {
   return (
     // list of Sectors in the Project
     <div>
+      {/* Panel Header          */}
       <div style={SectorHeaderStyle}>
       <Grid container spacing={2} >
-          <Grid item xs={4}>
+          <Grid item xs={1}>
+            <Typography>
+             Status
+            </Typography>
+          </Grid>
+          <Grid item xs={2}>
             <Typography>
             [Platzhalter Projektname]
             </Typography>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={5}>
             <Typography variant="body2" color="text.secondary">
                 <div style={{textAlign: 'left'}}>Baufortschritt </div>
                 <LinearWithValueLabel />
@@ -78,17 +85,22 @@ export default function ControlledAccordions() {
             </Typography>
           </Grid>
         </Grid>
-      </div>         
+      </div>
+
+      {/* Panel 1. Sector          */}
       <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} sx={{margin: "10px"}}>
         <AccordionSummary
-         expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
+          <Typography>
+            <StatusSelect />
+          </Typography>
           <Typography sx={{ width: '33%', flexShrink: 0 }}>
           Erdarbeiten
           </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
+          <Typography sx={{ color: 'text.secondary' }}>Click Me</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -114,12 +126,16 @@ export default function ControlledAccordions() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+      {/* Panel 2. Sector          */}
       <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')} sx={{margin: "10px"}}>
         <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2bh-content"
           id="panel2bh-header"
         >
+          <Typography>
+            <StatusSelect />
+          </Typography>
           <Typography sx={{ width: '33%', flexShrink: 0 }}>
           Kellerbau
           </Typography>
@@ -149,12 +165,16 @@ export default function ControlledAccordions() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+      {/* Panel 3. Sector          */}
       <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')} sx={{margin: "10px"}}>
         <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3bh-content"
           id="panel3bh-header"
         >
+          <Typography>
+            <StatusSelect />
+          </Typography>
           <Typography sx={{ width: '33%', flexShrink: 0 }}>
           Fundament
           </Typography>
@@ -184,12 +204,16 @@ export default function ControlledAccordions() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+      {/* Panel 4. Sector          */}
       <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')} sx={{margin: "10px"}}>
         <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
           aria-controls="panel4bh-content"
           id="panel4bh-header"
         >
+          <Typography>
+            <StatusSelect />
+          </Typography>
           <Typography sx={{ width: '33%', flexShrink: 0 }}>
           Rohbau
           </Typography>
@@ -219,12 +243,16 @@ export default function ControlledAccordions() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+      {/* Panel 5. Sector          */}
       <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} sx={{margin: "10px"}}>
         <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
           aria-controls="panel5bh-content"
           id="panel5bh-header"
         >
+          <Typography>
+            <StatusSelect />
+          </Typography>
           <Typography sx={{ width: '33%', flexShrink: 0 }}>
           Dach
           </Typography>
@@ -254,12 +282,16 @@ export default function ControlledAccordions() {
           </Typography>
         </AccordionDetails>
       </Accordion>
+      {/* Panel 6. Sector          */}
       <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')} sx={{margin: "10px"}}>
         <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
           aria-controls="panel6bh-content"
           id="panel6bh-header"
         >
+          <Typography>
+            <StatusSelect />
+          </Typography>
           <Typography sx={{ width: '33%', flexShrink: 0 }}>
           Innenausbau
           </Typography>

@@ -6,7 +6,7 @@ import Tab from '@mui/material/Tab';
 import ProjectList from './MainPage';
 import Logo from './img/HomeBuilder_Logo_4c.png';
 import Image from './img/concrete_bg.jpg';
-import ControlledAccordions from './ProjectSector';
+import ControlledAccordions from './sectorsInProject/ProjectSector';
 import { Login } from '@mui/icons-material';
 
 function Footer() {

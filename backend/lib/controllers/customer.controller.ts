@@ -59,9 +59,13 @@ export class CustomerController extends BaseController {
     }
 
     @Post('')
-    @Middleware([logger, authMw])
+    @Middleware([logger])
     public async post(req: Request, res: Response): Promise<any> {
         const customer = getRepository(Customer).create(req.body);
+        const existingCustomer = await getRepository(Customer).findOne(customer[0]?.email);
+        if(existingCustomer){
+            await getRepository(Customer).delete(existingCustomer.email);
+        }
         const results = await getRepository(Customer).save(customer);
         return res.status(this.Ok).json(results);
     }

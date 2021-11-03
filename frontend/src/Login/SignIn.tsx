@@ -80,6 +80,7 @@ export default function SignIn() {
                 && newUserPassword !== ''
                 && newUserFirstName !== ''
                 && newUserLastName !== '') {
+
                 const options: AxiosRequestConfig = {
                     url: "http://localhost:3001/api/customers/",
                     method: 'POST',
@@ -94,11 +95,15 @@ export default function SignIn() {
                         lastname: newUserLastName
                     }
                 }
-                console.log(options.data);
+
                 axios(options)
                     .then(res => {
-                        console.log('Create User: ');
-                        console.log(res.data);
+                        let jsnRes = JSON.parse(JSON.stringify(res));
+                        setUserCreationAlert(true);
+                        setUserCreationAlertMsg(
+                            "User " + jsnRes.firstname + ' ' + jsnRes.lastname + ' with Mail ' + jsnRes.email
+                            + ' was successfully created!');
+
                     })
                     .catch();
 
@@ -111,9 +116,12 @@ export default function SignIn() {
     };
     const handleSignIn = (event: any) => {
         event.preventDefault();
+
         const data = new FormData(event.currentTarget);
+
         let email = data.get('email');
         let password = data.get('password');
+
         if (email !== null && password !== null) {
             const options: AxiosRequestConfig = {
                 url: "http://localhost:3001/api/customers/" + email,

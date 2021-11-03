@@ -4,9 +4,6 @@ import LinearWithValueLabel from "../Progressbar";
 
 export default class ProjectCard extends Component<any> {
 
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

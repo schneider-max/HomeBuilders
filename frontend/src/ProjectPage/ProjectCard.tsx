@@ -4,7 +4,6 @@ import LinearWithValueLabel from "../Progressbar";
 
 export default class ProjectCard extends Component<any> {
 
-
   render() {
     return (
       <Card sx={{ width: "100%" }}>

@@ -1,5 +1,6 @@
 import { Box, Button, Grid } from "@mui/material";
 import React from "react";
+import { getAxioxInstance } from "../shared/axios";
 import CreateProjectButton from "./CreateProjectModal";
 import ProjectCard from "./ProjectCard";
 
@@ -11,11 +12,9 @@ export default class ProjectComponent extends React.Component {
 
     // set state in this method to trigger re-render on request completion
     componentDidMount() {
-        const axios = require("axios").create({
-            baseURL: 'http://localhost:3001'
-        });
+        const axios = getAxioxInstance();
 
-        axios.get("/api/projects/TestUser@hotmail.com")
+        axios.get("/api/projects/" + sessionStorage.getItem("email"))
             .then(res => {
                 const projects = res.data;
                 this.setState({ projects });

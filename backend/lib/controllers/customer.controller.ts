@@ -24,12 +24,12 @@ export class CustomerController extends BaseController {
     @Middleware([logger, authMw])
     public async getValidateToken(req: Request, res: Response): Promise<any> {
         let tokenString = req.header("X-JWT-Token");
-        if(tokenString != null){
+        if (tokenString != null) {
             let decodedSessionJsn = JSON.stringify(decodeSession(JWT_TOKEN, tokenString));
             checkExpirationStatus(JSON.parse(decodedSessionJsn).session);
 
             return res.status(this.Ok).json("Token is valid!");
-        }else {
+        } else {
             return res.status(this.Unauthorized).json("Token is invalid!");
         }
     }
@@ -53,20 +53,20 @@ export class CustomerController extends BaseController {
         const customer = await getRepository(Customer).findOne(req.params.email.toLowerCase());
         if (customer?.password === Md5.hashStr(req.body.password))
             return res.status(this.Ok).json(
-            encodeSession(JWT_TOKEN, {id: customer.email, dateCreated: Date.now(), username: customer.firstname})
-        );
+                encodeSession(JWT_TOKEN, {id: customer.email, dateCreated: Date.now(), username: customer.firstname})
+            );
         else return res.status(this.Unauthorized).json(null);
     }
 
     @Post('')
     @Middleware([logger])
     public async post(req: Request, res: Response): Promise<any> {
-        const customer = getRepository(Customer).create(req.body);
-        const existingCustomer = await getRepository(Customer).findOne(customer[0]?.email);
-        if(existingCustomer){
+        const customers = getRepository(Customer).create(req.body);
+        const existingCustomer = await getRepository(Customer).findOne(req.body.email.toLowerCase());
+        if (existingCustomer) {
             await getRepository(Customer).delete(existingCustomer.email);
         }
-        const results = await getRepository(Customer).save(customer);
+        const results = await getRepository(Customer).save(customers);
         return res.status(this.Ok).json(results);
     }
 

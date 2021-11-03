@@ -6,12 +6,20 @@ import { getRepository } from 'typeorm';
 import { Project } from '../db/entities/entity.project';
 import { BaseController } from './base.controller';
 import {authMw} from "../middleware/auth.mw";
+import { Sector } from '../db/entities/entity.sector';
 
 @Controller('api/sectors')
 export class SectorController extends BaseController {
-    @Get(':projectId')
+    @Get('')
     @Middleware([logger, authMw])
     public async get(req: Request, res: Response): Promise<any> {
+        const sectors = await getRepository(Sector).find();
+        return res.status(this.Ok).json(sectors);
+    }
+    
+    @Get(':projectId')
+    @Middleware([logger, authMw])
+    public async getSectorOfProject(req: Request, res: Response): Promise<any> {
         const projectId = req.params.projectId;
         const sectors = await getRepository(Project)
             .createQueryBuilder('project')

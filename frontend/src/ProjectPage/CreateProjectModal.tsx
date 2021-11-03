@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { FormControl, Input, InputLabel } from '@mui/material';
+import { Checkbox, FormControl, FormControlLabel, FormGroup, Input, InputLabel } from '@mui/material';
 import { getAxioxInstance } from '../shared/axios';
 
 const style = {
@@ -20,9 +20,18 @@ const style = {
 
 export default function CreateProjectButton() {
     const [open, setOpen] = React.useState(false);
+    const [sectors, setSectors] = React.useState([]);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    React.useEffect(() => {
+        const axios = getAxioxInstance();
+
+        axios.get('/api/sectors').then(res => {
+            setSectors(res.data);
+        });
+    }, [])
 
     return (
         <Box>
@@ -49,6 +58,15 @@ export default function CreateProjectButton() {
                             <InputLabel htmlFor="budget-input">Budget</InputLabel>
                             <Input id="budget-input" name="budget"/>
                         </FormControl>
+                        <h3>Sektoren</h3>
+                        <FormGroup>
+                            {sectors.map((sector: any) => {
+                                const name = "sector_" + sector.id
+                                return (
+                                    <FormControlLabel value={sector.id} name={name} label={sector.name} key={sector.id} control={<Checkbox defaultChecked color="success"/>}/>
+                                )
+                            })}    
+                        </FormGroup>
                         <Button sx={{ m: 1 }} type="submit">Erstellen</Button>
                     </Box>
                 </Typography>
@@ -58,6 +76,14 @@ export default function CreateProjectButton() {
     );
 
     function handleSubmit(form: FormData) {
+
+        let sectors: string[] = [];
+        form.forEach(function(value, key){
+            if (key.startsWith("sector")) {
+                sectors.push(value.toString())
+            }
+        });
+
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
@@ -69,8 +95,10 @@ export default function CreateProjectButton() {
                 name: form.get("name"),
                 budget: form.get("budget"),
                 creationDate: date,
-            }}).then(res => {
-                window.location.reload();
+            },
+            sectors: sectors
+        }).then(res => {
+            window.location.reload();
         });      
     }
 }

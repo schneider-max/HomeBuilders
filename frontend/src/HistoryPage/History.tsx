@@ -1,15 +1,12 @@
 import DataGrid from './DataTable';
 import Box from '@mui/material/Box';
-import SelectProject from './ProjectSelector';
-import PhaseDetail from './Details';
-
+// import SelectProject from './ProjectSelector';
 
 function History() {
     return(
         <Box sx={{padding: '15px', height: '600px'}}>
-            <SelectProject />
+            {/* <SelectProject /> */}
             <DataGrid />
-            <PhaseDetail />
         </Box>
     )        
 }

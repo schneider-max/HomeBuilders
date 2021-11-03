@@ -73,7 +73,7 @@ function NavBar() {
 
 function App() {
   return (
-    <div className="App" style={{backgroundImage: `url(${Image})`, height: "100%"}}>
+    <div className="App" style={{backgroundImage: `url(${Image})`, height: "100vh"}}>
       <Box sx={{top: '0px', fontSize: '30px', height: '100px', padding: '15px'}} className="titleName">
         <img src={Logo} style= {{width: "300px"}} alt={"Logo"}/>
       </Box>

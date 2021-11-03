@@ -1,5 +1,6 @@
 import { Box, Button, Grid } from "@mui/material";
 import React from "react";
+import CreateProjectButton from "./CreateProjectModal";
 import ProjectCard from "./ProjectCard";
 
 export default class ProjectComponent extends React.Component {
@@ -33,10 +34,15 @@ export default class ProjectComponent extends React.Component {
                         )
                     })}
                     <Grid item xs={12} style={{ marginTop: "15px", padding: "15px", height: "100px" }}>
-                        <Button style={{ backgroundColor: "white", width: "20%", height: "100%", color: 'black' }}>Neues Projekt</Button>
+                        <CreateProjectButton></CreateProjectButton>
                     </Grid>
                 </Grid>
             </Box>
         )
     }
+
+    private createProject() {
+
+    }
+
 }

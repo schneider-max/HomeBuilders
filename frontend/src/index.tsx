@@ -41,10 +41,9 @@ const PrivateRoute = ({component: Component, ...rest}) => {
 
     if (!isTokenValidated) return <div/>; // or some kind of loading animation
 
-    return (<Route {...rest}
-                   render={(props) => {
-                       return auth ? <Component {...props} /> : <Redirect to="/home"/>
-                   }}/>)
+    return (<Route {...rest} render={(props) => {
+                return auth ? <Component {...props} /> : <Redirect to="/"/>
+            }}/>)
 }
 
 const Entry = () => {

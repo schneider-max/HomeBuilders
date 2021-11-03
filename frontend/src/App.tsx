@@ -79,8 +79,6 @@ function App() {
         <React.StrictMode>
           <NavBar/>
         </React.StrictMode>  
-        <React.StrictMode>      
-        </React.StrictMode> 
       </Box>
       <Box>
         <Footer />

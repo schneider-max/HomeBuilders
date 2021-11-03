@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import React from "react";
 import { getAxioxInstance } from "../shared/axios";
 import CreateProjectButton from "./CreateProjectModal";
@@ -14,11 +14,11 @@ export default class ProjectComponent extends React.Component {
     componentDidMount() {
         const axios = getAxioxInstance();
 
-        axios.get("/api/projects/" + sessionStorage.getItem("email"))
+        axios.get("/api/requests/" + sessionStorage.getItem("email"))
             .then(res => {
                 const projects = res.data;
                 this.setState({ projects });
-            })
+            });
     }
 
     render() {

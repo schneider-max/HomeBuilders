@@ -32,7 +32,7 @@ export default function CreateProjectButton() {
             setSectors(res.data);
         });
     }, [])
-
+    
     return (
         <Box>
             <Button onClick={handleOpen}>Create new project</Button>
@@ -41,7 +41,7 @@ export default function CreateProjectButton() {
                 onClose={handleClose}
             >
                 <Box sx={style}>
-                <Typography variant="h6" component="h2">
+                <Typography variant="h6" component={'span'}>
                     Create new project
                 </Typography>
                 <Typography component={"span"} sx={{ mt: 2 }}>

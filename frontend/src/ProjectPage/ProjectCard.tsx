@@ -13,6 +13,7 @@ export default class ProjectCard extends Component<any> {
   state = {
     redirect: false
   };
+
   setRedirect = () => {
     this.setState({
       redirect: true
@@ -22,17 +23,15 @@ export default class ProjectCard extends Component<any> {
     if (this.state.redirect) {
       return <Redirect to='/sectors'/>
     }
-  }  
-
-
+  }
 
   render() {
     return (
       <Card sx={{ width: "100%" }}>
-              {this.renderRedirect()}
+        {this.renderRedirect()}
        <CardActionArea onClick={this.setRedirect}>
           <CardContent sx={{ height: "200px" }}>
-            <Typography gutterBottom variant="h5" component="div">
+            <Typography variant="h5" component={'span'}>
               {this.props.name}
             </Typography>
             <Typography component={"span"} variant="body2" color="text.secondary">

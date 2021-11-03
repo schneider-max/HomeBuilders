@@ -38,7 +38,7 @@ export function authMw(request: Request, response: Response, next: NextFunction)
         return;
     }
 
-    let session: Session;
+     let session: Session;
 
     if (expiration === ExpirationStatus.grace) {
         // Automatically renew the session and send it back with the response

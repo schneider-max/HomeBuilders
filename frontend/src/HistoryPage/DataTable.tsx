@@ -1,7 +1,10 @@
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import React from 'react';
+import PhaseDetail from './Details';
+// import ChangeProject from './ChangeProjects';
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'Id', flex: 0.5},
+  { field: 'id', headerName: 'Id', flex: 0.5, },
   { field: 'project', headerName: 'Projekt', flex: 1},
   { field: 'phase', headerName: 'Phase', flex: 1},
   { field: 'status', headerName: 'Status',flex: 1},
@@ -19,22 +22,54 @@ const columns: GridColDef[] = [
   },
 ];
 
-const rows = [
-  { id: 1, project: 'Haus1', phase: 'Fundament', status: 'in Arbeit', cost: 15000, date: "2017-05-24"},
-  { id: 2, project: 'Haus1', phase: 'Baggern', status: 'Fertig/Erledigt', cost: 10000, date: "2017-01-24"},
-];
-
-function DataTable() {
-  return (
-    <div style={{ height: 500, width: '100%' }}>
-      <DataGrid 
-        rows={rows}
-        columns={columns}
-        pageSize={8}
-        rowsPerPageOptions={[8]}
-        style={{margin: "8px"}}    />
-    </div>
-  );
+function rowClicked(props: any){
+  console.log(props.row.phase);
+  <PhaseDetail />
 }
 
-export default DataTable;
+export default class DataTable extends React.Component { 
+  state = {
+    projects: []
+  };
+
+// set state in this method to trigger re-render on request completion
+  componentDidMount() {
+      const axios = require("axios").create({
+          baseURL: 'http://localhost:3001'
+      });
+
+      axios.get("/api/requests/TestUser@hotmail.com")
+          .then((res : any) => {
+              const projects = res.data;
+              this.setState( {projects} );
+          }) 
+  }
+
+  render() {
+    return (
+      <div style={{ height: 450, width: '100%' }}>
+        <DataGrid 
+          rows={getValues(this.state.projects)}
+          columns={columns}
+          pageSize={8}
+          rowsPerPageOptions={[8]}
+          style={{margin: "8px", backgroundColor: "gray"}}   
+          onRowClick={rowClicked} 
+        />
+      </div>
+    );
+  }
+}
+
+
+function getValues(projects: any){
+  const values : any = [];
+  projects.forEach(project => {
+    project.requests.forEach(request => {
+      values.push({id : request.id, project: project.name, phase: request.sectors.name, status: request.status, cost: request.budget, date: request.creationDate});
+    });
+  });
+
+  return values;
+}
+

@@ -1,15 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, JoinColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { Project } from './entity.project';
 import { Sector } from './entity.sector';
 import { Supplier } from './entity.supplier';
+
+enum RequestStatus {
+    canceled = "c",
+    pending = "p",
+    accepted = "a"
+}
 
 @Entity()
 export class Request {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Column()
-    accepted: boolean;
 
     @Column({
         type: 'datetime'
@@ -32,11 +35,25 @@ export class Request {
     @Column({
         type: 'decimal',
         precision: 10,
-        scale: 0,
+        scale: 2,
         nullable: true,
         default: null
     })
-    price: number;
+    budget: number;
+
+    @Column({
+        type: 'nvarchar',
+        length: 255,
+        charset: 'utf8'
+    })
+    email: string;
+
+    @Column({
+        type: 'enum',
+        enum: RequestStatus,
+        default: RequestStatus.pending
+    })
+    status: RequestStatus;
 
     @ManyToOne(type => Project, project => project.requests, {
         nullable: false,
@@ -58,4 +75,12 @@ export class Request {
         onDelete: 'CASCADE'
     })
     suppliers: Supplier;
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    emailToLower() {
+        if (this.email) {
+            this.email = this.email.toLowerCase();
+        }
+    }
 }

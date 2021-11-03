@@ -8,8 +8,6 @@ import History from './HistoryPage/History';
 import SignOut from "./Login/SignOut";
 import ProjectComponent from './ProjectPage/ProjectOverview';
 import Image from './img/concrete_bg.jpg';
-import ControlledAccordions from './SectorPage/ProjectSector';
-import { Login } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 
 function Footer() {

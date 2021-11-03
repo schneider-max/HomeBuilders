@@ -5,7 +5,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from "../img/HomeBuilder_Logo_4c.png";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {useHistory} from "react-router-dom";
+import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 function Copyright(props: any) {
     return (
@@ -18,51 +20,129 @@ function Copyright(props: any) {
     );
 }
 
-function throwLoginErrorIfGiven(response: Response) {
-    if (response.status !== 200) {
-        throw new Error(response.statusText)
-    }
-    handleLogin("",response.status)
-    return response;
-}
-
-function handleLoginError(errorMsg:string) {
-    console.log(errorMsg !== "" ? errorMsg : "Login faild!");
-}
-
-function handleLogin(errorMsg: string, statuscode: number) {
-    if (errorMsg !== "" && statuscode !== 200) {
-        handleLoginError(errorMsg);
-    }
-    if(statuscode === 200){
-        console.log("login successfull");
-    }
-}
-
 export default function SignIn() {
-    const [open, setOpen] = React.useState(false);
+    let history = useHistory();
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleCreateAcc = () => {
-        console.log('Create User: ')
-        handleClose()
+    const homepagePath = '/home';
+
+    const [signUpDialogOpen, setSignUpDialogOpen] = React.useState(false);
+    const [userCreationAlert, setUserCreationAlert] = React.useState(false);
+    const [userCreationAlertMsg, setUserCreationAlertMsg] = React.useState('');
+    const [logInErrorAlert, setLogInErrorAlert] = React.useState(false);
+    const [loginErrorAlertMsg, setLoginErrorAlertMsg] = React.useState('');
+
+    function handleLoginError(errorMsg: any) {
+        if (errorMsg !== null && errorMsg.toString().includes("401")) {
+            setLoginErrorAlertMsg("Login failed - Bad Credentials");
+        } else {
+            setLoginErrorAlertMsg("Login failed! Please try again or create a new Account.")
+        }
+        setLogInErrorAlert(true);
     }
 
-    const handleSubmit = (event: any) => {
+    function processLogin(res: AxiosResponse) {
+        setLoginErrorAlertMsg('');
+
+        setLogInErrorAlert(false);
+        setUserCreationAlertMsg('');
+
+        setUserCreationAlert(false);
+        if (res.status === 200 && res.data != null) {
+            try {
+                sessionStorage.setItem("token", res.data.token);
+                history.push(homepagePath);
+            } catch (ex: any) {
+                handleLoginError(ex);
+            }
+        } else {
+            handleLoginError('');
+        }
+    }
+
+    const handleClickSignUpOpen = () => {
+        setSignUpDialogOpen(true);
+    };
+    const handleSignUpClose = () => {
+        setSignUpDialogOpen(false);
+    };
+    const handleCreateAcc = (event: any) => {
         event.preventDefault();
+
+        try {
+            const data = new FormData(event.currentTarget);
+
+            let newUserMail = data.get('newUserMail');
+            let newUserPassword = data.get('newUserPassword');
+            let newUserFirstName = data.get('newUserFirstname');
+            let newUserLastName = data.get('newUserLastname');
+
+            if (newUserMail !== ''
+                && newUserPassword !== ''
+                && newUserFirstName !== ''
+                && newUserLastName !== '') {
+
+                const options: AxiosRequestConfig = {
+                    url: "http://localhost:3001/api/customers/",
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        email: newUserMail,
+                        password: newUserPassword,
+                        firstname: newUserFirstName,
+                        lastname: newUserLastName
+                    }
+                }
+
+                axios(options)
+                    .then(res => {
+                        let jsnRes = JSON.parse(JSON.stringify(res));
+                        setUserCreationAlert(true);
+                        setUserCreationAlertMsg(
+                            "User " + jsnRes.firstname + ' ' + jsnRes.lastname + ' with Mail ' + jsnRes.email
+                            + ' was successfully created!');
+
+                    })
+                    .catch();
+
+                handleSignUpClose()
+            }
+
+        } catch (ex: any) {
+
+        }
+    };
+    const handleSignIn = (event: any) => {
+        event.preventDefault();
+
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
+
         let email = data.get('email');
         let password = data.get('password');
-        if (email !== "" && password !== "") {
-            fetch("http://localhost:3001/api/customers/" + email + "/" + password)
-                .then(throwLoginErrorIfGiven)
-                .catch(err => handleLogin(err, 0));
+
+        if (email !== null && password !== null) {
+            const options: AxiosRequestConfig = {
+                url: "http://localhost:3001/api/customers/" + email,
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                data: {password: password}
+            }
+            axios(options)
+                .then(res => {
+                    processLogin(res);
+                    if (typeof email === "string") {
+                        sessionStorage.setItem("email", email);
+                    }
+                })
+                .catch(ex => {
+                    handleLoginError(ex);
+                    sessionStorage.removeItem("email");
+                })
         } else {
             handleLoginError("");
         }
@@ -85,7 +165,31 @@ export default function SignIn() {
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
+
+                <div id={"logInErrorAlert"}>
+                    {logInErrorAlert ? <Alert
+                        severity='error'
+                        onClick={() => {
+                            setLogInErrorAlert(false);
+                            setLoginErrorAlertMsg('');
+                            return null;
+                        }}
+                    >{loginErrorAlertMsg}
+                    </Alert> : <></>}
+                </div>
+                <div id={"userCreationAlert"}>
+                    {userCreationAlert ? <Alert
+                        severity='success'
+                        onClick={() => {
+                            setUserCreationAlert(false);
+                            setUserCreationAlertMsg('');
+                            return null;
+                        }}
+                    >{userCreationAlertMsg}
+                    </Alert> : <></>}
+                </div>
+
+                <Box component="form" onSubmit={handleSignIn} noValidate sx={{mt: 1}}>
                     <TextField
                         margin="normal"
                         required
@@ -110,45 +214,69 @@ export default function SignIn() {
                         Sign In
                     </Button>
                 </Box>
-                <Button fullWidth variant="contained" onClick={handleClickOpen}>
+                <Button fullWidth variant="contained" onClick={handleClickSignUpOpen}>
                     Sign Up
                 </Button>
             </Box>
 
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={signUpDialogOpen} onClose={handleSignUpClose}>
                 <DialogTitle>Sign Up</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        To create a new Account to start your upcoming Project with HomeBuilders, please fill out the
-                        following fields and click on 'create Account'
-                    </DialogContentText>
-                    <TextField
-                        autoFocus
-                        required
-                        margin="dense"
-                        id="name"
-                        label="Email Address"
-                        type="email"
-                        fullWidth
-                        variant="standard"
-                        autoComplete="email"
-                    />
-                    <TextField
-                        autoFocus
-                        required
-                        margin="dense"
-                        id="password"
-                        label="Password"
-                        type="password"
-                        fullWidth
-                        variant="standard"
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleCreateAcc}>Create Account</Button>
-                </DialogActions>
+                <Box component="form" onSubmit={handleCreateAcc} noValidate sx={{mt: 1}}>
+                    <DialogContent>
+                        <DialogContentText>
+                            To create a new Account to start your upcoming Project with HomeBuilders, please fill out
+                            the
+                            following fields and click on 'create Account'
+                        </DialogContentText>
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            name="newUserMail"
+                            label="Email Address"
+                            type="email"
+                            fullWidth
+                            variant="standard"
+                            autoComplete="email"
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            name="newUserPassword"
+                            label="Password"
+                            type="password"
+                            fullWidth
+                            variant="standard"
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            name="newUserFirstname"
+                            label="Firstname"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                        />
+                        <TextField
+                            autoFocus
+                            required
+                            margin="dense"
+                            name="newUserLastname"
+                            label="Lastname"
+                            type="text"
+                            fullWidth
+                            variant="standard"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleSignUpClose}>Cancel</Button>
+                        <Button type="submit">Create Account</Button>
+                    </DialogActions>
+                </Box>
             </Dialog>
+
             <Copyright sx={{mt: 4, mb: 4}}/>
         </Container>
     );

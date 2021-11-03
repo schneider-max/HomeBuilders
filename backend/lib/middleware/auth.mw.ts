@@ -33,14 +33,14 @@ export function authMw(request: Request, response: Response, next: NextFunction)
 
     const expiration: ExpirationStatus = checkExpirationStatus(decodedSession.session);
 
-    if (expiration === "expired") {
+    if (expiration === ExpirationStatus.expired) {
         unauthorized(`Authorization token has expired. Please create a new authorization token.`);
         return;
     }
 
     let session: Session;
 
-    if (expiration === "grace") {
+    if (expiration === ExpirationStatus.grace) {
         // Automatically renew the session and send it back with the response
         const {token, expires, issued} = encodeSession(JWT_TOKEN, decodedSession.session);
         session = {

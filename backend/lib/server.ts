@@ -1,5 +1,6 @@
 import * as controllers from './controllers';
 import * as express from 'express';
+import * as cors from 'cors';
 import { Server } from '@overnightjs/core';
 import { Logger } from '@overnightjs/logger';
 import { createConnection } from 'typeorm';
@@ -9,9 +10,14 @@ class RouterServer extends Server {
     private readonly SERVER_CONFIG = require('./config/server.config');
     private readonly DB_CONFIG = require('./config/db.config');
 
+    private readonly options: cors.CorsOptions = {
+        origin: ['http://localhost:3000']
+    };
+
     constructor() {
         super();
 
+        this.app.use(cors(this.options));
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.setupConnection();

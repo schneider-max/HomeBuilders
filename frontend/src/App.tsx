@@ -8,6 +8,8 @@ import History from './HistoryPage/History';
 import SignOut from "./Login/SignOut";
 import ProjectComponent from './ProjectPage/ProjectOverview';
 import Image from './img/concrete_bg.jpg';
+import ControlledAccordions from './SectorPage/ProjectSector';
+import { Login } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 
 function Footer() {
@@ -54,7 +56,7 @@ function NavBar() {
       <Tabs value={value} onChange={handleChange} centered>
         <Tab label="Projects" />
         <Tab label="History" />
-        <Tab label="Logout" />
+        <Tab label="Sektoren" />
       </Tabs>
       <TabPanel value={value} index={0}>
         <ProjectComponent/>
@@ -78,7 +80,9 @@ function App() {
       <Box>
         <React.StrictMode>
           <NavBar/>
-        </React.StrictMode>
+        </React.StrictMode>  
+        <React.StrictMode>      
+        </React.StrictMode> 
       </Box>
       <Box>
         <Footer />

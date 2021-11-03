@@ -4,8 +4,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
-import { VerticalAlignBottomSharp } from '@mui/icons-material';
-import { borderColor } from '@mui/system';
 
 const style = {
   position: 'absolute' as 'absolute',

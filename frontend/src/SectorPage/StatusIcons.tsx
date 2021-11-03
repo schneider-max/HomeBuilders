@@ -56,17 +56,17 @@ export default function StatusSelect() {
   };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ minWidth: 120}}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Status</InputLabel>
+        <InputLabel id="select-label">Status</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
+          labelId="select-label"
+          id="select"
           value={status}
           label="Status"
           onChange={handleChange}
           onClick={(e) => e.stopPropagation()}
-         
+          style={{ padding: 0 }}
         >
           <MenuItem value={10}><TodoIcon /></MenuItem>
           <MenuItem value={20}><PendingIcon /></MenuItem>

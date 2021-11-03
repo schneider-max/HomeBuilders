@@ -6,7 +6,7 @@ import Tab from '@mui/material/Tab';
 import Logo from './img/HomeBuilder_Logo_4c.png';
 import History from './HistoryPage/History';
 import Image from './img/concrete_bg.jpg';
-import ControlledAccordions from './sectorsInProject/ProjectSector';
+import ControlledAccordions from './SectorPage/ProjectSector';
 import { Login } from '@mui/icons-material';
 import { Typography } from '@mui/material';
 import ProjectComponent from './ProjectPage/ProjectOverview';
@@ -55,7 +55,7 @@ function NavBar() {
       <Tabs value={value} onChange={handleChange} centered>
         <Tab label="Projects" />
         <Tab label="History" />
-        <Tab label="Logout" />
+        <Tab label="Sektoren" />
       </Tabs>
       <TabPanel value={value} index={0}>
         <ProjectComponent></ProjectComponent>
@@ -64,7 +64,7 @@ function NavBar() {
         <History></History>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <ControlledAccordions />
       </TabPanel>
     </Box>
   );
@@ -80,10 +80,7 @@ function App() {
         <React.StrictMode>
           <NavBar/>
         </React.StrictMode>  
-        <React.StrictMode>
-          <ControlledAccordions />
-          {/* <ProjectList /> */}
-        
+        <React.StrictMode>      
         </React.StrictMode> 
       </Box>
       <Box>

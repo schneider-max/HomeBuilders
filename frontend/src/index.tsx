@@ -29,6 +29,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
                 .catch((err) => {
                     setAuth(false);
                     sessionStorage.removeItem("token");
+                    sessionStorage.removeItem("email");
                 })
                 .then(() => setIsTokenValidated(true));
         } else {
@@ -45,11 +46,10 @@ const PrivateRoute = ({component: Component, ...rest}) => {
                    }}/>)
 }
 
-
 const Entry = () => {
     return (
         <Router>
-            <Route path='/' exact component={SignIn}/>
+            <Route component={SignIn} path='/' exact />
             <PrivateRoute component={App} path='/home' exact/>
         </Router>
     );

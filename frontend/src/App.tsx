@@ -5,9 +5,10 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Logo from './img/HomeBuilder_Logo_4c.png';
 import History from './HistoryPage/History';
+import SignOut from "./Login/SignOut";
+import ProjectComponent from './ProjectPage/ProjectOverview';
 import Image from './img/concrete_bg.jpg';
 import { Typography } from '@mui/material';
-import ProjectComponent from './ProjectPage/ProjectOverview';
 
 function Footer() {
   return(
@@ -62,7 +63,7 @@ function NavBar() {
         <History/>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        <SignOut/>
       </TabPanel>
     </Box>
   );

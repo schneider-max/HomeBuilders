@@ -21,7 +21,10 @@ export default class ProjectCard extends Component<any> {
   } 
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='/sectors'/>
+      return <Redirect to={{
+        pathname: '/sectors',
+        state: {project: this.props}     
+      }}/>
     }
   }
 

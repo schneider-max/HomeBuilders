@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from "../img/HomeBuilder_Logo_4c.png";
 import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {useHistory} from "react-router-dom";
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 
 function Copyright(props: any) {
@@ -20,6 +21,10 @@ function Copyright(props: any) {
 }
 
 export default function SignIn() {
+    let history = useHistory();
+
+    const homepagePath = '/home';
+
     const [signUpDialogOpen, setSignUpDialogOpen] = React.useState(false);
     const [userCreationAlert, setUserCreationAlert] = React.useState(false);
     const [userCreationAlertMsg, setUserCreationAlertMsg] = React.useState('');
@@ -37,16 +42,15 @@ export default function SignIn() {
 
     function processLogin(res: AxiosResponse) {
         setLoginErrorAlertMsg('');
+
         setLogInErrorAlert(false);
-
         setUserCreationAlertMsg('');
-        setUserCreationAlert(false);
 
+        setUserCreationAlert(false);
         if (res.status === 200 && res.data != null) {
             try {
-                console.log(res.data);
                 sessionStorage.setItem("token", res.data.token);
-                sessionStorage.setItem("email", res.data.firstname);
+                history.push(homepagePath);
             } catch (ex: any) {
                 handleLoginError(ex);
             }
@@ -110,7 +114,7 @@ export default function SignIn() {
         const data = new FormData(event.currentTarget);
         let email = data.get('email');
         let password = data.get('password');
-        if (email !== "" && password !== "") {
+        if (email !== null && password !== null) {
             const options: AxiosRequestConfig = {
                 url: "http://localhost:3001/api/customers/" + email,
                 method: 'POST',
@@ -121,8 +125,16 @@ export default function SignIn() {
                 data: {password: password}
             }
             axios(options)
-                .then(res => processLogin(res))
-                .catch(ex => handleLoginError(ex))
+                .then(res => {
+                    processLogin(res);
+                    if (typeof email === "string") {
+                        sessionStorage.setItem("email", email);
+                    }
+                })
+                .catch(ex => {
+                    handleLoginError(ex);
+                    sessionStorage.removeItem("email");
+                })
         } else {
             handleLoginError("");
         }

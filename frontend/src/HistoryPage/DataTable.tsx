@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import React from 'react';
 import PhaseDetail from './Details';
 // import ChangeProject from './ChangeProjects';
 

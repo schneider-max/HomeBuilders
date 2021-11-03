@@ -1,4 +1,4 @@
-import {decode, encode, TAlgorithm} from "jwt-simple";
+import { decode, encode, TAlgorithm} from "jwt-simple";
 import {DecodeResult, ExpirationStatus, PartialSession} from "./jwtHelpers";
 import {EncodeResult, Session} from "./jwtInterfaces";
 
@@ -66,13 +66,13 @@ export function decodeSession(secretKey: string, tokenString: string): DecodeRes
 export function checkExpirationStatus(token: Session): ExpirationStatus {
     const now = Date.now();
 
-    if (token.expires > now) return "active";
+    if (token.expires > now) return ExpirationStatus.active;
 
     // Find the timestamp for the end of the token's grace period
     const threeHoursInMs = 3 * 60 * 60 * 1000;
     const threeHoursAfterExpiration = token.expires + threeHoursInMs;
 
-    if (threeHoursAfterExpiration > now) return "grace";
+    if (threeHoursAfterExpiration > now) return ExpirationStatus.grace;
 
-    return "expired";
+    return ExpirationStatus.expired;
 }

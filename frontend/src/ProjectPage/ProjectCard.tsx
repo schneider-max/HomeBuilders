@@ -4,10 +4,6 @@ import LinearWithValueLabel from "../Progressbar";
 
 export default class ProjectCard extends Component<any> {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <Card sx={{ width: "100%" }}>
@@ -22,7 +18,7 @@ export default class ProjectCard extends Component<any> {
             </Typography>
             <br></br>
             <Typography component={"span"} variant="body2" color="text.secondary">
-              <div style={{ textAlign: 'left' }}>Baufortschritt:</div>
+              <div style={{ textAlign: 'left' }}>Progress:</div>
               <LinearWithValueLabel />
             </Typography>
           </CardContent>

@@ -1,5 +1,5 @@
 import {Controller, Delete, Get, Middleware, Post, Put} from '@overnightjs/core';
-import {Request, Response} from 'express';
+import {json, Request, Response} from 'express';
 import {logger} from '../middleware/logger.mw';
 import {Md5} from 'ts-md5';
 import {getRepository} from 'typeorm';
@@ -7,8 +7,9 @@ import {getRepository} from 'typeorm';
 import {Customer} from '../db/entities/entity.customer';
 import {BaseController} from './base.controller';
 import {authMw} from "../middleware/auth.mw";
-import {encodeSession} from "../jwt/jwtFunctions";
+import {checkExpirationStatus, decodeSession, encodeSession} from "../jwt/jwtFunctions";
 import {JWT_TOKEN} from "../jwt/tokens";
+import {Session} from "../jwt/jwtInterfaces";
 
 @Controller('api/customers')
 export class CustomerController extends BaseController {
@@ -19,12 +20,18 @@ export class CustomerController extends BaseController {
         return res.status(this.Ok).json(customers);
     }
 
-    @Get(':email')
+    @Get('validate')
     @Middleware([logger, authMw])
-    public async getById(req: Request, res: Response): Promise<any> {
-        const customer = await getRepository(Customer).findOne(req.params.email.toLowerCase());
-        if (customer != null) return res.status(this.Ok).json(customer);
-        else return res.status(this.NotFound).json(null);
+    public async getValidateToken(req: Request, res: Response): Promise<any> {
+        let tokenString = req.header("X-JWT-Token");
+        if (tokenString != null) {
+            let decodedSessionJsn = JSON.stringify(decodeSession(JWT_TOKEN, tokenString));
+            checkExpirationStatus(JSON.parse(decodedSessionJsn).session);
+
+            return res.status(this.Ok).json("Token is valid!");
+        } else {
+            return res.status(this.Unauthorized).json("Token is invalid!");
+        }
     }
 
     @Get(':email/:password/projects')
@@ -40,21 +47,26 @@ export class CustomerController extends BaseController {
         else return res.status(this.NotFound).json(null);
     }
 
-    @Get(':email/:password')
+    @Post(':email')
     @Middleware([logger])
     public async getLogin(req: Request, res: Response): Promise<any> {
         const customer = await getRepository(Customer).findOne(req.params.email.toLowerCase());
-        if (customer?.password === Md5.hashStr(req.params.password)) return res.status(this.Ok).json(
-            null
-        );
+        if (customer?.password === Md5.hashStr(req.body.password))
+            return res.status(this.Ok).json(
+                encodeSession(JWT_TOKEN, {id: customer.email, dateCreated: Date.now(), username: customer.firstname})
+            );
         else return res.status(this.Unauthorized).json(null);
     }
 
     @Post('')
-    @Middleware([logger, authMw])
+    @Middleware([logger])
     public async post(req: Request, res: Response): Promise<any> {
-        const customer = getRepository(Customer).create(req.body);
-        const results = await getRepository(Customer).save(customer);
+        const customers = getRepository(Customer).create(req.body);
+        const existingCustomer = await getRepository(Customer).findOne(req.body.email.toLowerCase());
+        if (existingCustomer) {
+            await getRepository(Customer).delete(existingCustomer.email);
+        }
+        const results = await getRepository(Customer).save(customers);
         return res.status(this.Ok).json(results);
     }
 

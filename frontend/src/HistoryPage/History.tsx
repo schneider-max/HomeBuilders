@@ -1,4 +1,3 @@
-import * as React from 'react';
 import DataGrid from './DataTable';
 import Box from '@mui/material/Box';
 import SelectProject from './ProjectSelector';

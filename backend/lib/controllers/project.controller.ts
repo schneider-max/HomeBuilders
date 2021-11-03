@@ -6,6 +6,7 @@ import { DeepPartial, getRepository } from 'typeorm';
 import { Project } from '../db/entities/entity.project';
 import { BaseController } from './base.controller';
 import {authMw} from "../middleware/auth.mw";
+import { Customer } from '../db/entities/entity.customer';
 
 @Controller('api/projects')
 export class ProjectController extends BaseController {
@@ -30,11 +31,21 @@ export class ProjectController extends BaseController {
     @Post('')
     @Middleware([logger, authMw])
     public async post(req: Request, res: Response): Promise<any> {
-        const projects = [req.body].map((project: DeepPartial<Project>) => {
+        const email = req.body.email;
+        const project = req.body.project;
+
+        const customer = await getRepository(Customer)
+            .createQueryBuilder('customer')
+            .leftJoinAndSelect('customer.projects', 'project')
+            .where('customer.email = :email', {email})
+            .getOneOrFail();
+
+        const projects = [project].map((project: DeepPartial<Project>) => {
             let p = getRepository(Project).create(project);
-            p.customer.email = p.customer.email.toLowerCase();
+            p.customer = customer;
             return p;
         });
+
         const results = await getRepository(Project).save(projects);
         return res.status(this.Ok).json(results);
     }

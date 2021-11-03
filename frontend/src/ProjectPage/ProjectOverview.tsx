@@ -1,5 +1,7 @@
 import { Box, Button, Grid } from "@mui/material";
 import React from "react";
+import { getAxioxInstance } from "../shared/axios";
+import CreateProjectButton from "./CreateProjectModal";
 import ProjectCard from "./ProjectCard";
 
 export default class ProjectComponent extends React.Component {
@@ -10,11 +12,9 @@ export default class ProjectComponent extends React.Component {
 
     // set state in this method to trigger re-render on request completion
     componentDidMount() {
-        const axios = require("axios").create({
-            baseURL: 'http://localhost:3001'
-        });
+        const axios = getAxioxInstance();
 
-        axios.get("/api/projects/TestUser@hotmail.com")
+        axios.get("/api/projects/" + sessionStorage.getItem("email"))
             .then(res => {
                 const projects = res.data;
                 this.setState({ projects });
@@ -33,10 +33,15 @@ export default class ProjectComponent extends React.Component {
                         )
                     })}
                     <Grid item xs={12} style={{ marginTop: "15px", padding: "15px", height: "100px" }}>
-                        <Button style={{ backgroundColor: "white", width: "20%", height: "100%", color: 'black' }}>Neues Projekt</Button>
+                        <CreateProjectButton></CreateProjectButton>
                     </Grid>
                 </Grid>
             </Box>
         )
     }
+
+    private createProject() {
+
+    }
+
 }

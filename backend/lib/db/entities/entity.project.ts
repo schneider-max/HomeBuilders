@@ -34,7 +34,7 @@ export class Project {
     @Column({
         type: 'decimal',
         precision: 10,
-        scale: 0,
+        scale: 2,
         nullable: true,
         default: null
     })

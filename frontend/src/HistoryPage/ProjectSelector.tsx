@@ -3,13 +3,28 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useEffect } from 'react';
+// import ChangeProject from './ChangeProjects';
 
-function SelectAutoWidth() {
-  const [project, setProject] = React.useState('');
+export default function SelectProject() {
+  const [item, setProject] = React.useState('');
+  const [projectList, setProjectList] = React.useState([]);
 
   const handleChange = (event: SelectChangeEvent) => {
     setProject(event.target.value);
   };
+
+  useEffect(() => {
+      
+    const axios = require("axios").create({
+      baseURL: 'http://localhost:3001'
+    });
+
+    axios.get("/api/requests/TestUser@hotmail.com")
+    .then((res : any) => {
+      setProjectList(res.data)
+    });
+  },[]);
 
   return (
     <div style={{textAlign: "left"}}>
@@ -18,19 +33,21 @@ function SelectAutoWidth() {
         <Select
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
-          value={project}
+          value={item}
           onChange={handleChange}
           autoWidth
           label="Projekt"
         >
-          <MenuItem value="" sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Alle</MenuItem>
-          <MenuItem value={10} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Haus 1</MenuItem>
-          <MenuItem value={21} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Baumhaus 1</MenuItem>
-          <MenuItem value={22} sx={{display:"flex!important", margin: "5px!important", padding: "5px!important"}}>Höhle 1</MenuItem>
+          <MenuItem value={0}>Alle</MenuItem>
+          {projectList.map((project: any ) => (
+            <MenuItem key={project.id} value={project.id}>
+              {project.name}
+            </MenuItem>
+            ))}
+          {console.log(item)}
         </Select>
       </FormControl>
     </div>
   );
 }
 
-export default SelectAutoWidth;

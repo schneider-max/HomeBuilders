@@ -1,30 +1,27 @@
 import * as controllers from './controllers';
 import * as express from 'express';
+import * as cors from 'cors';
 import { Server } from '@overnightjs/core';
 import { Logger } from '@overnightjs/logger';
 import { createConnection } from 'typeorm';
-const swaggerUi = require('swagger-ui-express');
 
 class RouterServer extends Server {
     private readonly SERVER_START_MSG: string = 'Server started at port: ';
     private readonly SERVER_CONFIG = require('./config/server.config');
     private readonly DB_CONFIG = require('./config/db.config');
-    private readonly SWAGGER_CONFIG = require('./config/swagger.config');
+
+    private readonly options: cors.CorsOptions = {
+        origin: ['http://localhost:3000']
+    };
 
     constructor() {
         super();
 
+        this.app.use(cors(this.options));
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: true }));
         this.setupConnection();
         this.setupControllers();
-        this.setupSwagger();
-    }
-
-    public setupSwagger() {
-        this.app.use('/api-docs', swaggerUi.serve);
-        this.app.get('/api-docs', swaggerUi.setup(this.SWAGGER_CONFIG));
-        Logger.Info('Swagger api docs added to server.')
     }
 
     public start(port?: number): void {

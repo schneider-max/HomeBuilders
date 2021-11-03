@@ -4,7 +4,7 @@ module.exports = {
     type: 'mysql',
     host: 'localhost',
     port: 3306,
-    username: 'HomeBuildersTest',
+    username: 'root',
     password: 'password',
     database: 'homebuildersdb',
     synchronize: true,

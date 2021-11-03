@@ -35,14 +35,14 @@ export default function CreateProjectButton() {
 
     return (
         <Box>
-            <Button onClick={handleOpen}>Neues Projekt erstellen</Button>
+            <Button onClick={handleOpen}>Create new project</Button>
             <Modal
                 open={open}
                 onClose={handleClose}
             >
                 <Box sx={style}>
                 <Typography variant="h6" component="h2">
-                    Neues Projekt erstellen
+                    Create new project
                 </Typography>
                 <Typography component={"span"} sx={{ mt: 2 }}>
                     <Box component="form" onSubmit={(e) => {
@@ -51,14 +51,14 @@ export default function CreateProjectButton() {
                         handleClose();
                     }}>
                         <FormControl fullWidth required sx={{ m: 1 }}>
-                            <InputLabel htmlFor="project-input">Projekt Name</InputLabel>
+                            <InputLabel htmlFor="project-input">Project name</InputLabel>
                             <Input id="project-input" name="name"/>
                         </FormControl>
                         <FormControl fullWidth sx={{ m: 1 }}>
                             <InputLabel htmlFor="budget-input">Budget</InputLabel>
                             <Input id="budget-input" name="budget"/>
                         </FormControl>
-                        <h3>Sektoren</h3>
+                        <h3>Select wanted company sectors</h3>
                         <FormGroup>
                             {sectors.map((sector: any) => {
                                 const name = "sector_" + sector.id
@@ -67,7 +67,7 @@ export default function CreateProjectButton() {
                                 )
                             })}    
                         </FormGroup>
-                        <Button sx={{ m: 1 }} type="submit">Erstellen</Button>
+                        <Button sx={{ m: 1 }} type="submit">Create</Button>
                     </Box>
                 </Typography>
                 </Box>

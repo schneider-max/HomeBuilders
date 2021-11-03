@@ -39,9 +39,4 @@ export default class ProjectComponent extends React.Component {
             </Box>
         )
     }
-
-    private createProject() {
-
-    }
-
 }

@@ -43,7 +43,10 @@ const PrivateRoute = ({component: Component, ...rest}) => {
 
     return (<Route {...rest}
                    render={(props) => {
-                       return auth ? <Component {...props} /> : <Redirect to="/home"/>
+                       return auth ? <Component {...props} /> : <Redirect to={{
+                        pathname: "/home",
+                        state: { from: props.location }
+                      }}/>
                    }}/>)
 }
 
@@ -51,8 +54,8 @@ const Entry = () => {
     return (
         <Router>
             <Route component={SignIn} path='/' exact />
-            <PrivateRoute component={App} path='/home' exact/>
-            <PrivateRoute component={ShowSectors} path='/sectors' exact/>
+            <PrivateRoute component={App} data={null} path='/home' exact/>
+            <PrivateRoute component={ShowSectors} path='/sectors' exact />
         </Router>
     );
 };

@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useEffect } from 'react';
+// import ChangeProject from './ChangeProjects';
 
 export default function SelectProject() {
   const [item, setProject] = React.useState('');
@@ -37,12 +38,13 @@ export default function SelectProject() {
           autoWidth
           label="Projekt"
         >
-          <MenuItem value="all">Alle</MenuItem>
+          <MenuItem value={0}>Alle</MenuItem>
           {projectList.map((project: any ) => (
-            <MenuItem key={project.id} value={project.name}>
+            <MenuItem key={project.id} value={project.id}>
               {project.name}
             </MenuItem>
             ))}
+          {console.log(item)}
         </Select>
       </FormControl>
     </div>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import PhaseDetail from './Details';
+// import ChangeProject from './ChangeProjects';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'Id', flex: 0.5, },
@@ -46,7 +47,7 @@ export default class DataTable extends React.Component {
 
   render() {
     return (
-      <div style={{ height: 500, width: '100%' }}>
+      <div style={{ height: 450, width: '100%' }}>
         <DataGrid 
           rows={getValues(this.state.projects)}
           columns={columns}

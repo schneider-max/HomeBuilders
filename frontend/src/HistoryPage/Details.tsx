@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
 const modalInfo = {
@@ -38,48 +37,72 @@ const style = {
   p: 4,
 };
 
+function Info(project: any) {
+    const request = project.request;
+
+    return (
+        <Box>
+            <Grid style={modalInfo} container spacing={3}>
+                <Grid item xs={3}>
+                    Email:
+                </Grid>
+                <Grid item xs={9}>
+                    testus.test@schule.at
+                </Grid>
+            </Grid>
+            <Grid style={modalInfo} container spacing={3}>
+                <Grid item xs={3}>
+                    Betreff:
+                </Grid>
+                <Grid item xs={9}>
+                    Test
+                </Grid>
+            </Grid>
+            <Grid style={modalInfo} container spacing={3}>
+                <Grid item xs={3}>
+                    Budget:
+                </Grid>
+                <Grid item xs={9}>
+                    3000000000000 €
+                </Grid>
+            </Grid>
+            <Grid style={modalInfo} container spacing={3}>
+                <Grid item xs={3}>
+                    Notizen:
+                </Grid>
+                <Grid item xs={9}>
+                    Das ist eine Testnotiz über die Kommunikation mit Herr Testus Test!
+                </Grid>
+            </Grid>
+        </Box>
+    )
+}
+
 class Information extends React.Component {
     constructor(props : any){
         super(props);
 
     }
+    state = {
+        projects: []
+    };
+
+    // set state in this method to trigger re-render on request completion
+    componentDidMount() {
+        const axios = require("axios").create({
+            baseURL: 'http://localhost:3001'
+        });
+
+        axios.get("/api/projects/TestUser@hotmail.com")
+            .then(res => {
+                const projects = res.data;
+                this.setState({ projects });
+            })
+    }
 
     render(){
         return(
-            <Box>
-                <Grid style={modalInfo} container spacing={3}>
-                    <Grid item xs={3}>
-                        Email:
-                    </Grid>
-                    <Grid item xs={9}>
-                        testus.test@schule.at
-                    </Grid>
-                </Grid>
-                <Grid style={modalInfo} container spacing={3}>
-                    <Grid item xs={3}>
-                        Betreff:
-                    </Grid>
-                    <Grid item xs={9}>
-                        Test
-                    </Grid>
-                </Grid>
-                <Grid style={modalInfo} container spacing={3}>
-                    <Grid item xs={3}>
-                        Budget:
-                    </Grid>
-                    <Grid item xs={9}>
-                        3000000000000 €
-                    </Grid>
-                </Grid>
-                <Grid style={modalInfo} container spacing={3}>
-                    <Grid item xs={3}>
-                        Notizen:
-                    </Grid>
-                    <Grid item xs={9}>
-                        Das ist eine Testnotiz über die Kommunikation mit Herr Testus Test!
-                    </Grid>
-                </Grid>
-            </Box>
+            <Info {... this.state.projects} />
         )
     }
 }

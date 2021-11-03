@@ -5,6 +5,7 @@ import App from './App';
 import SignIn from "./Login/SignIn";
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import axios from "axios";
+import ShowSectors from './SectorPage/ProjectSector';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
 
@@ -51,6 +52,7 @@ const Entry = () => {
         <Router>
             <Route component={SignIn} path='/' exact />
             <PrivateRoute component={App} path='/home' exact/>
+            <PrivateRoute component={ShowSectors} path='/sectors' exact/>
         </Router>
     );
 };

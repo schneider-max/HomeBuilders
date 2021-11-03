@@ -12,6 +12,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LinearWithValueLabel from '../Progressbar';
 import ModalRequest from "./ModalRequest";
 import StatusSelect from './StatusIcons';
+import Logo from '../img/HomeBuilder_Logo_4c.png';
+
 
 import CSS from 'csstype';
 
@@ -25,6 +27,10 @@ const SectorHeaderStyle: CSS.Properties = {
   boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
   padding: "0px 16px"
 
+};
+const SectorPageStyle: CSS.Properties = {
+  backgroundImage: `url("/static/media/concrete_bg.c57b6ffb.jpg")`,
+  height: "100vh"
 };
 
 //function that defines the suppliers card
@@ -47,7 +53,7 @@ function ActionAreaCard(props: any) {
   );
 }
 
-export default function ControlledAccordions() {
+export default function ShowSectors() {
   const [expanded, setExpanded] = React.useState<string | false>(false);
 
   const handleChange =
@@ -56,270 +62,278 @@ export default function ControlledAccordions() {
     };
     
   return (
-    // list of Sectors in the Project
-    <div>
-      {/* Panel Header          */}
-      <div style={SectorHeaderStyle}>
-      <Grid container spacing={2} >
-          <Grid item xs={1}>
-            <Typography>
-             Status
-            </Typography>
-          </Grid>
-          <Grid item xs={2}>
-            <Typography>
-            [Platzhalter Projektname]
-            </Typography>
-          </Grid>
-          <Grid item xs={5}>
-            <Typography variant="body2" color="text.secondary">
-                <div style={{textAlign: 'left'}}>Baufortschritt </div>
-                <LinearWithValueLabel />
-            </Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Typography variant="body2" color="text.secondary">
-                <div style={{textAlign: 'left'}}>Budget available</div>
-                7.000.000 €
-            </Typography>
-          </Grid>
-        </Grid>
-      </div>
+    <div className="App" style={SectorPageStyle}>
+      <div style={SectorPageStyle}>
+      <Box sx={{top: '0px', fontSize: '30px', height: '100px', padding: '15px'}} className="titleName">
+        <img src={Logo} style= {{width: "300px"}} alt={"Logo"}/>
+      </Box>
+      <Box>
+        <div>
+          {/* Panel Header          */}
+          <div style={SectorHeaderStyle}>
+          <Grid container spacing={2} >
+              <Grid item xs={1}>
+                <Typography>
+                Status
+                </Typography>
+              </Grid>
+              <Grid item xs={2}>
+                <Typography>
+                [Platzhalter Projektname]
+                </Typography>
+              </Grid>
+              <Grid item xs={5}>
+                <Typography variant="body2" color="text.secondary">
+                    <div style={{textAlign: 'left'}}>Baufortschritt </div>
+                    <LinearWithValueLabel />
+                </Typography>
+              </Grid>
+              <Grid item xs={4}>
+                <Typography variant="body2" color="text.secondary">
+                    <div style={{textAlign: 'left'}}>Budget available</div>
+                    7.000.000 €
+                </Typography>
+              </Grid>
+            </Grid>
+          </div>
 
-      {/* Panel 1. Sector          */}
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} sx={{margin: "10px"}}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography>
-            <StatusSelect />
-          </Typography>
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-          Erdarbeiten
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>Click Me</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-                <Box sx={{height: '100%', borderColor: 'black'}}>
+          {/* Panel 1. Sector          */}
+          <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} sx={{margin: "10px"}}>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+            >
+              <Typography>
+                <StatusSelect />
+              </Typography>
+              <Typography sx={{ width: '33%', flexShrink: 0 }}>
+              Erdarbeiten
+              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Click Me</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                    <Box sx={{height: '100%', borderColor: 'black'}}>
+                      <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
+                          <Grid item xs={12} md={6} lg={4}>
+                          <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                          </Grid>
+                          <Grid item xs={12} md={6} lg={4}>
+                          <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                          </Grid>
+                          <Grid item xs={12} md={6} lg={4}>
+                          <ActionAreaCard companyName="Buchner GmbH"/>
+                          </Grid>
+                          <Grid item xs={12} md={6} lg={4}>
+                          <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                          </Grid>
+                          <Grid item xs={12} md={6} lg={4}>
+                          <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                          </Grid>
+                      </Grid>
+                    </Box>  	  
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          {/* Panel 2. Sector          */}
+          <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')} sx={{margin: "10px"}}>
+            <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2bh-content"
+              id="panel2bh-header"
+            >
+              <Typography>
+                <StatusSelect />
+              </Typography>
+              <Typography sx={{ width: '33%', flexShrink: 0 }}>
+              Kellerbau
+              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                  <Box sx={{height: '100%', borderColor: 'black'}}>
+                    <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Buchner GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
+                    </Grid>
+                  </Box>  	  
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          {/* Panel 3. Sector          */}
+          <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')} sx={{margin: "10px"}}>
+            <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel3bh-content"
+              id="panel3bh-header"
+            >
+              <Typography>
+                <StatusSelect />
+              </Typography>
+              <Typography sx={{ width: '33%', flexShrink: 0 }}>
+              Fundament
+              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                  <Box sx={{height: '100%', borderColor: 'black'}}>
                   <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
-                      <Grid item xs={12} md={6} lg={4}>
-                      <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={4}>
-                      <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={4}>
-                      <ActionAreaCard companyName="Buchner GmbH"/>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={4}>
-                      <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                      </Grid>
-                      <Grid item xs={12} md={6} lg={4}>
-                      <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                      </Grid>
-                  </Grid>
-                </Box>  	  
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      {/* Panel 2. Sector          */}
-      <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')} sx={{margin: "10px"}}>
-        <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-        >
-          <Typography>
-            <StatusSelect />
-          </Typography>
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-          Kellerbau
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-              <Box sx={{height: '100%', borderColor: 'black'}}>
-                <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Buchner GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                  </Box>  	 
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          {/* Panel 4. Sector          */}
+          <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')} sx={{margin: "10px"}}>
+            <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel4bh-content"
+              id="panel4bh-header"
+            >
+              <Typography>
+                <StatusSelect />
+              </Typography>
+              <Typography sx={{ width: '33%', flexShrink: 0 }}>
+              Rohbau
+              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                  <Box sx={{height: '100%', borderColor: 'black'}}>
+                  <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Buchner GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Buchner GmbH"/>
+                  </Box>  	 
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          {/* Panel 5. Sector          */}
+          <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} sx={{margin: "10px"}}>
+            <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel5bh-content"
+              id="panel5bh-header"
+            >
+              <Typography>
+                <StatusSelect />
+              </Typography>
+              <Typography sx={{ width: '33%', flexShrink: 0 }}>
+              Dach
+              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                  <Box sx={{height: '100%', borderColor: 'black'}}>
+                  <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Buchner GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                  </Box> 
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+          {/* Panel 6. Sector          */}
+          <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')} sx={{margin: "10px"}}>
+            <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel6bh-content"
+              id="panel6bh-header"
+            >
+              <Typography>
+                <StatusSelect />
+              </Typography>
+              <Typography sx={{ width: '33%', flexShrink: 0 }}>
+              Innenausbau
+              </Typography>
+              <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography>
+                  <Box sx={{height: '100%', borderColor: 'black'}}>
+                  <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Buchner GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                    </Grid>
-                </Grid>
-              </Box>  	  
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      {/* Panel 3. Sector          */}
-      <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')} sx={{margin: "10px"}}>
-        <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3bh-content"
-          id="panel3bh-header"
-        >
-          <Typography>
-            <StatusSelect />
-          </Typography>
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-          Fundament
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-              <Box sx={{height: '100%', borderColor: 'black'}}>
-              <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Buchner GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                    </Grid>
-                </Grid>
-              </Box>  	 
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      {/* Panel 4. Sector          */}
-      <Accordion expanded={expanded === 'panel4'} onChange={handleChange('panel4')} sx={{margin: "10px"}}>
-        <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel4bh-content"
-          id="panel4bh-header"
-        >
-          <Typography>
-            <StatusSelect />
-          </Typography>
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-          Rohbau
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-              <Box sx={{height: '100%', borderColor: 'black'}}>
-              <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Buchner GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                    </Grid>
-                </Grid>
-              </Box>  	 
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      {/* Panel 5. Sector          */}
-      <Accordion expanded={expanded === 'panel5'} onChange={handleChange('panel5')} sx={{margin: "10px"}}>
-        <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel5bh-content"
-          id="panel5bh-header"
-        >
-          <Typography>
-            <StatusSelect />
-          </Typography>
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-          Dach
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-              <Box sx={{height: '100%', borderColor: 'black'}}>
-              <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Buchner GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                    </Grid>
-                </Grid>
-              </Box> 
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      {/* Panel 6. Sector          */}
-      <Accordion expanded={expanded === 'panel6'} onChange={handleChange('panel6')} sx={{margin: "10px"}}>
-        <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel6bh-content"
-          id="panel6bh-header"
-        >
-          <Typography>
-            <StatusSelect />
-          </Typography>
-          <Typography sx={{ width: '33%', flexShrink: 0 }}>
-          Innenausbau
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>Verfügbare Dienstleister</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-              <Box sx={{height: '100%', borderColor: 'black'}}>
-              <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Buchner GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={4}>
-                    <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                    </Grid>
-                </Grid>
-              </Box> 
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+                  </Box> 
+              </Typography>
+            </AccordionDetails>
+          </Accordion>
+        </div>
+        </Box>
+      </div>
     </div>
   );
 }

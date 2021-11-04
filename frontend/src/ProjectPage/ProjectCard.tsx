@@ -1,5 +1,4 @@
-import { MouseEvent } from 'react';
-import { Button, Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import {Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import { Component } from "react";
 import LinearWithValueLabel from "../Progressbar";
 import { Redirect } from "react-router-dom";
@@ -41,7 +40,7 @@ export default class ProjectCard extends Component<any> {
               <div style={{ textAlign: 'left' }}>Budget: {this.props.budget}</div>
               <LinearWithValueLabel />
             </Typography>
-            <br></br>
+            <br/>
             <Typography component={"span"} variant="body2" color="text.secondary">
               <div style={{ textAlign: 'left' }}>Progress:</div>
               <LinearWithValueLabel />

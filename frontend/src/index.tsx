@@ -6,6 +6,8 @@ import SignIn from "./Login/SignIn";
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import axios from "axios";
 import ShowSectors from './SectorPage/ProjectSector';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const PrivateRoute = ({component: Component, ...rest}) => {
 
@@ -27,7 +29,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
                         setAuth(true);
                     }
                 })
-                .catch((err) => {
+                .catch(() => {
                     setAuth(false);
                     sessionStorage.removeItem("token");
                     sessionStorage.removeItem("email");
@@ -39,7 +41,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
 
     }, [])
 
-    if (!isTokenValidated) return <div/>; // or some kind of loading animation
+    if (!isTokenValidated) return <CircularProgress />;
 
     return (<Route {...rest}
                    render={(props) => {

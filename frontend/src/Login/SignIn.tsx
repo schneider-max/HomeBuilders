@@ -8,6 +8,7 @@ import Logo from "../img/HomeBuilder_Logo_4c.png";
 import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import {useEffect} from "react";
 
 function Copyright(props: any) {
     return (
@@ -31,6 +32,15 @@ export default function SignIn() {
     const [logInErrorAlert, setLogInErrorAlert] = React.useState(false);
     const [loginErrorAlertMsg, setLoginErrorAlertMsg] = React.useState('');
 
+    useEffect(() => {
+        let token = sessionStorage.getItem("token");
+        let email = sessionStorage.getItem("email");
+
+        if(token != null && email != null){
+            history.push(homepagePath);
+        }
+    }, []);
+
     function handleLoginError(errorMsg: any) {
         if (errorMsg !== null && errorMsg.toString().includes("401")) {
             setLoginErrorAlertMsg("Login failed - Bad Credentials");
@@ -50,7 +60,9 @@ export default function SignIn() {
         if (res.status === 200 && res.data != null) {
             try {
                 sessionStorage.setItem("token", res.data.token);
-                history.push(homepagePath);
+
+                if(sessionStorage.getItem("token") != null)
+                    window.location.reload();
             } catch (ex: any) {
                 handleLoginError(ex);
             }

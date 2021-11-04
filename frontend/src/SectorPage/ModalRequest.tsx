@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import axios, {AxiosRequestConfig} from "axios";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -25,19 +26,36 @@ function handleRequestSent(event: any) {
 
     const data = new FormData(event.currentTarget);
 
-    let firstname = data.get("firstname");
-    let lastname = data.get("lastname");
-    let email = data.get("email");
-    let budget = data.get("budget");
-    let subject = data.get("subject");
-    let message = data.get("msg");
+    try {
+        let sessionToken = sessionStorage.getItem('token');
+        if (sessionToken != null && data != null) {
+            const options: AxiosRequestConfig = {
+                url: "http://localhost:3001/api/requests",
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "X-JWT-Token": sessionToken
+                },
+                data: {
+                    firstname: data.get("firstname"),
+                    lastname: data.get("lastname"),
+                    email: data.get("email"),
+                    price: data.get("budget"),
+                    subject: data.get("subject"),
+                    message: data.get("msg"),
+                    projectsId: data.get("project"),
+                    sectorsId: data.get("sector"),
+                    suppliersId: data.get("supplier"),
+                }
+            }
+            axios(options)
+                .then(res => console.log(res))
+                .catch(ex => console.log(ex));
+        }
+    } catch (ex: any) {
 
-    console.log(firstname);
-    console.log(lastname);
-    console.log(email);
-    console.log(budget);
-    console.log(subject);
-    console.log(message);
+    }
 }
 
 //type of supplier parameter should be changed to Supplier
@@ -48,7 +66,7 @@ export default function ModalRequest(props: any) {
 
     return (
         <div>
-            <Button onClick={handleOpen}>Send request for offer</Button>
+            <Button onClick={handleOpen} variant="outlined">Send request for offer</Button>
             <Modal
                 open={open}
                 onClose={handleClose}

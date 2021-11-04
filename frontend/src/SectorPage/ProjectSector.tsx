@@ -7,14 +7,12 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import {CardActionArea} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LinearWithValueLabel from '../Progressbar';
 import ModalRequest from "./ModalRequest";
 import StatusSelect from './StatusIcons';
 import Logo from '../img/HomeBuilder_Logo_4c.png';
-
-
 import CSS from 'csstype';
 
 //styles header of the sector page
@@ -33,6 +31,12 @@ const SectorPageStyle: CSS.Properties = {
   height: "100vh"
 };
 
+function createSupplier(props: any){
+    let sup = {id: props.id, companyName: props.companyName, email: props.email, webPage: props.webpage};
+    console.log(sup);
+    return sup;
+}
+
 //function that defines the suppliers card
 function ActionAreaCard(props: any) {
   return (
@@ -45,8 +49,8 @@ function ActionAreaCard(props: any) {
           <Typography variant="body2" color="text.secondary">
               <div style={{textAlign: 'left'}}>[Platzhalter IMG Dienstleister]</div>              
           </Typography>
-          <br></br>
-            <ModalRequest />
+          <br/>
+            <ModalRequest supplier={createSupplier(props)}/>
         </CardContent>
       </CardActionArea>
     </Card>
@@ -118,28 +122,28 @@ console.log(props);
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                    <Box sx={{height: '100%', borderColor: 'black'}}>
-                      <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
-                          <Grid item xs={12} md={6} lg={4}>
-                          <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                          </Grid>
-                          <Grid item xs={12} md={6} lg={4}>
-                          <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                          </Grid>
-                          <Grid item xs={12} md={6} lg={4}>
-                          <ActionAreaCard companyName="Buchner GmbH"/>
-                          </Grid>
-                          <Grid item xs={12} md={6} lg={4}>
-                          <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
-                          </Grid>
-                          <Grid item xs={12} md={6} lg={4}>
-                          <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
-                          </Grid>
-                      </Grid>
-                    </Box>  	  
+                  <Box sx={{height: '100%', borderColor: 'black'}}>
+                  <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Buchner GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Holzhaider Bau GmbH"/>
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={4}>
+                        <ActionAreaCard companyName="Wimberger Bau GesmbH"/>
+                        </Grid>
+                    </Grid>
+                  </Box>
               </Typography>
             </AccordionDetails>
-          </Accordion>       
+          </Accordion>
         </div>
         </Box>
       </div>

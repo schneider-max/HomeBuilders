@@ -15,7 +15,6 @@ export class RequestController extends BaseController {
         const projects = await getRepository(Project)
             .createQueryBuilder('project')
             .leftJoinAndSelect('project.requests', 'request')
-            .leftJoinAndSelect('request.sectors', 'sector')
             .where('project.customerEmail = :email', { email })
             .getMany();
 

@@ -24,8 +24,12 @@ export class SectorController extends BaseController {
         const sectors = await getRepository(Project)
             .createQueryBuilder('project')
             .leftJoinAndSelect('project.sectors', 'sector')
+            .leftJoinAndSelect('sector.suppliers', 'supplier')
             .where('project.id = :projectId', {projectId})
             .getMany()
+
+        console.log(sectors)
+
         return res.status(this.Ok).json(sectors);
     }
 }

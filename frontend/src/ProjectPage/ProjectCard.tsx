@@ -2,16 +2,23 @@ import {Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import { Component } from "react";
 import LinearWithValueLabel from "../Progressbar";
 import { Redirect } from "react-router-dom";
-
-// function getSectors(project){
-//  console.log("OnClick auf Project Card funktioniert !");
-// }
+import { getAxioxInstance } from "../shared/axios";
 
 export default class ProjectCard extends Component<any> {
 
   state = {
-    redirect: false
+    redirect: false,
   };
+
+  componentDidMount() {
+
+    const axios = getAxioxInstance();
+
+    axios.get(`/api/sectors/${this.props.id}`).then(res => {
+      console.log(res.data);
+    })
+
+  }
 
   setRedirect = () => {
     this.setState({
@@ -28,6 +35,15 @@ export default class ProjectCard extends Component<any> {
   }
 
   render() {
+    let usedBudget: number = 0;
+
+    this.props.requests.forEach(r => {
+      if (r.status === 'p')
+        usedBudget += r.budget;
+    })
+
+    const budgetProgress = (usedBudget / this.props.budget) * 100;
+
     return (
       <Card sx={{ width: "100%" }}>
         {this.renderRedirect()}
@@ -38,12 +54,12 @@ export default class ProjectCard extends Component<any> {
             </Typography>
             <Typography component={"span"} variant="body2" color="text.secondary">
               <div style={{ textAlign: 'left' }}>Budget: {this.props.budget}</div>
-              <LinearWithValueLabel />
+              <LinearWithValueLabel {... {progress: budgetProgress}}/>
             </Typography>
             <br/>
             <Typography component={"span"} variant="body2" color="text.secondary">
               <div style={{ textAlign: 'left' }}>Progress:</div>
-              <LinearWithValueLabel />
+              <LinearWithValueLabel {...{progress: budgetProgress}} />
             </Typography>
           </CardContent>
         </CardActionArea>       

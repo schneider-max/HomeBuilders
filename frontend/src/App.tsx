@@ -55,7 +55,6 @@ function NavBar() {
             <Tabs value={value} onChange={handleChange} centered>
                 <Tab label="Projects"/>
                 <Tab label="History"/>
-                <Tab label="Sectors"/>
                 <Tab label="Log out"/>
             </Tabs>
             <TabPanel value={value} index={0}>
@@ -65,9 +64,6 @@ function NavBar() {
                 <History/>
             </TabPanel>
             <TabPanel value={value} index={2}>
-                <ControlledAccordions/>
-            </TabPanel>
-            <TabPanel value={value} index={3}>
                 <SignOut/>
             </TabPanel>
         </Box>

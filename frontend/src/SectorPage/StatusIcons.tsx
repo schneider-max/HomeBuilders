@@ -1,15 +1,10 @@
 import * as React from "react";
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import CSS from 'csstype';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-//icons
-import { Icon } from '@mui/material';
-import { Icons } from 'material-table';
 import {AccessTime, CheckCircleOutline, HighlightOff} from '@mui/icons-material';
 
 const styleIcons:CSS.Properties = {

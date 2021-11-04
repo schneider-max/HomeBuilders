@@ -24,6 +24,9 @@ export default class ProjectComponent extends React.Component {
     render() {
         return (
             <Box sx={{ height: '100%', borderColor: 'black' }}>
+                <Grid item xs={12} style={{ marginTop: "15px", padding: "15px", height: "100px" }}>
+                    <CreateProjectButton></CreateProjectButton>
+                </Grid>
                 <Grid container spacing={2} sx={{ margin: "15px", width: "calc(100% - 40px)" }}>
                     {this.state.projects.map((project: any) => {
                         return (
@@ -32,9 +35,6 @@ export default class ProjectComponent extends React.Component {
                             </Grid>
                         )
                     })}
-                    <Grid item xs={12} style={{ marginTop: "15px", padding: "15px", height: "100px" }}>
-                        <CreateProjectButton></CreateProjectButton>
-                    </Grid>
                 </Grid>
             </Box>
         )

@@ -25,13 +25,15 @@ function handleRequestSent(event: any) {
 
     const data = new FormData(event.currentTarget);
 
-    let name = data.get("name");
+    let firstname = data.get("firstname");
+    let lastname = data.get("lastname");
     let email = data.get("email");
     let budget = data.get("budget");
     let subject = data.get("subject");
     let message = data.get("msg");
 
-    console.log(name);
+    console.log(firstname);
+    console.log(lastname);
     console.log(email);
     console.log(budget);
     console.log(subject);
@@ -63,10 +65,13 @@ export default function ModalRequest(props: any) {
                                 handleRequestSent(event);
                                 handleClose()
                             }}>
-                                <TextField sx={styleInputs} fullWidth label="Your Name" name="name">
+                                <TextField sx={styleInputs} fullWidth label="First name" name="firstname">
                                     <input type="text"/>
                                 </TextField>
-                                <TextField sx={styleInputs} fullWidth label="Your Mail" name="email"
+                                <TextField sx={styleInputs} fullWidth label="Last name" name="lastname">
+                                    <input type="text"/>
+                                </TextField>
+                                <TextField sx={styleInputs} fullWidth label="E-Mail" name="email"
                                            defaultValue={sessionStorage.getItem("email")?.toString()!}>
                                     <input type="email"/>
                                 </TextField>

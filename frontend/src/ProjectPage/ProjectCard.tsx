@@ -8,6 +8,7 @@ export default class ProjectCard extends Component<any> {
 
   state = {
     redirect: false,
+    project: null
   };
 
   componentDidMount() {
@@ -15,16 +16,17 @@ export default class ProjectCard extends Component<any> {
     const axios = getAxioxInstance();
 
     axios.get(`/api/sectors/${this.props.id}`).then(res => {
-      console.log(res.data);
+      this.state.project = res.data
+      this.setState(this.state);
     })
 
   }
 
   setRedirect = () => {
-    this.setState({
-      redirect: true
-    })
-  } 
+    this.state.redirect = true;
+    this.setState(this.state)
+  }
+
   renderRedirect = () => {
     if (this.state.redirect) {
       return <Redirect to={{
@@ -34,16 +36,7 @@ export default class ProjectCard extends Component<any> {
     }
   }
 
-  render() {
-    let usedBudget: number = 0;
-
-    this.props.requests.forEach(r => {
-      if (r.status === 'p')
-        usedBudget += r.budget;
-    })
-
-    const budgetProgress = (usedBudget / this.props.budget) * 100;
-
+  render() {  
     return (
       <Card sx={{ width: "100%" }}>
         {this.renderRedirect()}
@@ -54,16 +47,44 @@ export default class ProjectCard extends Component<any> {
             </Typography>
             <Typography component={"span"} variant="body2" color="text.secondary">
               <div style={{ textAlign: 'left' }}>Budget: {this.props.budget}</div>
-              <LinearWithValueLabel {... {progress: budgetProgress}}/>
+              <LinearWithValueLabel {... {progress: calcBudgetProgress(this.props.requests, this.props.budget)}}/>
             </Typography>
             <br/>
             <Typography component={"span"} variant="body2" color="text.secondary">
               <div style={{ textAlign: 'left' }}>Progress:</div>
-              <LinearWithValueLabel {...{progress: budgetProgress}} />
+              <LinearWithValueLabel {...{progress: calcSectorProgress(this.props.requests, this.state.project)}} />
             </Typography>
           </CardContent>
         </CardActionArea>       
       </Card>
     );
   }
+}
+
+function calcSectorProgress(requests, project) {
+  if (requests == null || project == null)
+    return 0;
+  
+  let acceptedSectors: number = 0;
+
+  requests.forEach(r => {
+    if (r.status === 'a')
+      acceptedSectors += 1;
+  })
+    
+  return (acceptedSectors / project[0].sectors.length) * 100;
+}
+
+function calcBudgetProgress(requests, totalBudget) {
+  if (requests == null || totalBudget == null)
+    return 0;
+
+  let usedBudget: number = 0;
+
+  requests.forEach(r => {
+    if (r.status === 'a')
+      usedBudget += r.budget;
+  })
+
+  return (usedBudget / totalBudget) * 100;
 }

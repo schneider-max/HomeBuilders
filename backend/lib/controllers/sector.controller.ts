@@ -27,9 +27,6 @@ export class SectorController extends BaseController {
             .leftJoinAndSelect('sector.suppliers', 'supplier')
             .where('project.id = :projectId', {projectId})
             .getMany()
-
-        console.log(sectors)
-
         return res.status(this.Ok).json(sectors);
     }
 }

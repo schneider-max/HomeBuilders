@@ -27,11 +27,8 @@ export class RequestController extends BaseController {
     @Middleware([logger, authMw])
     public async createNewRequest(req: Request, res: Response): Promise<any> {
         req.body.creationDate = new Date();
-
         const requests = getRepository(ReqestEntity).create(req.body);
-        console.log(req.body);
         const results = await getRepository(ReqestEntity).save(requests);
-
         return res.status(this.Ok).json(results);
     }
 }

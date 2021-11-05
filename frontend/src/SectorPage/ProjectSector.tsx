@@ -15,6 +15,7 @@ import StatusSelect from './StatusIcons';
 import Logo from '../img/HomeBuilder_Logo_4c.png';
 import CSS from 'csstype';
 import {Business} from "@mui/icons-material";
+import ProjectCard, { calcBudgetProgress, calcSectorProgress } from '../ProjectPage/ProjectCard';
 
 //styles header of the sector page
 const SectorHeaderStyle: CSS.Properties = {
@@ -60,7 +61,11 @@ function ActionAreaCard(props: any) {
 
 export default function ShowSectors(props: any) {
 
-    const project = props.location.state.project;
+    const projectRequests = props.location.state.projectWithRequests;
+    const projectSectors = props.location.state.projectWithSectors;
+
+    console.log(projectRequests
+        )
 
     const [expanded, setExpanded] = React.useState<string | false>(false);
 
@@ -77,7 +82,6 @@ export default function ShowSectors(props: any) {
                 </Box>
                 <Box>
                     <div>
-                        {/* Panel Header          */}
                         <div style={SectorHeaderStyle}>
                             <Grid container spacing={2}>
                                 <Grid item xs={1}>
@@ -87,64 +91,74 @@ export default function ShowSectors(props: any) {
                                 </Grid>
                                 <Grid item xs={2}>
                                     <Typography>
-                                        {project.name}
+                                        {projectRequests == null ? '' : projectRequests.name}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={5}>
                                     <Typography variant="body2" color="text.secondary">
-                                        <div style={{textAlign: 'left'}}>Planing progress</div>
-                                        <LinearWithValueLabel/>
+                                        <div style={{textAlign: 'left'}}>Planning progress</div>
+                                        <LinearWithValueLabel {...{progress: calcBudgetProgress(projectRequests.requests, projectRequests.budget)}} />
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={4}>
                                     <Typography variant="body2" color="text.secondary">
                                         <div style={{textAlign: 'center'}}>Budget available</div>
-                                        7.000.000 €
+                                        {projectRequests.budget}
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </div>
 
-                        {/* Panel 1. Sector          */}
-                        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}
-                                   sx={{margin: "10px"}}>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon/>}
-                                aria-controls="panel1bh-content"
-                                id="panel1bh-header"
-                            >
-                                <Typography>
-                                    <StatusSelect/>
-                                </Typography>
-                                <Typography sx={{width: '33%', flexShrink: 0}}>
-                                    Erdarbeiten
-                                </Typography>
-                                <Typography sx={{color: 'text.secondary'}}>Click Me</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails>
-                                <Typography>
-                                    <Box sx={{height: '100%', borderColor: 'black'}}>
-                                        <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
-                                            <Grid item xs={12} md={6} lg={4}>
-                                                <ActionAreaCard companyName="Holzhaider Bau GmbH" project={project}/>
-                                            </Grid>
-                                            <Grid item xs={12} md={6} lg={4}>
-                                                <ActionAreaCard companyName="Wimberger Bau GesmbH" project={project}/>
-                                            </Grid>
-                                            <Grid item xs={12} md={6} lg={4}>
-                                                <ActionAreaCard companyName="Buchner GmbH" project={project}/>
-                                            </Grid>
-                                            <Grid item xs={12} md={6} lg={4}>
-                                                <ActionAreaCard companyName="Holzhaider Bau GmbH" project={project}/>
-                                            </Grid>
-                                            <Grid item xs={12} md={6} lg={4}>
-                                                <ActionAreaCard companyName="Wimberger Bau GesmbH" project={project}/>
-                                            </Grid>
-                                        </Grid>
-                                    </Box>
-                                </Typography>
-                            </AccordionDetails>
-                        </Accordion>
+
+                        {/* Panel erzeugen         */}
+                        {/* Change Accordion ID, expands all Accordions rn */}
+
+                        {   
+                            projectSectors == null ? 
+                            (<div></div>) : 
+                            projectSectors[0].sectors.map(
+                                (sector: any) =>
+                                {
+                                    return(
+                                        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}
+                                                sx={{margin: "10px"}}>
+                                            <AccordionSummary
+                                                expandIcon={<ExpandMoreIcon/>}
+                                                aria-controls="panel1bh-content"
+                                                id="panel1bh-header"
+                                            >
+                                                <Typography>
+                                                    <StatusSelect/>
+                                                </Typography>
+                                                <Typography sx={{width: '33%', flexShrink: 0}}>
+                                                    {sector.name}
+                                                </Typography>
+                                                <Typography sx={{color: 'text.secondary'}}>expand</Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Typography>
+                                                    <Box sx={{height: '100%', borderColor: 'black'}}>
+                                                        <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
+                                                            {sector.suppliers.map(
+                                                                (supplier: any) =>
+                                                                {
+                                                                    return(
+                                                                    <Grid item xs={12} md={6} lg={4}>
+                                                                        <ActionAreaCard project={projectSectors[0]} sector={sector} supplier={supplier}/>
+                                                                    </Grid>
+                                                                    )
+                                                                }
+                                                            )}
+                                                        </Grid>
+                                                    </Box>
+                                                </Typography>
+                                            </AccordionDetails>
+                                        </Accordion>
+                                    )
+
+                                }
+                            )
+                        }
                     </div>
                 </Box>
             </div>

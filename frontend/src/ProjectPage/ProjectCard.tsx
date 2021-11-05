@@ -26,10 +26,14 @@ export default class ProjectCard extends Component<any> {
   }
 
   renderRedirect = () => {
+
     if (this.state.redirect) {
       return <Redirect to={{
         pathname: '/sectors',
-        state: {project: this.props}     
+        state: {
+          projectWithRequests: this.props,
+          projectWithSectors: this.state.project
+        }     
       }}/>
     }
   }
@@ -59,7 +63,7 @@ export default class ProjectCard extends Component<any> {
   }
 }
 
-function calcSectorProgress(requests, project) {
+export function calcSectorProgress(requests, project) {
   if (requests == null || project == null)
     return 0;
   
@@ -73,7 +77,7 @@ function calcSectorProgress(requests, project) {
   return (acceptedSectors / project[0].sectors.length) * 100;
 }
 
-function calcBudgetProgress(requests, totalBudget) {
+export function calcBudgetProgress(requests, totalBudget) {
   if (requests == null || totalBudget == null)
     return 0;
 

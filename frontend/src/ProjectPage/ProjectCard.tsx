@@ -16,15 +16,13 @@ export default class ProjectCard extends Component<any> {
     const axios = getAxioxInstance();
 
     axios.get(`/api/sectors/${this.props.id}`).then(res => {
-      this.state.project = res.data
-      this.setState(this.state);
+      this.setState( {project: res.data} );
     })
 
   }
 
   setRedirect = () => {
-    this.state.redirect = true;
-    this.setState(this.state)
+    this.setState( {redirect: true} )
   }
 
   renderRedirect = () => {

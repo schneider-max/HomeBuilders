@@ -108,11 +108,6 @@ export default function ShowSectors(props: any) {
                                 </Grid>
                             </Grid>
                         </div>
-
-
-                        {/* Panel erzeugen         */}
-                        {/* Change Accordion ID, expands all Accordions rn */}
-
                         {   
                             projectSectors == null ? 
                             (<div></div>) : 
@@ -120,12 +115,12 @@ export default function ShowSectors(props: any) {
                                 (sector: any) =>
                                 {
                                     return(
-                                        <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}
+                                        <Accordion expanded={expanded === `panel${sector.id}`} onChange={handleChange(`panel${sector.id}`)}
                                                 sx={{margin: "10px"}}>
                                             <AccordionSummary
                                                 expandIcon={<ExpandMoreIcon/>}
-                                                aria-controls="panel1bh-content"
-                                                id="panel1bh-header"
+                                                aria-controls={`panel${sector.id}bh-content`}
+                                                id={`panel${sector.id}bh-header`}
                                             >
                                                 <Typography>
                                                     <StatusSelect/>

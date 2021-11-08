@@ -1,4 +1,4 @@
-import { Controller, Get, Middleware, Post } from '@overnightjs/core';
+import { Controller, Delete, Get, Middleware, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
 import { logger } from '../middleware/logger.mw';
 import { createQueryBuilder, DeepPartial, getRepository } from 'typeorm';
@@ -27,6 +27,20 @@ export class ProjectController extends BaseController {
             .where('project.customerEmail = :email', { email })
             .getMany();
         return res.status(this.Ok).json(projects);
+    }
+
+    @Delete(':id')
+    @Middleware([logger, authMw])
+    public async deleteById(req: Request, res: Response): Promise<any> {
+        const id = req.params.id;
+        const project = await getRepository(Project).findOne(id);
+        if (project != null) {
+            await getRepository(Project).delete(project);
+            return res.status(this.Ok).json(null);
+        }
+        else {
+            return res.status(this.NotFound).json(null);
+        }
     }
 
     @Post('')

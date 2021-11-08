@@ -9,15 +9,9 @@ import {AccessTime, CheckCircleOutline, HighlightOff} from '@mui/icons-material'
 
 const styleIcons:CSS.Properties = {
     backgroundColor: 'white',
-    // boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
     padding: "5px",
-  
-  };
-// const statusIcons: typeof Icon = {
-//     Pending: () => <AccessTimeIcon />,
-//     Done: () => <DoneIcon />,
-//     Todo: () => <TodoIcon />
-// }
+};
+
 function TodoIcon(props: any){
     return(
         <div style = {styleIcons}>

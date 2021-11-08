@@ -1,8 +1,9 @@
-import {Card, CardActionArea, CardContent, Typography } from "@mui/material";
+import {Button, Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import { Component } from "react";
 import LinearWithValueLabel from "../Progressbar";
 import { Redirect } from "react-router-dom";
 import { getAxioxInstance } from "../shared/axios";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default class ProjectCard extends Component<any> {
 
@@ -38,6 +39,14 @@ export default class ProjectCard extends Component<any> {
     }
   }
 
+  private deleteProject(id: number) {
+    const axios = getAxioxInstance();
+
+    axios.delete(`/api/projects/${id}`).then(res => {
+      window.location.reload();
+    });
+  }
+
   render() {  
     return (
       <Card sx={{ width: "100%" }}>
@@ -56,6 +65,7 @@ export default class ProjectCard extends Component<any> {
               <div style={{ textAlign: 'left' }}>Progress:</div>
               <LinearWithValueLabel {...{progress: calcSectorProgress(this.props.requests, this.state.project)}} />
             </Typography>
+            <Button sx={{position: "absolute", bottom: 0, right: 0, margin: 2}} onClick={(e) => {e.stopPropagation(); this.deleteProject(this.props.id)}}><DeleteIcon /></Button>
           </CardContent>
         </CardActionArea>       
       </Card>

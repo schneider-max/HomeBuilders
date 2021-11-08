@@ -84,8 +84,9 @@ export default function CreateProjectButton() {
             }
         });
 
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        let today = new Date();
+        let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        let budget = form.get("budget") == '' ? null : form.get("budget");
 
         const axios = getAxioxInstance();
 
@@ -93,7 +94,7 @@ export default function CreateProjectButton() {
             email: sessionStorage.getItem("email"),
             project: {
                 name: form.get("name"),
-                budget: form.get("budget"),
+                budget: budget,
                 creationDate: date,
             },
             sectors: sectors

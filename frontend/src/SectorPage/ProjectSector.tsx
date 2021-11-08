@@ -15,7 +15,7 @@ import StatusSelect from './StatusIcons';
 import Logo from '../img/HomeBuilder_Logo_4c.png';
 import CSS from 'csstype';
 import {Business} from "@mui/icons-material";
-import ProjectCard, { calcBudgetProgress, calcSectorProgress } from '../ProjectPage/ProjectCard';
+import { calcBudgetProgress } from '../ProjectPage/ProjectCard';
 
 //styles header of the sector page
 const SectorHeaderStyle: CSS.Properties = {
@@ -63,9 +63,6 @@ export default function ShowSectors(props: any) {
 
     const projectRequests = props.location.state.projectWithRequests;
     const projectSectors = props.location.state.projectWithSectors;
-
-    console.log(projectRequests
-        )
 
     const [expanded, setExpanded] = React.useState<string | false>(false);
 
@@ -123,7 +120,9 @@ export default function ShowSectors(props: any) {
                                                 id={`panel${sector.id}bh-header`}
                                             >
                                                 <Typography>
-                                                    <StatusSelect/>
+                                                    <StatusSelect {...projectRequests.requests
+                                                    .filter(filterRequest => filterRequest.sectors.name === sector.name)
+                                                    }/>
                                                 </Typography>
                                                 <Typography sx={{width: '33%', flexShrink: 0}}>
                                                     {sector.name}

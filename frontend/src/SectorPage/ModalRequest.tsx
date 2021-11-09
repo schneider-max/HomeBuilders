@@ -41,7 +41,7 @@ function handleRequestSent(event: any, project, supplier, sector) {
                     firstname: data.get("firstname"),
                     lastname: data.get("lastname"),
                     email: data.get("email"),
-                    price: data.get("budget"),
+                    budget: Number(data.get("budget")),
                     subject: data.get("subject"),
                     message: data.get("msg"),
                     sectors: sector,

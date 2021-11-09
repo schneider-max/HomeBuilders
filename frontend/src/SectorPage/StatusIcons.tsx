@@ -6,6 +6,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import {AccessTime, CheckCircleOutline, HighlightOff} from '@mui/icons-material';
+import { useEffect } from "react";
 
 const styleIcons:CSS.Properties = {
     backgroundColor: 'white',
@@ -37,13 +38,26 @@ function DoneIcon(props: any){
 }
 
 
-export default function StatusSelect() {
-  const [status, setStatus] = React.useState('');
+export default function StatusSelect(props: any) {
+  const [status, setStatus] = React.useState('c');
+
+  useEffect(() => {
+    let requestArray: any[] = []
+    Object.keys(props).map((key) => requestArray.push(props[key]));
+    
+    if (requestArray.length > 0) {
+      if (requestArray.some(requestArray => requestArray.status === 'a')) {
+        setStatus('a');
+      }
+      else if (requestArray.some(requestArray => requestArray.status === 'p'))
+        setStatus('p');
+    }
+  }, [])
 
   const handleChange = (event: SelectChangeEvent) => {
         setStatus(event.target.value as string);
   };
-
+    
   return (
     <Box sx={{ minWidth: 120}}>
       <FormControl fullWidth>
@@ -57,9 +71,9 @@ export default function StatusSelect() {
           onClick={(e) => e.stopPropagation()}
           style={{ padding: 0 }}
         >
-          <MenuItem value={10}><TodoIcon /></MenuItem>
-          <MenuItem value={20}><PendingIcon /></MenuItem>
-          <MenuItem value={30}><DoneIcon /></MenuItem>
+          <MenuItem key="c" value="c"><TodoIcon sx={{color: "red"}} /></MenuItem>
+          <MenuItem key="p" value="p"><PendingIcon sx={{color: "orange"}} /></MenuItem>
+          <MenuItem key="a" value="a"><DoneIcon sx={{color: "green"}} /></MenuItem>
         </Select>
       </FormControl>
     </Box>

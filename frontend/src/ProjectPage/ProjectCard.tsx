@@ -95,7 +95,7 @@ export function calcBudgetProgress(requests, totalBudget) {
 
   requests.forEach(r => {
     if (r.status === 'a')
-      usedBudget += r.budget;
+      usedBudget += Number(r.budget);
   })
 
   return (usedBudget / totalBudget) * 100;

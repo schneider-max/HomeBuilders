@@ -15,7 +15,7 @@ import StatusSelect from './StatusIcons';
 import Logo from '../img/HomeBuilder_Logo_4c.png';
 import CSS from 'csstype';
 import {Business} from "@mui/icons-material";
-import ProjectCard, { calcBudgetProgress, calcSectorProgress } from '../ProjectPage/ProjectCard';
+import { calcBudgetProgress} from '../ProjectPage/ProjectCard';
 
 //styles header of the sector page
 const SectorHeaderStyle: CSS.Properties = {

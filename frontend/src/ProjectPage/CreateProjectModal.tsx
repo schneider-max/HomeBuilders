@@ -86,7 +86,7 @@ export default function CreateProjectButton() {
 
         let today = new Date();
         let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        let budget = form.get("budget") == '' ? null : form.get("budget");
+        let budget = form.get("budget") === '' ? null : form.get("budget");
 
         const axios = getAxioxInstance();
 

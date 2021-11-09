@@ -39,7 +39,7 @@ export default function SignIn() {
         if(token != null && email != null){
             history.push(homepagePath);
         }
-    }, []);
+    });
 
     function handleLoginError(errorMsg: any) {
         if (errorMsg !== null && errorMsg.toString().includes("401")) {

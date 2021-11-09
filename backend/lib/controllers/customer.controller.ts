@@ -1,5 +1,5 @@
 import {Controller, Delete, Get, Middleware, Post, Put} from '@overnightjs/core';
-import {json, Request, Response} from 'express';
+import {Request, Response} from 'express';
 import {logger} from '../middleware/logger.mw';
 import {Md5} from 'ts-md5';
 import {getRepository} from 'typeorm';
@@ -9,7 +9,6 @@ import {BaseController} from './base.controller';
 import {authMw} from "../middleware/auth.mw";
 import {checkExpirationStatus, decodeSession, encodeSession} from "../jwt/jwtFunctions";
 import {JWT_TOKEN} from "../jwt/tokens";
-import {Session} from "../jwt/jwtInterfaces";
 
 @Controller('api/customers')
 export class CustomerController extends BaseController {
@@ -61,13 +60,17 @@ export class CustomerController extends BaseController {
     @Post('')
     @Middleware([logger])
     public async post(req: Request, res: Response): Promise<any> {
-        const customers = getRepository(Customer).create(req.body);
-        const existingCustomer = await getRepository(Customer).findOne(req.body.email.toLowerCase());
-        if (existingCustomer) {
-            await getRepository(Customer).delete(existingCustomer.email);
+        try {
+            const customers = getRepository(Customer).create(req.body);
+            const existingCustomer = await getRepository(Customer).findOne(req.body.email.toLowerCase());
+            if (existingCustomer) {
+                return res.status(this.Ok).json("User already exists");
+            }
+            const results = await getRepository(Customer).save(customers);
+            return res.status(this.Ok).json(results);
+        } catch (ex: any) {
+            return res.status(this.BadRequest).json(ex);
         }
-        const results = await getRepository(Customer).save(customers);
-        return res.status(this.Ok).json(results);
     }
 
     @Put('')

@@ -1,13 +1,12 @@
-import { Controller, Delete, Get, Middleware, Post } from '@overnightjs/core';
-import { Request, Response } from 'express';
-import { logger } from '../middleware/logger.mw';
-import { createQueryBuilder, DeepPartial, getRepository } from 'typeorm';
+import {Controller, Delete, Get, Middleware, Post} from '@overnightjs/core';
+import {Request, Response} from 'express';
+import {logger} from '../middleware/logger.mw';
+import {createQueryBuilder, DeepPartial, getRepository} from 'typeorm';
 
-import { Project } from '../db/entities/entity.project';
-import { BaseController } from './base.controller';
+import {Project} from '../db/entities/entity.project';
+import {BaseController} from './base.controller';
 import {authMw} from "../middleware/auth.mw";
-import { Customer } from '../db/entities/entity.customer';
-import { Sector } from 'db/entities/entity.sector';
+import {Customer} from '../db/entities/entity.customer';
 
 @Controller('api/projects')
 export class ProjectController extends BaseController {
@@ -63,7 +62,7 @@ export class ProjectController extends BaseController {
 
         const results = await getRepository(Project).save(projects);
 
-        createQueryBuilder()
+        await createQueryBuilder()
             .insert()
             .into('project_sectors_sector')
             .values(req.body.sectors.map((sectorId: any) => {

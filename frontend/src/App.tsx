@@ -9,13 +9,6 @@ import SignOut from "./Login/SignOut";
 import ProjectComponent from './ProjectPage/ProjectOverview';
 import Image from './img/concrete_bg.jpg';
 import {Typography} from '@mui/material';
-import ControlledAccordions from "./SectorPage/ProjectSector";
-
-function Footer() {
-    return (
-        <div style={{bottom: "0px", height: "40px", backgroundColor: "gray"}}/>
-    );
-}
 
 interface TabPanelProps {
     children?: React.ReactNode;

@@ -1,4 +1,4 @@
-import { Backdrop, Box, Fade, Grid, Modal, selectClasses } from '@mui/material';
+import { Backdrop, Box, Fade, Grid, Modal} from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import React from 'react';
 import { getAxioxInstance } from '../shared/axios';
@@ -9,18 +9,17 @@ let selectedRow: any;
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'Id', flex: 0.5 },
-  { field: 'project', headerName: 'Projekt', flex: 1},
+  { field: 'project', headerName: 'Project', flex: 1},
   { field: 'phase', headerName: 'Phase', flex: 1},
   { field: 'status', headerName: 'Status',flex: 1},
   {
     field: 'cost',
-    headerName: 'Kosten',
+    headerName: 'Cost',
     flex: 1
   },
   {
     field: 'date',
     headerName: 'Date',
-    type: 'date',
     flex: 1,
   },
 ];
@@ -149,7 +148,7 @@ function Info() {
           </Grid>
           <Grid style={modalInfo} container spacing={3}>
               <Grid item xs={3}>
-                  Betreff:
+                  Subject:
               </Grid>
               <Grid item xs={9}>
                  {request.subject}
@@ -165,7 +164,7 @@ function Info() {
           </Grid>
           <Grid style={modalInfo} container spacing={3}>
               <Grid item xs={3}>
-                  Nachricht:
+                  Message:
               </Grid>
               <Grid item xs={9}>
                   {request.message}

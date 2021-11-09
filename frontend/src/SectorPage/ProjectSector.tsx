@@ -16,6 +16,7 @@ import Logo from '../img/HomeBuilder_Logo_4c.png';
 import CSS from 'csstype';
 import {Business} from "@mui/icons-material";
 import {calcBudgetProgress} from '../ProjectPage/ProjectCard';
+import {Link} from 'react-router-dom';
 
 //styles header of the sector page
 const SectorHeaderStyle: CSS.Properties = {
@@ -70,7 +71,9 @@ export default function ShowSectors(props: any) {
         <div className="App" style={SectorPageStyle}>
             <div style={SectorPageStyle}>
                 <Box sx={{top: '0px', fontSize: '30px', height: '100px', padding: '15px'}} className="titleName">
-                    <img src={Logo} style={{width: "300px"}} alt={"Logo"}/>
+                    <Link to="home" > 
+                        <img  src={Logo} style={{width: "300px"}} alt={"Logo"}/>
+                    </Link>
                 </Box>
                 <Box>
                     <div>

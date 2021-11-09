@@ -145,7 +145,7 @@ function Info() {
 
         let request = currentProject.requests.find(request => request.id === selectedRow.id);
 
-        if (request != undefined) {
+        if (request !== undefined) {
             return (
                 <Box>
                     <Grid style={modalInfo} container spacing={3}>

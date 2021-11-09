@@ -1,12 +1,12 @@
 import * as React from "react";
+import {useEffect} from "react";
 import Box from '@mui/material/Box';
 import CSS from 'csstype';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select, {SelectChangeEvent} from '@mui/material/Select';
 import {AccessTime, CheckCircleOutline, HighlightOff} from '@mui/icons-material';
-import { useEffect } from "react";
 
 const styleIcons:CSS.Properties = {
     backgroundColor: 'white',
@@ -42,17 +42,16 @@ export default function StatusSelect(props: any) {
   const [status, setStatus] = React.useState('c');
 
   useEffect(() => {
-    let requestArray: any[] = []
-    Object.keys(props).map((key) => requestArray.push(props[key]));
-    
-    if (requestArray.length > 0) {
-      if (requestArray.some(requestArray => requestArray.status === 'a')) {
-        setStatus('a');
+      let requestArray: any[] = []
+      Object.keys(props).map((key) => requestArray.push(props[key]));
+
+      if (requestArray.length > 0) {
+          if (requestArray.some(requestArray => requestArray.status === 'a')) {
+              setStatus('a');
+          } else if (requestArray.some(requestArray => requestArray.status === 'p'))
+              setStatus('p');
       }
-      else if (requestArray.some(requestArray => requestArray.status === 'p'))
-        setStatus('p');
-    }
-  }, [])
+  }, [props])
 
   const handleChange = (event: SelectChangeEvent) => {
         setStatus(event.target.value as string);

@@ -33,7 +33,6 @@ const SectorPageStyle: CSS.Properties = {
     height: "100vh"
 };
 
-
 function ActionAreaCard(props: any) {
     return (
         <Card sx={{width: "100%"}}>

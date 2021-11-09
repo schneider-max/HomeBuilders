@@ -1,5 +1,5 @@
 import { AccessTime, CheckCircleOutline, HighlightOff } from "@mui/icons-material";
-import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useState } from "react";
 import { getAxioxInstance } from "../shared/axios";
@@ -21,9 +21,8 @@ export default function StatusChangeForm(props: any) {
         if (status !== '' && requestId !== 0) {
             const axios = getAxioxInstance();
             axios.post(`http://localhost:3001/api/requests/${requestId}/${status}`).then(res => {
-                window.location.reload();
+                window.location.href = `/home?redirect=sectors`;
             });
-            
         }
     }
 
@@ -44,13 +43,14 @@ export default function StatusChangeForm(props: any) {
                 </Select>
             </FormControl>
             <DataGrid 
-                style={{ height: "90%", marginTop: "5px" }} 
+                style={{ marginTop: "10px" }} 
                 rows={mapRequestsToGridData(props.requests)} 
                 columns={columns} 
                 pagination 
-                pageSize={10} 
+                autoHeight={true}
+                pageSize={8} 
                 onRowClick={handleRequestChange} />
-            <Button onClick={sendRequestStatusUpdate}>Save</Button>
+            <Button fullWidth sx={{marginTop: "10px"}} variant="contained" onClick={sendRequestStatusUpdate}>Save</Button>
         </div>
     )
 }

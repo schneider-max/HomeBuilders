@@ -21,7 +21,7 @@ const styleInputs = {
     marginBottom: "2em",
 };
 
-function handleRequestSent(event: any) {
+function handleRequestSent(event: any, project, supplier, sector) {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
@@ -41,12 +41,12 @@ function handleRequestSent(event: any) {
                     firstname: data.get("firstname"),
                     lastname: data.get("lastname"),
                     email: data.get("email"),
-                    price: data.get("budget"),
+                    budget: Number(data.get("budget")),
                     subject: data.get("subject"),
                     message: data.get("msg"),
-                    projectsId: data.get("project"),
-                    sectorsId: data.get("sector"),
-                    suppliersId: data.get("supplier"),
+                    sectors: sector,
+                    suppliers: supplier,
+                    projects: project
                 }
             }
             axios(options)
@@ -58,7 +58,6 @@ function handleRequestSent(event: any) {
     }
 }
 
-//type of supplier parameter should be changed to Supplier
 export default function ModalRequest(props: any) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -80,7 +79,7 @@ export default function ModalRequest(props: any) {
                     <Typography id="modal-modal-description" sx={{mt: 2}}>
                         <div>
                             <form className="mui-form" onSubmit={(event: any) => {
-                                handleRequestSent(event);
+                                handleRequestSent(event, props.project, props.supplier, props.sector);
                                 handleClose()
                             }}>
                                 <TextField sx={styleInputs} fullWidth label="First name" name="firstname">

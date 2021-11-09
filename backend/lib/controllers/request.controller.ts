@@ -5,7 +5,8 @@ import {getRepository} from 'typeorm';
 import {BaseController} from './base.controller';
 import {logger} from '../middleware/logger.mw';
 import {authMw} from '../middleware/auth.mw';
-import {Request as ReqestEntity} from "../db/entities/entity.request";
+import {Request as RequestEntity} from "../db/entities/entity.request";
+
 
 @Controller('api/requests')
 export class RequestController extends BaseController {
@@ -26,9 +27,16 @@ export class RequestController extends BaseController {
     @Post('')
     @Middleware([logger, authMw])
     public async createNewRequest(req: Request, res: Response): Promise<any> {
-        req.body.creationDate = new Date();
-        const requests = getRepository(ReqestEntity).create(req.body);
-        const results = await getRepository(ReqestEntity).save(requests);
-        return res.status(this.Ok).json(results);
+        try {
+            const reqRequest = req.body;
+            reqRequest.creationDate = new Date();
+
+            let request = getRepository(RequestEntity).create(reqRequest);
+            const result = await getRepository(RequestEntity).save(request);
+            return res.status(this.Ok).json(result);
+        } catch (ex: any) {
+            return res.status(this.BadRequest).json("Request creation failed due to the following error: </br>" + ex);
+        }
+
     }
 }

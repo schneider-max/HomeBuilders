@@ -15,7 +15,7 @@ import StatusSelect from './StatusIcons';
 import Logo from '../img/HomeBuilder_Logo_4c.png';
 import CSS from 'csstype';
 import {Business} from "@mui/icons-material";
-import { calcBudgetProgress } from '../ProjectPage/ProjectCard';
+import {calcBudgetProgress} from '../ProjectPage/ProjectCard';
 
 //styles header of the sector page
 const SectorHeaderStyle: CSS.Properties = {
@@ -33,11 +33,6 @@ const SectorPageStyle: CSS.Properties = {
     height: "100vh"
 };
 
-//todo[SK] is going to be removed when right data is fetched
-function createSupplier(props: any) {
-    return {id: props.id, companyName: props.companyName, email: props.email, webPage: props.webpage};
-}
-
 function ActionAreaCard(props: any) {
     return (
         <Card sx={{width: "100%"}}>
@@ -49,10 +44,10 @@ function ActionAreaCard(props: any) {
                         </div>
                     </Typography>
                     <Typography gutterBottom variant="h5" component="div">
-                        {props.companyName}
+                        {props.supplier.companyName}
                     </Typography>
                     <br/>
-                    <ModalRequest supplier={createSupplier(props)} project={props.project}/>
+                    <ModalRequest project={props.project} supplier={props.supplier} sector={props.sector}/>
                 </CardContent>
             </CardActionArea>
         </Card>
@@ -105,53 +100,56 @@ export default function ShowSectors(props: any) {
                                 </Grid>
                             </Grid>
                         </div>
-                        {   
-                            projectSectors == null ? 
-                            (<div></div>) : 
-                            projectSectors[0].sectors.map(
-                                (sector: any) =>
-                                {
-                                    return(
-                                        <Accordion expanded={expanded === `panel${sector.id}`} onChange={handleChange(`panel${sector.id}`)}
-                                                sx={{margin: "10px"}}>
-                                            <AccordionSummary
-                                                expandIcon={<ExpandMoreIcon/>}
-                                                aria-controls={`panel${sector.id}bh-content`}
-                                                id={`panel${sector.id}bh-header`}
-                                            >
-                                                <Typography>
-                                                    <StatusSelect {...projectRequests.requests
-                                                    .filter(filterRequest => filterRequest.sectors.name === sector.name)
-                                                    }/>
-                                                </Typography>
-                                                <Typography sx={{width: '33%', flexShrink: 0}}>
-                                                    {sector.name}
-                                                </Typography>
-                                                <Typography sx={{color: 'text.secondary'}}>expand</Typography>
-                                            </AccordionSummary>
-                                            <AccordionDetails>
-                                                <Typography>
-                                                    <Box sx={{height: '100%', borderColor: 'black'}}>
-                                                        <Grid container spacing={2} sx={{margin: "15px", width: "calc(100% - 30px)"}}>
-                                                            {sector.suppliers.map(
-                                                                (supplier: any) =>
-                                                                {
-                                                                    return(
-                                                                    <Grid item xs={12} md={6} lg={4}>
-                                                                        <ActionAreaCard project={projectSectors[0]} sector={sector} supplier={supplier}/>
-                                                                    </Grid>
-                                                                    )
-                                                                }
-                                                            )}
-                                                        </Grid>
-                                                    </Box>
-                                                </Typography>
-                                            </AccordionDetails>
-                                        </Accordion>
-                                    )
+                        {
+                            projectSectors == null ?
+                                (<div/>) :
+                                projectSectors[0].sectors.map(
+                                    (sector: any) => {
+                                        return (
+                                            <Accordion expanded={expanded === `panel${sector.id}`}
+                                                       onChange={handleChange(`panel${sector.id}`)}
+                                                       sx={{margin: "10px"}}>
+                                                <AccordionSummary
+                                                    expandIcon={<ExpandMoreIcon/>}
+                                                    aria-controls={`panel${sector.id}bh-content`}
+                                                    id={`panel${sector.id}bh-header`}
+                                                >
+                                                    <Typography>
+                                                        <StatusSelect {...projectRequests.requests
+                                                            .filter(filterRequest => filterRequest.sectors.name === sector.name)
+                                                                      }/>
+                                                    </Typography>
+                                                    <Typography sx={{width: '33%', flexShrink: 0}}>
+                                                        {sector.name}
+                                                    </Typography>
+                                                    <Typography sx={{color: 'text.secondary'}}>expand</Typography>
+                                                </AccordionSummary>
+                                                <AccordionDetails>
+                                                    <Typography>
+                                                        <Box sx={{height: '100%', borderColor: 'black'}}>
+                                                            <Grid container spacing={2}
+                                                                  sx={{margin: "15px", width: "calc(100% - 30px)"}}>
+                                                                {sector.suppliers.map(
+                                                                    (supplier: any) => {
+                                                                        return (
+                                                                            <Grid item xs={12} md={6} lg={4}>
+                                                                                <ActionAreaCard
+                                                                                    project={projectSectors[0]}
+                                                                                    sector={sector}
+                                                                                    supplier={supplier}/>
+                                                                            </Grid>
+                                                                        )
+                                                                    }
+                                                                )}
+                                                            </Grid>
+                                                        </Box>
+                                                    </Typography>
+                                                </AccordionDetails>
+                                            </Accordion>
+                                        )
 
-                                }
-                            )
+                                    }
+                                )
                         }
                     </div>
                 </Box>

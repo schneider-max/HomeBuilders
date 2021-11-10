@@ -82,10 +82,13 @@ export function calcSectorProgress(requests, project) {
     return 0;
   
   let acceptedSectors: number = 0;
+  let usedSectors: string[] = [];
 
   requests.forEach(r => {
-    if (r.status === 'a')
+    if (r.status === 'a' && !usedSectors.includes(r.name)) {
+      usedSectors.push(r.name)
       acceptedSectors += 1;
+    }
   })
     
   return (acceptedSectors / project[0].sectors.length) * 100;

@@ -15,7 +15,7 @@ import StatusModal from './StatusModal';
 import Logo from '../img/HomeBuilder_Logo_4c.png';
 import CSS from 'csstype';
 import {Business} from "@mui/icons-material";
-import {calcBudgetProgress} from '../ProjectPage/ProjectCard';
+import {calcSectorProgress} from '../ProjectPage/ProjectCard';
 import {Link} from 'react-router-dom';
 
 //styles header of the sector page
@@ -92,7 +92,7 @@ export default function ShowSectors(props: any) {
                                 <Grid item xs={5}>
                                     <Typography variant="body2" color="text.secondary">
                                         <div style={{textAlign: 'left'}}>Planning progress</div>
-                                        <LinearWithValueLabel {...{progress: calcBudgetProgress(projectRequests.requests, projectRequests.budget)}} />
+                                        <LinearWithValueLabel {...{progress: calcSectorProgress(projectRequests.requests, projectSectors)}}></LinearWithValueLabel>
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={4}>

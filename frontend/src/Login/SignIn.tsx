@@ -1,14 +1,14 @@
 import * as React from 'react';
+import {useEffect} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from "../img/HomeBuilder_Logo_4c.png";
-import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Input} from "@mui/material";
+import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
-import {useEffect} from "react";
 
 function Copyright(props: any) {
     return (
@@ -36,7 +36,7 @@ export default function SignIn() {
         let token = sessionStorage.getItem("token");
         let email = sessionStorage.getItem("email");
 
-        if(token != null && email != null){
+        if (token != null && email != null) {
             history.push(homepagePath);
         }
     });
@@ -61,7 +61,7 @@ export default function SignIn() {
             try {
                 sessionStorage.setItem("token", res.data.token);
 
-                if(sessionStorage.getItem("token") != null)
+                if (sessionStorage.getItem("token") != null)
                     window.location.reload();
             } catch (ex: any) {
                 handleLoginError(ex);
@@ -231,7 +231,7 @@ export default function SignIn() {
                 </Button>
             </Box>
 
-            <Dialog open={signUpDialogOpen} onClose={handleSignUpClose} >
+            <Dialog open={signUpDialogOpen} onClose={handleSignUpClose}>
                 <DialogTitle>Sign Up</DialogTitle>
                 <Box component="form" onSubmit={handleCreateAcc} sx={{mt: 1}}>
                     <DialogContent>

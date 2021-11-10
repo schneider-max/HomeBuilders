@@ -61,7 +61,7 @@ export default class DataTable extends React.Component {
                     columns={columns}
                     pageSize={8}
                     rowsPerPageOptions={[8]}
-                    style={{margin: "8px", backgroundColor: "gray"}}
+                    style={{margin: "8px", backgroundColor: "white"}}
                     onRowClick={this.handleOpen}
                 />
                 <div>
@@ -92,15 +92,21 @@ export default class DataTable extends React.Component {
     }
 }
 
+
+
 function getValues(projects: any) {
     const values: any = [];
     projects.forEach(project => {
         project.requests.forEach(request => {
+                let tmpStatus = "pending";
+                if(request.status == "a"){tmpStatus = "accepted"}
+                else if(request.status == "c"){tmpStatus = "cancelled"}
+
             values.push({
                 id: request.id,
                 project: project.name,
                 phase: request.sectors.name,
-                status: request.status,
+                status: tmpStatus,
                 cost: request.budget,
                 date: request.creationDate
             });

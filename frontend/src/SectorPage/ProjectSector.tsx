@@ -15,7 +15,7 @@ import StatusModal from './StatusModal';
 import Logo from '../img/HomeBuilder_Logo_4c.png';
 import CSS from 'csstype';
 import {Business} from "@mui/icons-material";
-import {calcSectorProgress} from '../ProjectPage/ProjectCard';
+import {calcLeftoverBudget, calcSectorProgress} from '../ProjectPage/ProjectCard';
 import {Link} from 'react-router-dom';
 
 //styles header of the sector page
@@ -57,8 +57,8 @@ function ActionAreaCard(props: any) {
 
 export default function ShowSectors(props: any) {
 
-    const projectRequests = props.location.state.projectWithRequests;
-    const projectSectors = props.location.state.projectWithSectors;
+    const projectWithRequests = props.location.state.projectWithRequests;
+    const projectWithSectors = props.location.state.projectWithSectors;
 
     const [expanded, setExpanded] = React.useState<string | false>(false);
 
@@ -71,8 +71,8 @@ export default function ShowSectors(props: any) {
         <div className="App" style={SectorPageStyle}>
             <div style={SectorPageStyle}>
                 <Box sx={{top: '0px', fontSize: '30px', height: '100px', padding: '15px'}} className="titleName">
-                    <Link to="home" > 
-                        <img  src={Logo} style={{width: "300px"}} alt={"Logo"}/>
+                    <Link to="home">
+                        <img src={Logo} style={{width: "300px"}} alt={"Logo"}/>
                     </Link>
                 </Box>
                 <Box>
@@ -86,27 +86,27 @@ export default function ShowSectors(props: any) {
                                 </Grid>
                                 <Grid item xs={2}>
                                     <Typography>
-                                        {projectRequests == null ? '' : projectRequests.name}
+                                        {projectWithRequests == null ? '' : projectWithRequests.name}
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={5}>
                                     <Typography variant="body2" color="text.secondary">
-                                        <div style={{textAlign: 'left'}}>Planning progress</div>
-                                        <LinearWithValueLabel {...{progress: calcSectorProgress(projectRequests.requests, projectSectors)}}></LinearWithValueLabel>
+                                        <div style={{textAlign: 'center'}}>Planning progress</div>
+                                        <LinearWithValueLabel {...{progress: calcSectorProgress(projectWithRequests.requests, projectWithSectors)}}/>
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={4}>
                                     <Typography variant="body2" color="text.secondary">
                                         <div style={{textAlign: 'center'}}>Budget available</div>
-                                        {projectRequests.budget}
+                                        {calcLeftoverBudget(projectWithRequests.requests, projectWithRequests.budget)}
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </div>
                         {
-                            projectSectors == null ?
+                            projectWithSectors == null ?
                                 (<div/>) :
-                                projectSectors[0].sectors.map(
+                                projectWithSectors[0].sectors.map(
                                     (sector: any) => {
                                         return (
                                             <Accordion expanded={expanded === `panel${sector.id}`}
@@ -119,8 +119,8 @@ export default function ShowSectors(props: any) {
                                                 >
                                                     <Typography>
                                                         <StatusModal 
-                                                            requests={projectRequests.requests.filter(filterRequest => filterRequest.sectors.name === sector.name)}
-                                                            projectId={projectRequests.id}
+                                                            requests={projectWithRequests.requests.filter(filterRequest => filterRequest.sectors.name === sector.name)}
+                                                            projectId={projectWithRequests.id}
                                                         />
                                                     </Typography>
                                                     <Typography sx={{width: '33%', flexShrink: 0}}>
@@ -138,7 +138,7 @@ export default function ShowSectors(props: any) {
                                                                         return (
                                                                             <Grid item xs={12} md={6} lg={4}>
                                                                                 <ActionAreaCard
-                                                                                    project={projectSectors[0]}
+                                                                                    project={projectWithSectors[0]}
                                                                                     sector={sector}
                                                                                     supplier={supplier}/>
                                                                             </Grid>

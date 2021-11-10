@@ -18,8 +18,13 @@ export default class ProjectCard extends Component<any> {
 
     axios.get(`/api/sectors/${this.props.id}`).then(res => {
       this.setState( {project: res.data} );
-    })
 
+      const url: URL = new URL(window.location.href);
+      if (url.searchParams.get("redirect") === 'sectors'){
+        this.setRedirect();
+        this.renderRedirect();
+      }
+    })
   }
 
   setRedirect = () => {
@@ -27,7 +32,6 @@ export default class ProjectCard extends Component<any> {
   }
 
   renderRedirect = () => {
-
     if (this.state.redirect) {
       return <Redirect to={{
         pathname: '/sectors',
@@ -47,7 +51,7 @@ export default class ProjectCard extends Component<any> {
     });
   }
 
-  render() {  
+  render() { 
     return (
       <Card sx={{ width: "100%" }}>
         {this.renderRedirect()}

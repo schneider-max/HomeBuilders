@@ -1,9 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable, JoinColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { Project } from './entity.project';
 import { Sector } from './entity.sector';
 import { Supplier } from './entity.supplier';
 
-enum RequestStatus {
+export enum RequestStatus {
     canceled = "c",
     pending = "p",
     accepted = "a"

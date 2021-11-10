@@ -5,8 +5,7 @@ import {getRepository} from 'typeorm';
 import {BaseController} from './base.controller';
 import {logger} from '../middleware/logger.mw';
 import {authMw} from '../middleware/auth.mw';
-import {Request as RequestEntity} from "../db/entities/entity.request";
-
+import {Request as RequestEntity, RequestStatus} from "../db/entities/entity.request";
 
 @Controller('api/requests')
 export class RequestController extends BaseController {
@@ -24,6 +23,24 @@ export class RequestController extends BaseController {
         return res.status(this.Ok).json(projects);
     }
 
+    @Post(':requestId/:status')
+    @Middleware([logger, authMw])
+    public async postRequestStatus(req: Request, res: Response): Promise<any> {
+        try {
+            const id: string = req.params.requestId;
+            const status: RequestStatus = req.params.status as RequestStatus;
+            await getRepository(RequestEntity)
+                .createQueryBuilder("request")
+                .update<RequestEntity>(RequestEntity, {status: status})
+                .where("request.id = :id", { id: id })
+                .execute();
+
+            return res.status(this.Ok).json(null);
+        } catch (ex: any) {
+            return res.status(this.BadRequest).json("Request update failed due to the following error: </br>" + ex);
+        }
+    }
+
     @Post('')
     @Middleware([logger, authMw])
     public async createNewRequest(req: Request, res: Response): Promise<any> {
@@ -37,6 +54,5 @@ export class RequestController extends BaseController {
         } catch (ex: any) {
             return res.status(this.BadRequest).json("Request creation failed due to the following error: </br>" + ex);
         }
-
     }
 }

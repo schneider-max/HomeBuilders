@@ -11,7 +11,7 @@ import {CardActionArea} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import LinearWithValueLabel from '../Progressbar';
 import ModalRequest from "./ModalRequest";
-import StatusSelect from './StatusIcons';
+import StatusModal from './StatusModal';
 import Logo from '../img/HomeBuilder_Logo_4c.png';
 import CSS from 'csstype';
 import {Business} from "@mui/icons-material";
@@ -118,9 +118,10 @@ export default function ShowSectors(props: any) {
                                                     id={`panel${sector.id}bh-header`}
                                                 >
                                                     <Typography>
-                                                        <StatusSelect {...projectRequests.requests
-                                                            .filter(filterRequest => filterRequest.sectors.name === sector.name)
-                                                                      }/>
+                                                        <StatusModal 
+                                                            requests={projectRequests.requests.filter(filterRequest => filterRequest.sectors.name === sector.name)}
+                                                            projectId={3}
+                                                        />
                                                     </Typography>
                                                     <Typography sx={{width: '33%', flexShrink: 0}}>
                                                         {sector.name}

@@ -1,8 +1,8 @@
-import {Button, Card, CardActionArea, CardContent, Typography } from "@mui/material";
-import { Component } from "react";
+import {Button, Card, CardActionArea, CardContent, Typography} from "@mui/material";
+import {Component} from "react";
 import LinearWithValueLabel from "../Progressbar";
-import { Redirect } from "react-router-dom";
-import { getAxioxInstance } from "../shared/axios";
+import {Redirect} from "react-router-dom";
+import {getAxioxInstance} from "../shared/axios";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export default class ProjectCard extends Component<any> {
@@ -46,7 +46,7 @@ export default class ProjectCard extends Component<any> {
   private deleteProject(id: number) {
     const axios = getAxioxInstance();
 
-    axios.delete(`/api/projects/${id}`).then(res => {
+    axios.delete(`/api/projects/${id}`).then(() => {
       window.location.reload();
     });
   }
@@ -80,13 +80,13 @@ export default class ProjectCard extends Component<any> {
 export function calcSectorProgress(requests, project) {
   if (requests == null || project == null)
     return 0;
-  
+
   let acceptedSectors: number = 0;
-  let usedSectors: string[] = [];
+  let usedSectors: number[] = [];
 
   requests.forEach(r => {
-    if (r.status === 'a' && !usedSectors.includes(r.name)) {
-      usedSectors.push(r.name)
+    if (r.status === 'a' && !usedSectors.includes(r.sectors.id)) {
+      usedSectors.push(r.sectors.id)
       acceptedSectors += 1;
     }
   })
@@ -106,4 +106,18 @@ export function calcBudgetProgress(requests, totalBudget) {
   })
 
   return (usedBudget / totalBudget) * 100;
+}
+
+export function calcLeftoverBudget(requests, totalBudget) {
+  if (requests == null || totalBudget == null)
+    return 0;
+
+  let usedBudget: number = 0;
+
+  requests.forEach(request => {
+    if (request.status === 'a')
+      usedBudget += Number(request.budget);
+  })
+
+  return totalBudget - usedBudget;
 }

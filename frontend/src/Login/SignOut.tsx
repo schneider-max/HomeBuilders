@@ -47,7 +47,7 @@ function SignOut() {
                     <Button autoFocus onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button autoFocus onClick={handleLogOut}>
+                    <Button autoFocus onClick={handleLogOut} color={"error"}>
                         Log out
                     </Button>
                 </DialogActions>

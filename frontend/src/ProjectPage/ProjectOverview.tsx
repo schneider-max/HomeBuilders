@@ -1,6 +1,6 @@
-import { Box, Grid } from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import React from "react";
-import { getAxioxInstance } from "../shared/axios";
+import {getAxioxInstance} from "../shared/axios";
 import CreateProjectButton from "./CreateProjectModal";
 import ProjectCard from "./ProjectCard";
 
@@ -25,7 +25,7 @@ export default class ProjectComponent extends React.Component {
         return (
             <Box sx={{ height: '100%', borderColor: 'black' }}>
                 <Grid item xs={12} style={{ marginTop: "15px", padding: "15px", height: "100px" }}>
-                    <CreateProjectButton></CreateProjectButton>
+                    <CreateProjectButton/>
                 </Grid>
                 <Grid container spacing={2} sx={{ margin: "15px", width: "calc(100% - 40px)" }}>
                     {this.state.projects.map((project: any) => {

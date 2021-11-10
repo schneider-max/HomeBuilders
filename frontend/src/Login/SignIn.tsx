@@ -42,6 +42,8 @@ export default function SignIn() {
     });
 
     function handleLoginError(errorMsg: any) {
+        resetAlerts();
+
         if (errorMsg !== null && errorMsg.toString().includes("401")) {
             setLoginErrorAlertMsg("Login failed - Bad Credentials");
         } else {
@@ -51,12 +53,8 @@ export default function SignIn() {
     }
 
     function processLogin(res: AxiosResponse) {
-        setLoginErrorAlertMsg('');
+        resetAlerts();
 
-        setLogInErrorAlert(false);
-        setUserCreationAlertMsg('');
-
-        setUserCreationAlert(false);
         if (res.status === 200 && res.data != null) {
             try {
                 sessionStorage.setItem("token", res.data.token);
@@ -71,6 +69,13 @@ export default function SignIn() {
         }
     }
 
+    function resetAlerts() {
+        setLogInErrorAlert(false);
+        setLoginErrorAlertMsg("");
+        setUserCreationAlert(false);
+        setUserCreationAlertMsg("");
+    }
+
     const handleClickSignUpOpen = () => {
         setSignUpDialogOpen(true);
     };
@@ -79,6 +84,8 @@ export default function SignIn() {
     };
     const handleCreateAcc = (event: any) => {
         event.preventDefault();
+
+        resetAlerts();
 
         try {
             const data = new FormData(event.currentTarget);
@@ -110,10 +117,10 @@ export default function SignIn() {
 
                 axios(options)
                     .then(res => {
-                        let jsnRes = JSON.parse(JSON.stringify(res));
+                        console.log(res);
                         setUserCreationAlert(true);
                         setUserCreationAlertMsg(
-                            "User " + jsnRes.firstname + ' ' + jsnRes.lastname + ' with Mail ' + jsnRes.email
+                            "User " + newUserFirstName + ' ' + newUserLastName + ' with Mail ' + newUserMail
                             + ' was successfully created!');
 
                     })

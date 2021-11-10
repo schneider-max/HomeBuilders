@@ -64,7 +64,7 @@ export class CustomerController extends BaseController {
             const customers = getRepository(Customer).create(req.body);
             const existingCustomer = await getRepository(Customer).findOne(req.body.email.toLowerCase());
             if (existingCustomer) {
-                return res.status(this.Ok).json("User already exists");
+                return res.status(this.BadRequest).json("User already exists");
             }
             const results = await getRepository(Customer).save(customers);
             return res.status(this.Ok).json(results);

@@ -1,5 +1,5 @@
-import { Box, Button, Modal } from "@mui/material";
-import { useEffect, useState } from "react";
+import {Box, Button, Modal} from "@mui/material";
+import {useEffect, useState} from "react";
 import StatusChangeForm from "./StatusChangeForm";
 import StatusIcon from "./StatusIcons";
 
@@ -26,24 +26,23 @@ export default function StatusModal(props: any) {
         if (props.requests.length > 0) {
             if (props.requests.some(request => request.status === 'a')) {
                 setStatus('a');
-            }
-            else if (props.requests.some(request => request.status === 'p')) {
+            } else if (props.requests.some(request => request.status === 'p')) {
                 setStatus('p');
-            }     
+            }
         }
-    }, [])
+    }, [props.request])
 
     return (
         <div onClick={(e) => e.stopPropagation()}>
             <Button onClick={(e) => {e.stopPropagation(); handleOpen()}}>
-                <StatusIcon {...status}></StatusIcon>
+                <StatusIcon {...status}/>
             </Button>
             <Modal
                 open={open}
                 onClose={handleClose}
             >
                 <Box sx={style} onClick={(e) => e.stopPropagation()}>
-                    <StatusChangeForm status={status} requests={props.requests} projectId={props.projectId}></StatusChangeForm>
+                    <StatusChangeForm status={status} requests={props.requests} projectId={props.projectId}/>
                 </Box>
             </Modal>
         </div>

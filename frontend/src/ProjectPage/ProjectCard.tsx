@@ -1,15 +1,18 @@
 import {Button, Card, CardActionArea, CardContent, Typography} from "@mui/material";
+import * as React from "react";
 import {Component} from "react";
 import ProgressbarWithLabel from "../Progressbar";
 import {Redirect} from "react-router-dom";
 import {getAxioxInstance} from "../shared/axios";
 import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteProject from "./deleteProjectConfirmDialog";
 
 export default class ProjectCard extends Component<any> {
 
     state = {
         redirect: false,
-        project: null
+        project: null,
+        showDeleteDialog: false
     };
 
     componentDidMount() {
@@ -20,7 +23,7 @@ export default class ProjectCard extends Component<any> {
             this.setState({project: res.data});
 
             const url: URL = new URL(window.location.href);
-            if (url.searchParams.get("redirect") === 'sectors'&& url.searchParams.get("projectId") == this.props.id) {
+            if (url.searchParams.get("redirect") === 'sectors' && url.searchParams.get("projectId") == this.props.id) {
                 this.setRedirect();
 
             }
@@ -43,42 +46,44 @@ export default class ProjectCard extends Component<any> {
         }
     }
 
-    private deleteProject(id: number) {
-        const axios = getAxioxInstance();
-
-        axios.delete(`/api/projects/${id}`).then(() => {
-            window.location.reload();
-        });
+    private deleteProject() {
+        this.setState({showDeleteDialog: true});
     }
 
     render() {
         return (
-            <Card sx={{width: "100%"}}>
-                {this.renderRedirect()}
-                <CardActionArea onClick={this.setRedirect}>
-                    <CardContent sx={{height: "200px"}}>
-                        <Typography variant="h5" component={'span'}>
-                            {this.props.name}
-                        </Typography>
-                        <br/><br/>
-                        <Typography component={"span"} variant="body2" color="text.secondary" gutterBottom={true}>
-                            <div style={{textAlign: 'left'}}>Budget: {this.props.budget}</div>
-                            <ProgressbarWithLabel {...{progress: calcBudgetProgress(this.props.requests, this.props.budget)}}/>
-                        </Typography>
-                        <br/>
-                        <Typography component={"span"} variant="body2" color="text.secondary">
-                            <div style={{textAlign: 'left'}}>Progress:</div>
-                            <ProgressbarWithLabel {...{progress: calcSectorProgress(this.props.requests, this.state.project)}} />
-                        </Typography>
-                        <br/>
-                        <Button onClick={(e) => {
-                            e.stopPropagation();
-                            this.deleteProject(this.props.id)
-                        }}><DeleteIcon color={"error"}/>
-                        </Button>
-                    </CardContent>
-                </CardActionArea>
-            </Card>
+            <div>
+                <Card sx={{width: "100%"}}>
+                    {this.renderRedirect()}
+                    <CardActionArea onClick={this.setRedirect}>
+                        <CardContent sx={{height: "200px"}}>
+                            <Typography variant="h5" component={'span'}>
+                                {this.props.name}
+                            </Typography>
+                            <br/><br/>
+                            <Typography component={"span"} variant="body2" color="text.secondary" gutterBottom={true}>
+                                <div style={{textAlign: 'left'}}>Budget: {this.props.budget}</div>
+                                <ProgressbarWithLabel {...{progress: calcBudgetProgress(this.props.requests, this.props.budget)}}/>
+                            </Typography>
+                            <br/>
+                            <Typography component={"span"} variant="body2" color="text.secondary">
+                                <div style={{textAlign: 'left'}}>Progress:</div>
+                                <ProgressbarWithLabel {...{progress: calcSectorProgress(this.props.requests, this.state.project)}} />
+                            </Typography>
+                            <br/>
+                            <Button onClick={(e) => {
+                                e.stopPropagation();
+                                this.deleteProject()
+                            }}><DeleteIcon color={"error"}/>
+                            </Button>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+                <div id={"deleteProjectDialog"}>
+                    {this.state.showDeleteDialog ? <DeleteProject id={this.props.id}/> : <></>}
+                </div>
+            </div>
+
         );
     }
 }

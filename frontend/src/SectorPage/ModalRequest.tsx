@@ -34,6 +34,7 @@ export default function ModalRequest(props: any) {
     const handleClose = () => {
         setOpen(false);
         resetAlerts();
+        window.location.href = `/home?redirect=sectors&projectId=${props.project.id}`;
     }
 
     function handleRequestError(ex) {

@@ -120,7 +120,7 @@ export default function ShowSectors(props: any) {
                                                     <Typography>
                                                         <StatusModal 
                                                             requests={projectRequests.requests.filter(filterRequest => filterRequest.sectors.name === sector.name)}
-                                                            projectId={3}
+                                                            projectId={projectRequests.id}
                                                         />
                                                     </Typography>
                                                     <Typography sx={{width: '33%', flexShrink: 0}}>
@@ -151,7 +151,6 @@ export default function ShowSectors(props: any) {
                                                 </AccordionDetails>
                                             </Accordion>
                                         )
-
                                     }
                                 )
                         }

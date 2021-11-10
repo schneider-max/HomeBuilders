@@ -21,13 +21,14 @@ export default function StatusChangeForm(props: any) {
         if (status !== '' && requestId !== 0) {
             const axios = getAxioxInstance();
             axios.post(`http://localhost:3001/api/requests/${requestId}/${status}`).then(res => {
-                window.location.href = `/home?redirect=sectors`;
+                window.location.href = `/home?redirect=sectors&projectId=${props.projectId}`;
             });
         }
     }
 
     return (
         <div style={{ height: "100%" }}>
+            {console.log(props.projectId)}
             <FormControl fullWidth>
                 <InputLabel id="status-select-label">Status</InputLabel>
                 <Select

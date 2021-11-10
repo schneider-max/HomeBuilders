@@ -9,7 +9,7 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import {CardActionArea} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import LinearWithValueLabel from '../Progressbar';
+import ProgressbarWithLabel from '../Progressbar';
 import ModalRequest from "./ModalRequest";
 import StatusModal from './StatusModal';
 import Logo from '../img/HomeBuilder_Logo_4c.png';
@@ -92,7 +92,7 @@ export default function ShowSectors(props: any) {
                                 <Grid item xs={5}>
                                     <Typography variant="body2" color="text.secondary">
                                         <div style={{textAlign: 'center'}}>Planning progress</div>
-                                        <LinearWithValueLabel {...{progress: calcSectorProgress(projectWithRequests.requests, projectWithSectors)}}/>
+                                        <ProgressbarWithLabel {...{progress: calcSectorProgress(projectWithRequests.requests, projectWithSectors)}}/>
                                     </Typography>
                                 </Grid>
                                 <Grid item xs={4}>

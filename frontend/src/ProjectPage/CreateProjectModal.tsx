@@ -56,7 +56,7 @@ export default function CreateProjectButton() {
                             </FormControl>
                             <FormControl fullWidth sx={{m: 1}}>
                                 <InputLabel htmlFor="budget-input">Budget</InputLabel>
-                                <Input id="budget-input" name="budget"/>
+                                <Input id="budget-input" name="budget" type="number"/>
                             </FormControl>
                             <h3>Select wanted company sectors</h3>
                             <FormGroup>

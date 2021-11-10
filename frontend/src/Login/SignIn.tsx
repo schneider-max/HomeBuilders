@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from "../img/HomeBuilder_Logo_4c.png";
-import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Input} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {useEffect} from "react";
@@ -231,9 +231,9 @@ export default function SignIn() {
                 </Button>
             </Box>
 
-            <Dialog open={signUpDialogOpen} onClose={handleSignUpClose}>
+            <Dialog open={signUpDialogOpen} onClose={handleSignUpClose} >
                 <DialogTitle>Sign Up</DialogTitle>
-                <Box component="form" onSubmit={handleCreateAcc} noValidate sx={{mt: 1}}>
+                <Box component="form" onSubmit={handleCreateAcc} sx={{mt: 1}}>
                     <DialogContent>
                         <DialogContentText>
                             To create a new Account to start your upcoming Project with HomeBuilders, please fill out
@@ -246,7 +246,7 @@ export default function SignIn() {
                             margin="dense"
                             name="newUserMail"
                             label="Email Address"
-                            type="email"
+                            type={"email"}
                             fullWidth
                             variant="standard"
                             autoComplete="email"

@@ -7,7 +7,7 @@ import Logo from './img/HomeBuilder_Logo_4c.png';
 import History from './HistoryPage/History';
 import SignOut from "./Login/SignOut";
 import ProjectComponent from './ProjectPage/ProjectOverview';
-import Image from './img/concrete_bg.jpg';
+import Image from './img/concrete1.jpg';
 import {Typography} from '@mui/material';
 
 interface TabPanelProps {
@@ -65,7 +65,14 @@ function NavBar() {
 
 function App() {
     return (
-        <div className="App" style={{backgroundImage: `url(${Image})`, minHeight: "100vh"}}>
+        <div className="App" style={{
+            backgroundImage: `url(${Image})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            width: '100vw',
+            height: '100vh'
+        }}>
             <Box sx={{top: '0px', fontSize: '30px', height: '100px', padding: '15px'}} className="titleName">
                 <img src={Logo} style={{width: "300px"}} alt={"Logo"}/>
             </Box>

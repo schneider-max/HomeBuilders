@@ -17,6 +17,8 @@ import CSS from "csstype";
 import {Business} from "@mui/icons-material";
 import {calcLeftoverBudget, calcSectorProgress} from "../ProjectPage/ProjectCard";
 import {Link} from "react-router-dom";
+import Image from '../img/concrete1.jpg';
+
 
 //styles header of the sector page
 const SectorHeaderStyle: CSS.Properties = {
@@ -29,8 +31,12 @@ const SectorHeaderStyle: CSS.Properties = {
   padding: "0px 16px"
 };
 const SectorPageStyle: CSS.Properties = {
-  backgroundImage: `url("/static/media/concrete_bg.c57b6ffb.jpg")`,
-  height: "100vh"
+  backgroundImage: `url(${Image})`,
+  backgroundPosition: 'center',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  width: '100vw',
+  height: '100vh'
 };
 
 function ActionAreaCard(props: any) {

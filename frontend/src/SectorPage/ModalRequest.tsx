@@ -69,7 +69,7 @@ export default function ModalRequest(props: any) {
         let firstname = data.get("firstname");
         let lastname = data.get("lastname");
         let email = data.get("email");
-        let budget = Number(data.get("budget"));
+        let budget = data.get("budget");
         let subject = data.get("subject");
         let msg = data.get("msg");
 
@@ -168,7 +168,8 @@ export default function ModalRequest(props: any) {
                                            type={"email"} required={true}>
                                     <input type="email"/>
                                 </TextField>
-                                <TextField sx={styleInputs} fullWidth label="Budget" name="budget" type={"number"}>
+                                <TextField sx={styleInputs} fullWidth label="Budget" name="budget" type={"number"}
+                                           inputProps={{max: "99999999", step: "0.01"}}>
                                     <input type="number"/>
                                 </TextField>
                                 <TextField sx={styleInputs} fullWidth label="Subject" name="subject"

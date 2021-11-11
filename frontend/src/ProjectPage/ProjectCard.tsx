@@ -121,9 +121,9 @@ export function calcBudgetProgress(requests, totalBudget) {
 
 export function calcLeftoverBudget(requests, totalBudget) {
     if (requests == null || totalBudget == null)
-        return 0;
+        return 0.00;
 
-    let usedBudget: number = 0;
+    let usedBudget: number = 0.00;
 
     requests.forEach(request => {
         if (request.status === 'a')

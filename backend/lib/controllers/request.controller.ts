@@ -52,6 +52,7 @@ export class RequestController extends BaseController {
             const result = await getRepository(RequestEntity).save(request);
             return res.status(this.Ok).json(result);
         } catch (ex: any) {
+            
             return res.status(this.BadRequest).json("Request creation failed due to the following error: </br>" + ex);
         }
     }

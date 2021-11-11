@@ -1,19 +1,8 @@
-import {
-  AccessTime,
-  CheckCircleOutline,
-  HighlightOff
-} from "@mui/icons-material";
-import {
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent
-} from "@mui/material";
-import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
-import { useState } from "react";
-import { getAxioxInstance } from "../shared/axios";
+import {AccessTime, CheckCircleOutline, HighlightOff} from "@mui/icons-material";
+import {Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent} from "@mui/material";
+import {DataGrid, GridColDef, GridRowsProp} from "@mui/x-data-grid";
+import {useState} from "react";
+import {getAxioxInstance} from "../shared/axios";
 import StatusIcon from "./StatusIcons";
 
 export default function StatusChangeForm(props: any) {
@@ -32,16 +21,15 @@ export default function StatusChangeForm(props: any) {
     if (status !== "" && requestId !== 0) {
       const axios = getAxioxInstance();
       axios
-        .post(`http://localhost:3001/api/requests/${requestId}/${status}`)
-        .then(res => {
-          window.location.href = `/home?redirect=sectors&projectId=${props.projectId}`;
-        });
+          .post(`http://localhost:3001/api/requests/${requestId}/${status}`)
+          .then(() => {
+            window.location.href = `/home?redirect=sectors&projectId=${props.projectId}`;
+          });
     }
   };
 
   return (
     <div style={{ height: "100%" }}>
-      {console.log(props.projectId)}
       <FormControl fullWidth>
         <InputLabel id="status-select-label">Status</InputLabel>
         <Select
@@ -91,7 +79,7 @@ const columns: GridColDef[] = [
     renderCell: params => {
       return (
         <Button>
-          <StatusIcon {...params.row.status}></StatusIcon>
+          <StatusIcon {...params.row.status}/>
         </Button>
       );
     }
@@ -103,16 +91,14 @@ const columns: GridColDef[] = [
 ];
 
 function mapRequestsToGridData(requests): GridRowsProp {
-  const data = requests.map(request => {
+  return requests.map(request => {
     return {
       id: request.id,
       status: request.status,
       subject: request.subject,
       date: request.creationDate,
-      budget: request.budget,
+      budget: request.budget + ' €',
       sender: request.email
     };
   });
-
-  return data;
 }

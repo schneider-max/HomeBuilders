@@ -55,11 +55,11 @@ export default class DataTable extends React.Component {
     render() {
         projectsAll = this.state.projects;
         return (
-            <div style={{height: 450, width: '100%'}}>
+            <div style={{height: '100%', width: '100%'}}>
                 <DataGrid
                     rows={getValues(this.state.projects)}
                     columns={columns}
-                    pageSize={8}
+                    pageSize={9}
                     rowsPerPageOptions={[8]}
                     style={{margin: "8px", backgroundColor: "white"}}
                     onRowClick={this.handleOpen}
@@ -107,7 +107,7 @@ function getValues(projects: any) {
                 project: project.name,
                 phase: request.sectors.name,
                 status: tmpStatus,
-                cost: request.budget,
+                cost: request.budget + ' €',
                 date: request.creationDate
             });
         });
@@ -175,7 +175,7 @@ function Info() {
                             Budget:
                         </Grid>
                         <Grid item xs={9}>
-                            {request.budget}
+                            {request.budget} €
                         </Grid>
                     </Grid>
                     <Grid style={modalInfo} container spacing={3}>

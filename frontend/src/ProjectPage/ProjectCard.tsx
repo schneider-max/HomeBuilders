@@ -62,7 +62,7 @@ export default class ProjectCard extends Component<any> {
                             </Typography>
                             <br/><br/>
                             <Typography component={"span"} variant="body2" color="text.secondary" gutterBottom={true}>
-                                <div style={{textAlign: 'left'}}>Budget: {this.props.budget}</div>
+                                <div style={{textAlign: 'left'}}>Budget: {this.props.budget} €</div>
                                 <ProgressbarWithLabel {...{progress: calcBudgetProgress(this.props.requests, this.props.budget)}}/>
                             </Typography>
                             <br/>

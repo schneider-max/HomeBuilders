@@ -7,19 +7,16 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import {CardActionArea} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ProgressbarWithLabel from "../Progressbar";
 import ModalRequest from "./ModalRequest";
 import StatusModal from "./StatusModal";
 import Logo from "../img/HomeBuilder_Logo_4c.png";
 import CSS from "csstype";
-import { Business } from "@mui/icons-material";
-import {
-  calcLeftoverBudget,
-  calcSectorProgress
-} from "../ProjectPage/ProjectCard";
-import { Link } from "react-router-dom";
+import {Business} from "@mui/icons-material";
+import {calcLeftoverBudget, calcSectorProgress} from "../ProjectPage/ProjectCard";
+import {Link} from "react-router-dom";
 
 //styles header of the sector page
 const SectorHeaderStyle: CSS.Properties = {
@@ -119,11 +116,11 @@ export default function ShowSectors(props: any) {
                 </Grid>
                 <Grid item xs={4}>
                   <Typography variant="body2" color="text.secondary">
-                    <div style={{ textAlign: "center" }}>Budget available</div>
+                    <div style={{textAlign: "center"}}>Budget available</div>
                     {calcLeftoverBudget(
-                      projectWithRequests.requests,
-                      projectWithRequests.budget
-                    )}
+                        projectWithRequests.requests,
+                        projectWithRequests.budget
+                    )} €
                   </Typography>
                 </Grid>
               </Grid>

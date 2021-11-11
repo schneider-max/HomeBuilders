@@ -1,9 +1,9 @@
 import * as controllers from './controllers';
 import * as express from 'express';
 import * as cors from 'cors';
-import { Server } from '@overnightjs/core';
-import { Logger } from '@overnightjs/logger';
-import { createConnection } from 'typeorm';
+import {Server} from '@overnightjs/core';
+import {Logger} from '@overnightjs/logger';
+import {createConnection} from 'typeorm';
 
 class RouterServer extends Server {
     private readonly SERVER_START_MSG: string = 'Server started at port: ';
@@ -52,7 +52,7 @@ class RouterServer extends Server {
             .then(async connection => {
                 Logger.Imp(`Connection to ${connection.options.database} successful!`);
             })
-            .catch(error => console.log(error));
+            .catch(error => Logger.Info(error));
     }
 }
 

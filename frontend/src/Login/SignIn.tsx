@@ -116,8 +116,7 @@ export default function SignIn() {
                 }
 
                 axios(options)
-                    .then(res => {
-                        console.log(res);
+                    .then(() => {
                         setUserCreationAlert(true);
                         setUserCreationAlertMsg(
                             "User " + newUserFirstName + ' ' + newUserLastName + ' with Mail ' + newUserMail

@@ -96,10 +96,10 @@ const columns: GridColDef[] = [
       );
     }
   },
-  { field: "betreff", headerName: "Betreff", flex: 1 },
-  { field: "datum", headerName: "Datum", flex: 1 },
+  { field: "subject", headerName: "Subject", flex: 1 },
+  { field: "date", headerName: "Date", flex: 1 },
   { field: "budget", headerName: "Budget", flex: 1 },
-  { field: "an", headerName: "An", flex: 1 }
+  { field: "sender", headerName: "Sender", flex: 1 }
 ];
 
 function mapRequestsToGridData(requests): GridRowsProp {
@@ -107,10 +107,10 @@ function mapRequestsToGridData(requests): GridRowsProp {
     return {
       id: request.id,
       status: request.status,
-      betreff: request.subject,
-      datum: request.creationDate,
+      subject: request.subject,
+      date: request.creationDate,
       budget: request.budget,
-      an: request.email
+      sender: request.email
     };
   });
 
